@@ -1,0 +1,2024 @@
+.profession-page {
+    --profession-accent: var(--color-primary);
+    --profession-accent-light: var(--color-primary-light);
+    --profession-accent-rgb: 117, 103, 255;
+    background: var(--color-warm-white);
+}
+
+.profession-page[data-profession="marketers"] {
+    --profession-accent: #7567ff;
+    --profession-accent-light: #a49cff;
+    --profession-accent-rgb: 117, 103, 255;
+}
+
+.profession-page[data-profession="real-estate"] {
+    --profession-accent: #3caeb6;
+    --profession-accent-light: #78d8dc;
+    --profession-accent-rgb: 60, 174, 182;
+}
+
+.profession-page[data-profession="accountants"] {
+    --profession-accent: #657f45;
+    --profession-accent-light: #9bbd73;
+    --profession-accent-rgb: 101, 127, 69;
+}
+
+.profession-page[data-profession="business-owners"] {
+    --profession-accent: #b77a35;
+    --profession-accent-light: #e2ae70;
+    --profession-accent-rgb: 183, 122, 53;
+}
+
+.profession-page[data-profession="sales-teams"] {
+    --profession-accent: #b95e54;
+    --profession-accent-light: #e7968d;
+    --profession-accent-rgb: 185, 94, 84;
+}
+
+.profession-page[data-profession="customer-service"] {
+    --profession-accent: #347e76;
+    --profession-accent-light: #74bbb3;
+    --profession-accent-rgb: 52, 126, 118;
+}
+
+.profession-hero {
+    position: relative;
+    min-height: calc(100vh - var(--header-height));
+    min-height: calc(100svh - var(--header-height));
+    overflow: clip;
+    background:
+        radial-gradient(circle at 17% 26%,
+            rgba(var(--profession-accent-rgb), 0.18),
+            transparent 34%),
+        linear-gradient(135deg,
+            var(--color-black),
+            var(--color-charcoal));
+    color: var(--color-white);
+}
+
+.profession-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(520px, 1.08fr);
+    min-height: calc(100vh - var(--header-height));
+    min-height: calc(100svh - var(--header-height));
+}
+
+.profession-hero__content {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+    padding:
+        clamp(76px, 8vw, 132px) clamp(42px, 6vw, 104px);
+    padding-left: max(var(--page-padding),
+            calc((100vw - var(--container-wide)) / 2 + var(--page-padding)));
+}
+
+.profession-hero__breadcrumbs {
+    margin-bottom: 32px;
+}
+
+.profession-hero__eyebrow {
+    color: var(--profession-accent-light);
+}
+
+.profession-hero__title {
+    max-width: 980px;
+    margin-top: 22px;
+}
+
+.profession-hero__title-accent {
+    display: block;
+    color: var(--profession-accent-light);
+}
+
+.profession-hero__text {
+    max-width: 720px;
+    margin-top: 28px;
+    color: var(--color-text-muted);
+    font-size: clamp(1.04rem, 1.5vw, 1.28rem);
+    line-height: 1.72;
+}
+
+.profession-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 34px;
+}
+
+.profession-hero__note {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    max-width: 670px;
+    margin-top: 28px;
+    color: var(--color-text-muted);
+    font-size: 0.79rem;
+    line-height: 1.58;
+}
+
+.profession-hero__note::before {
+    flex: 0 0 auto;
+    width: 32px;
+    height: 1px;
+    margin-top: 0.62em;
+    background: var(--color-border);
+    content: "";
+}
+
+.profession-hero__media {
+    position: relative;
+    min-width: 0;
+    overflow: clip;
+    background: var(--color-surface);
+}
+
+.profession-hero__media::before {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+        linear-gradient(90deg,
+            rgba(8, 10, 13, 0.6) 0%,
+            rgba(8, 10, 13, 0.08) 34%,
+            rgba(8, 10, 13, 0.05) 100%),
+        linear-gradient(180deg,
+            rgba(8, 10, 13, 0.05) 48%,
+            rgba(8, 10, 13, 0.62) 100%);
+    pointer-events: none;
+    content: "";
+}
+
+.profession-hero__media::after {
+    position: absolute;
+    top: clamp(30px, 4vw, 64px);
+    right: clamp(28px, 4vw, 62px);
+    z-index: 2;
+    width: clamp(100px, 11vw, 170px);
+    aspect-ratio: 1;
+    border: 1px solid rgba(var(--profession-accent-rgb), 0.48);
+    border-radius: 50%;
+    pointer-events: none;
+    content: "";
+}
+
+.profession-hero__image {
+    width: 100%;
+    height: 100%;
+    min-height: calc(100vh - var(--header-height));
+    min-height: calc(100svh - var(--header-height));
+    object-fit: cover;
+    transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.profession-hero:hover .profession-hero__image {
+    transform: scale(1.018);
+}
+
+.profession-hero__card {
+    position: absolute;
+    right: clamp(24px, 4vw, 62px);
+    bottom: clamp(24px, 4vw, 60px);
+    z-index: 3;
+    display: grid;
+    gap: 15px;
+    width: min(500px, calc(100% - 48px));
+    padding: 22px;
+    border: 1px solid var(--color-border);
+    border-radius: 26px;
+    background: rgba(17, 21, 26, 0.93);
+    box-shadow: var(--shadow-dark);
+    backdrop-filter: blur(12px);
+}
+
+.profession-hero__card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.profession-hero__card-label {
+    color: var(--profession-accent-light);
+    font-family: var(--font-heading);
+    font-size: 0.69rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.profession-hero__card-icon {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    color: var(--color-cyan);
+}
+
+.profession-hero__card-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 1.7;
+}
+
+.profession-hero__card-title {
+    color: var(--color-white);
+    font-size: clamp(1.25rem, 2vw, 1.8rem);
+}
+
+.profession-hero__card-text {
+    color: var(--color-text-muted);
+    font-size: 0.84rem;
+    line-height: 1.62;
+}
+
+.profession-hero__card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.profession-hero__card-tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 6px 11px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    color: var(--color-white);
+    font-size: 0.72rem;
+    font-weight: 650;
+}
+
+.profession-subnav {
+    position: sticky;
+    top: var(--header-height);
+    z-index: 40;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    background: rgba(8, 10, 13, 0.96);
+    color: var(--color-white);
+    backdrop-filter: blur(14px);
+}
+
+.profession-subnav__inner {
+    display: flex;
+    align-items: stretch;
+    overflow-x: auto;
+    scroll-padding-inline: var(--page-padding);
+    scrollbar-width: none;
+}
+
+.profession-subnav__inner::-webkit-scrollbar {
+    display: none;
+}
+
+.profession-subnav__link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    min-height: 62px;
+    padding: 12px 22px;
+    border-right: 1px solid var(--color-border);
+    color: var(--color-text-muted);
+    font-family: var(--font-heading);
+    font-size: 0.78rem;
+    font-weight: 750;
+    white-space: nowrap;
+    transition:
+        background-color var(--transition-fast),
+        color var(--transition-fast);
+}
+
+.profession-subnav__link:first-child {
+    border-left: 1px solid var(--color-border);
+}
+
+.profession-subnav__link::after {
+    position: absolute;
+    right: 20px;
+    bottom: -1px;
+    left: 20px;
+    height: 2px;
+    background: var(--profession-accent-light);
+    content: "";
+    opacity: 0;
+    transform: scaleX(0.6);
+    transition:
+        opacity var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.profession-subnav__link:hover,
+.profession-subnav__link:focus-visible,
+.profession-subnav__link.is-active {
+    background: var(--color-surface);
+    color: var(--color-white);
+}
+
+.profession-subnav__link:hover::after,
+.profession-subnav__link:focus-visible::after,
+.profession-subnav__link.is-active::after {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+.profession-overview {
+    background: var(--color-white);
+}
+
+.profession-overview__layout {
+    display: grid;
+    grid-template-columns: minmax(460px, 0.94fr) minmax(0, 1.06fr);
+    align-items: center;
+    gap: clamp(62px, 9vw, 148px);
+}
+
+.profession-overview__visual {
+    position: relative;
+    min-height: 700px;
+}
+
+.profession-overview__shape {
+    position: absolute;
+    top: 4%;
+    right: 8%;
+    width: 72%;
+    height: 88%;
+    border-radius: 42px;
+    background: var(--profession-accent);
+    opacity: 0.9;
+    transform: rotate(-4deg);
+}
+
+.profession-overview__image {
+    position: absolute;
+    overflow: clip;
+    border-radius: 34px;
+    background: var(--color-surface);
+    box-shadow: var(--shadow-soft);
+}
+
+.profession-overview__image--primary {
+    top: 0;
+    right: 0;
+    width: 78%;
+    height: 83%;
+}
+
+.profession-overview__image--secondary {
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    width: 58%;
+    height: 44%;
+    border: 9px solid var(--color-white);
+}
+
+.profession-overview__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profession-overview__content {
+    display: grid;
+    gap: 28px;
+    min-width: 0;
+}
+
+.profession-overview__title {
+    max-width: 900px;
+}
+
+.profession-overview__lead {
+    max-width: 820px;
+    color: var(--color-text-dark);
+    font-family: var(--font-heading);
+    font-size: clamp(1.45rem, 2.6vw, 2.8rem);
+    font-weight: 600;
+    letter-spacing: -0.04em;
+    line-height: 1.3;
+}
+
+.profession-overview__copy {
+    display: grid;
+    gap: 18px;
+    max-width: 780px;
+    color: var(--color-text-soft);
+    font-size: 1rem;
+    line-height: 1.76;
+}
+
+.profession-overview__points {
+    display: grid;
+    gap: 0;
+    margin-top: 4px;
+    border-top: 1px solid var(--color-border-dark);
+}
+
+.profession-overview__point {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: 12px;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--color-border-dark);
+    color: var(--color-text-dark);
+    font-family: var(--font-heading);
+    font-size: 0.92rem;
+    font-weight: 700;
+}
+
+.profession-overview__point svg {
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    color: var(--profession-accent);
+    stroke-width: 1.8;
+}
+
+.profession-tasks {
+    background: var(--color-warm-white);
+}
+
+.profession-tasks__header {
+    align-items: end;
+}
+
+.profession-tasks__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--color-border-dark);
+    border-left: 1px solid var(--color-border-dark);
+}
+
+.profession-task-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 360px;
+    padding: clamp(26px, 3vw, 40px);
+    overflow: clip;
+    border-right: 1px solid var(--color-border-dark);
+    border-bottom: 1px solid var(--color-border-dark);
+    background: var(--color-white);
+    transition:
+        background-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-base);
+}
+
+.profession-task-card::before {
+    position: absolute;
+    top: -90px;
+    right: -90px;
+    width: 210px;
+    height: 210px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+            rgba(var(--profession-accent-rgb), 0.18),
+            transparent 68%);
+    opacity: 0;
+    pointer-events: none;
+    content: "";
+    transition: opacity var(--transition-base);
+}
+
+.profession-task-card:hover {
+    z-index: 2;
+    background: var(--color-charcoal);
+    color: var(--color-white);
+    transform: translateY(-5px);
+}
+
+.profession-task-card:hover::before {
+    opacity: 1;
+}
+
+.profession-task-card__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.profession-task-card__icon {
+    width: 38px;
+    height: 38px;
+    color: var(--profession-accent);
+    stroke-width: 1.6;
+    transition: color var(--transition-fast);
+}
+
+.profession-task-card:hover .profession-task-card__icon {
+    color: var(--color-cyan);
+}
+
+.profession-task-card__number {
+    color: var(--color-text-soft);
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+}
+
+.profession-task-card__title {
+    margin-top: auto;
+    padding-top: 78px;
+    font-size: clamp(1.4rem, 2.2vw, 2.15rem);
+}
+
+.profession-task-card__text {
+    margin-top: 15px;
+    color: var(--color-text-soft);
+    font-size: 0.89rem;
+    line-height: 1.68;
+    transition: color var(--transition-fast);
+}
+
+.profession-task-card:hover .profession-task-card__text {
+    color: var(--color-text-muted);
+}
+
+.profession-task-card__marker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    margin-top: 22px;
+    color: var(--profession-accent);
+    font-family: var(--font-heading);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+}
+
+.profession-task-card__marker::before {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    content: "";
+}
+
+.profession-task-card:hover .profession-task-card__marker {
+    color: var(--color-accent);
+}
+
+.profession-workflows {
+    position: relative;
+    overflow: clip;
+    background:
+        radial-gradient(circle at 15% 22%,
+            rgba(var(--profession-accent-rgb), 0.12),
+            transparent 30%),
+        linear-gradient(135deg,
+            var(--color-black),
+            var(--color-charcoal));
+    color: var(--color-white);
+}
+
+.profession-workflows::after {
+    position: absolute;
+    right: -230px;
+    bottom: -300px;
+    width: 680px;
+    height: 680px;
+    border: 1px solid rgba(var(--profession-accent-rgb), 0.17);
+    border-radius: 50%;
+    pointer-events: none;
+    content: "";
+}
+
+.profession-workflows__layout {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(300px, 0.38fr) minmax(0, 0.92fr);
+    align-items: start;
+    gap: clamp(54px, 8vw, 126px);
+}
+
+.profession-workflows__intro {
+    display: grid;
+    gap: 26px;
+}
+
+.profession-workflows__intro-text {
+    max-width: 560px;
+    color: var(--color-text-muted);
+    font-size: 1.03rem;
+    line-height: 1.74;
+}
+
+.profession-workflows__list {
+    display: grid;
+    gap: 18px;
+}
+
+.profession-workflow-card {
+    display: grid;
+    grid-template-columns: minmax(150px, 0.27fr) minmax(0, 0.73fr);
+    gap: clamp(24px, 4vw, 54px);
+    padding: clamp(28px, 4vw, 52px);
+    border: 1px solid var(--color-border);
+    border-radius: 28px;
+    background: rgba(25, 30, 37, 0.72);
+    transition:
+        border-color var(--transition-fast),
+        background-color var(--transition-fast),
+        transform var(--transition-base);
+}
+
+.profession-workflow-card:hover {
+    border-color: rgba(var(--profession-accent-rgb), 0.58);
+    background: var(--color-surface);
+    transform: translateY(-3px);
+}
+
+.profession-workflow-card__heading {
+    display: grid;
+    align-content: start;
+    gap: 16px;
+}
+
+.profession-workflow-card__number {
+    color: var(--profession-accent-light);
+    font-family: var(--font-heading);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+}
+
+.profession-workflow-card__title {
+    color: var(--color-white);
+    font-size: clamp(1.45rem, 2.4vw, 2.5rem);
+}
+
+.profession-workflow-card__content {
+    display: grid;
+    gap: 24px;
+}
+
+.profession-workflow-card__summary {
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-size: clamp(1.05rem, 1.65vw, 1.36rem);
+    font-weight: 700;
+    line-height: 1.45;
+}
+
+.profession-workflow-card__details {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.profession-workflow-card__detail {
+    display: grid;
+    gap: 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-border);
+}
+
+.profession-workflow-card__detail-label {
+    color: var(--profession-accent-light);
+    font-family: var(--font-heading);
+    font-size: 0.69rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.profession-workflow-card__detail-text {
+    color: var(--color-text-muted);
+    font-size: 0.87rem;
+    line-height: 1.64;
+}
+
+.profession-prompts {
+    background: var(--color-white);
+}
+
+.profession-prompts__header {
+    align-items: end;
+}
+
+.profession-prompts__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.profession-prompt-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 440px;
+    padding: clamp(24px, 2.6vw, 36px);
+    border: 1px solid var(--color-border-dark);
+    border-radius: 28px;
+    background: var(--color-warm-white);
+    transition:
+        border-color var(--transition-fast),
+        transform var(--transition-base),
+        box-shadow var(--transition-base);
+}
+
+.profession-prompt-card:hover {
+    border-color: rgba(var(--profession-accent-rgb), 0.5);
+    box-shadow: var(--shadow-soft);
+    transform: translateY(-5px);
+}
+
+.profession-prompt-card__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.profession-prompt-card__category {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--profession-accent);
+    font-family: var(--font-heading);
+    font-size: 0.69rem;
+    font-weight: 800;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+}
+
+.profession-prompt-card__category::before {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    content: "";
+}
+
+.profession-prompt-card__copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 36px;
+    padding: 8px 12px;
+    border: 1px solid var(--color-border-dark);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--color-text-soft);
+    font-family: var(--font-heading);
+    font-size: 0.74rem;
+    font-weight: 750;
+    transition:
+        border-color var(--transition-fast),
+        background-color var(--transition-fast),
+        color var(--transition-fast);
+}
+
+.profession-prompt-card__copy:hover {
+    border-color: var(--profession-accent);
+    background: var(--profession-accent);
+    color: var(--color-white);
+}
+
+.profession-prompt-card__copy.is-copied {
+    border-color: #3b9d5d;
+    background: rgba(127, 218, 154, 0.16);
+    color: #267542;
+}
+
+.profession-prompt-card__copy svg {
+    width: 15px;
+    height: 15px;
+    stroke-width: 1.8;
+}
+
+.profession-prompt-card__title {
+    margin-top: 32px;
+    font-size: clamp(1.4rem, 2vw, 1.95rem);
+}
+
+.profession-prompt-card__prompt {
+    flex: 1 1 auto;
+    margin-top: 20px;
+    color: var(--color-text-soft);
+    font-size: 0.92rem;
+    line-height: 1.72;
+}
+
+.profession-prompt-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid var(--color-border-dark);
+    color: var(--color-text-soft);
+    font-size: 0.75rem;
+}
+
+.profession-prompt-card__review {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--color-text-dark);
+    font-family: var(--font-heading);
+    font-weight: 750;
+}
+
+.profession-prompt-card__review svg {
+    width: 16px;
+    height: 16px;
+    color: var(--profession-accent);
+    stroke-width: 1.8;
+}
+
+.profession-prompts__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    margin-top: 42px;
+    padding-top: 28px;
+    border-top: 1px solid var(--color-border-dark);
+}
+
+.profession-prompts__footer-text {
+    max-width: 780px;
+    color: var(--color-text-soft);
+    font-size: 0.84rem;
+    line-height: 1.65;
+}
+
+.profession-tools {
+    background: var(--color-warm-white);
+}
+
+.profession-tools__header {
+    align-items: end;
+}
+
+.profession-tools__tabs {
+    margin-bottom: 38px;
+}
+
+.profession-tools__panel {
+    display: grid;
+    grid-template-columns: minmax(320px, 0.38fr) minmax(0, 0.62fr);
+    gap: clamp(38px, 6vw, 90px);
+    padding: clamp(32px, 5vw, 64px);
+    border: 1px solid var(--color-border-dark);
+    border-radius: 34px;
+    background: var(--color-white);
+}
+
+.profession-tools__summary {
+    display: grid;
+    align-content: start;
+    gap: 20px;
+}
+
+.profession-tools__icon {
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    border: 1px solid var(--color-border-dark);
+    border-radius: 50%;
+    color: var(--profession-accent);
+}
+
+.profession-tools__icon svg {
+    width: 27px;
+    height: 27px;
+    stroke-width: 1.65;
+}
+
+.profession-tools__category {
+    font-size: clamp(1.7rem, 3.2vw, 3.4rem);
+}
+
+.profession-tools__use-case {
+    color: var(--color-text-soft);
+    font-size: 0.96rem;
+    line-height: 1.72;
+}
+
+.profession-tools__details {
+    display: grid;
+    border-top: 1px solid var(--color-border-dark);
+}
+
+.profession-tools__detail {
+    display: grid;
+    grid-template-columns: minmax(140px, 0.3fr) minmax(0, 0.7fr);
+    gap: 24px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--color-border-dark);
+}
+
+.profession-tools__detail-label {
+    color: var(--color-text-dark);
+    font-family: var(--font-heading);
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.profession-tools__detail-text {
+    color: var(--color-text-soft);
+    font-size: 0.88rem;
+    line-height: 1.65;
+}
+
+.profession-review {
+    position: relative;
+    overflow: clip;
+    background:
+        radial-gradient(circle at 76% 20%,
+            rgba(var(--profession-accent-rgb), 0.16),
+            transparent 32%),
+        linear-gradient(135deg,
+            var(--color-black),
+            var(--color-charcoal));
+    color: var(--color-white);
+}
+
+.profession-review__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 0.88fr) minmax(460px, 1.12fr);
+    min-height: 720px;
+    overflow: clip;
+    border-radius: 40px;
+    background: var(--color-surface);
+}
+
+.profession-review__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 28px;
+    min-width: 0;
+    padding: clamp(48px, 7vw, 104px);
+}
+
+.profession-review__title {
+    max-width: 780px;
+}
+
+.profession-review__text {
+    max-width: 700px;
+    color: var(--color-text-muted);
+    font-size: clamp(1rem, 1.35vw, 1.15rem);
+    line-height: 1.74;
+}
+
+.profession-review__list {
+    display: grid;
+    gap: 0;
+    margin-top: 8px;
+    border-top: 1px solid var(--color-border);
+}
+
+.profession-review__item {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: 14px;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.profession-review__item-icon {
+    width: 22px;
+    height: 22px;
+    margin-top: 2px;
+    color: var(--profession-accent-light);
+    stroke-width: 1.7;
+}
+
+.profession-review__item-content {
+    display: grid;
+    gap: 5px;
+}
+
+.profession-review__item-title {
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-size: 0.94rem;
+    font-weight: 750;
+}
+
+.profession-review__item-text {
+    color: var(--color-text-muted);
+    font-size: 0.82rem;
+    line-height: 1.6;
+}
+
+.profession-review__media {
+    position: relative;
+    min-width: 0;
+    overflow: clip;
+}
+
+.profession-review__media::after {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg,
+            rgba(25, 30, 37, 0.5),
+            transparent 38%),
+        linear-gradient(180deg,
+            transparent 54%,
+            rgba(8, 10, 13, 0.48));
+    pointer-events: none;
+    content: "";
+}
+
+.profession-review__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profession-review__badge {
+    position: absolute;
+    right: clamp(24px, 4vw, 54px);
+    bottom: clamp(24px, 4vw, 52px);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 330px;
+    padding: 13px 16px;
+    border-radius: var(--radius-pill);
+    background: var(--profession-accent-light);
+    color: var(--color-black);
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+
+.profession-review__badge svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 1.8;
+}
+
+.profession-learning {
+    background: var(--color-white);
+}
+
+.profession-learning__header {
+    align-items: end;
+}
+
+.profession-learning__cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.profession-learning-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 570px;
+    overflow: clip;
+    border-radius: 34px;
+    background: var(--color-surface);
+    color: var(--color-white);
+}
+
+.profession-learning-card:nth-child(2) {
+    border-radius: 70px 22px 70px 22px;
+}
+
+.profession-learning-card:nth-child(3) {
+    border-radius: 22px 70px 22px 70px;
+}
+
+.profession-learning-card__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 850ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.profession-learning-card:hover .profession-learning-card__image {
+    transform: scale(1.05);
+}
+
+.profession-learning-card__overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg,
+            rgba(8, 10, 13, 0.04) 15%,
+            rgba(8, 10, 13, 0.92) 94%),
+        linear-gradient(90deg,
+            rgba(8, 10, 13, 0.14),
+            transparent);
+}
+
+.profession-learning-card__content {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    align-content: end;
+    gap: 15px;
+    flex: 1 1 auto;
+    padding: clamp(28px, 3.5vw, 44px);
+}
+
+.profession-learning-card__icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    color: var(--profession-accent-light);
+}
+
+.profession-learning-card__icon svg {
+    width: 23px;
+    height: 23px;
+    stroke-width: 1.7;
+}
+
+.profession-learning-card__title {
+    font-size: clamp(1.65rem, 2.6vw, 2.45rem);
+}
+
+.profession-learning-card__text {
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+    line-height: 1.67;
+}
+
+.profession-learning-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    width: fit-content;
+    margin-top: 5px;
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-size: 0.84rem;
+    font-weight: 800;
+}
+
+.profession-learning-card__link svg {
+    width: 17px;
+    height: 17px;
+    color: var(--profession-accent-light);
+    stroke-width: 1.7;
+    transition: transform var(--transition-fast);
+}
+
+.profession-learning-card:hover .profession-learning-card__link svg {
+    transform: translateX(4px);
+}
+
+.profession-faq {
+    background: var(--color-warm-white);
+}
+
+.profession-faq__layout {
+    display: grid;
+    grid-template-columns: minmax(300px, 0.4fr) minmax(0, 0.9fr);
+    align-items: start;
+    gap: clamp(54px, 8vw, 126px);
+}
+
+.profession-faq__intro {
+    display: grid;
+    gap: 26px;
+}
+
+.profession-faq__intro-text {
+    max-width: 560px;
+    color: var(--color-text-soft);
+    font-size: 1rem;
+    line-height: 1.72;
+}
+
+.profession-faq__contact {
+    display: grid;
+    gap: 9px;
+    margin-top: 6px;
+    padding-top: 22px;
+    border-top: 1px solid var(--color-border-dark);
+}
+
+.profession-faq__contact-label {
+    color: var(--color-text-soft);
+    font-size: 0.78rem;
+}
+
+.profession-faq__contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    color: var(--profession-accent);
+    font-family: var(--font-heading);
+    font-size: 0.88rem;
+    font-weight: 800;
+}
+
+.profession-faq__contact-link svg {
+    width: 17px;
+    height: 17px;
+    stroke-width: 1.8;
+}
+
+.profession-faq__accordion {
+    min-width: 0;
+}
+
+.profession-faq .ui-accordion__item {
+    border-color: var(--color-border-dark);
+}
+
+.profession-faq .ui-accordion__trigger {
+    color: var(--color-text-dark);
+}
+
+.profession-faq .ui-accordion__trigger:hover {
+    color: var(--profession-accent);
+}
+
+.profession-faq .ui-accordion__trigger[aria-expanded="true"] {
+    color: var(--profession-accent);
+}
+
+.profession-faq .ui-accordion__icon {
+    border-color: var(--color-border-dark);
+}
+
+.profession-faq .ui-accordion__trigger[aria-expanded="true"] .ui-accordion__icon {
+    border-color: var(--profession-accent);
+    background: var(--profession-accent);
+    color: var(--color-white);
+}
+
+.profession-disclaimer {
+    background: var(--color-white);
+}
+
+.profession-disclaimer__panel {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: clamp(24px, 4vw, 54px);
+    padding: clamp(30px, 5vw, 58px);
+    border: 1px solid var(--color-border-dark);
+    border-radius: 30px;
+    background: var(--color-warm-white);
+}
+
+.profession-disclaimer__icon {
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    border: 1px solid var(--color-border-dark);
+    border-radius: 50%;
+    color: var(--profession-accent);
+}
+
+.profession-disclaimer__icon svg {
+    width: 26px;
+    height: 26px;
+    stroke-width: 1.65;
+}
+
+.profession-disclaimer__content {
+    display: grid;
+    gap: 18px;
+}
+
+.profession-disclaimer__title {
+    font-size: clamp(1.65rem, 3vw, 3rem);
+}
+
+.profession-disclaimer__text {
+    max-width: 1120px;
+    color: var(--color-text-soft);
+    font-size: 0.91rem;
+    line-height: 1.72;
+}
+
+.profession-disclaimer__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+}
+
+.profession-disclaimer__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: var(--profession-accent);
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 800;
+}
+
+.profession-disclaimer__link svg {
+    width: 16px;
+    height: 16px;
+    stroke-width: 1.8;
+}
+
+.profession-next {
+    position: relative;
+    overflow: clip;
+    background:
+        radial-gradient(circle at 78% 50%,
+            rgba(var(--profession-accent-rgb), 0.18),
+            transparent 36%),
+        linear-gradient(135deg,
+            var(--color-black),
+            var(--color-charcoal));
+    color: var(--color-white);
+}
+
+.profession-next::before {
+    position: absolute;
+    top: -180px;
+    right: -120px;
+    width: 520px;
+    height: 520px;
+    border: 1px solid rgba(var(--profession-accent-rgb), 0.22);
+    border-radius: 50%;
+    pointer-events: none;
+    content: "";
+}
+
+.profession-next::after {
+    position: absolute;
+    right: 160px;
+    bottom: -290px;
+    width: 580px;
+    height: 580px;
+    border: 1px solid rgba(84, 214, 208, 0.12);
+    border-radius: 50%;
+    pointer-events: none;
+    content: "";
+}
+
+.profession-next__layout {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.55fr);
+    align-items: end;
+    gap: clamp(44px, 8vw, 140px);
+}
+
+.profession-next__content {
+    display: grid;
+    gap: 28px;
+}
+
+.profession-next__title {
+    max-width: 1000px;
+}
+
+.profession-next__text {
+    max-width: 720px;
+    color: var(--color-text-muted);
+    font-size: clamp(1rem, 1.35vw, 1.16rem);
+    line-height: 1.74;
+}
+
+.profession-next__aside {
+    display: grid;
+    gap: 28px;
+}
+
+.profession-next__links {
+    display: grid;
+    gap: 10px;
+}
+
+.profession-next__link {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 18px;
+    min-height: 64px;
+    padding: 13px 0;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    font-weight: 750;
+    transition:
+        color var(--transition-fast),
+        padding-left var(--transition-fast);
+}
+
+.profession-next__link:first-child {
+    border-top: 1px solid var(--color-border);
+}
+
+.profession-next__link:hover {
+    padding-left: 10px;
+    color: var(--profession-accent-light);
+}
+
+.profession-next__link svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 1.8;
+    transition: transform var(--transition-fast);
+}
+
+.profession-next__link:hover svg {
+    transform: translateX(4px);
+}
+
+.profession-next__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+@media (max-width: 1399px) {
+    .profession-hero__grid {
+        grid-template-columns: minmax(0, 0.9fr) minmax(500px, 1.1fr);
+    }
+
+    .profession-hero__content {
+        padding-right: 48px;
+    }
+
+    .profession-overview__layout {
+        grid-template-columns: minmax(420px, 0.9fr) minmax(0, 1.1fr);
+        gap: 78px;
+    }
+
+    .profession-overview__visual {
+        min-height: 630px;
+    }
+
+    .profession-task-card {
+        min-height: 340px;
+    }
+
+    .profession-workflows__layout {
+        grid-template-columns: minmax(280px, 0.36fr) minmax(0, 0.94fr);
+        gap: 80px;
+    }
+
+    .profession-review__layout {
+        grid-template-columns: minmax(0, 0.9fr) minmax(430px, 1.1fr);
+    }
+
+    .profession-learning-card {
+        min-height: 530px;
+    }
+}
+
+@media (max-width: 1199px) {
+    .profession-hero__grid {
+        grid-template-columns: minmax(0, 0.92fr) minmax(460px, 1.08fr);
+    }
+
+    .profession-hero__content {
+        padding-right: 36px;
+    }
+
+    .profession-hero__card {
+        width: min(450px, calc(100% - 40px));
+    }
+
+    .profession-overview__layout {
+        grid-template-columns: minmax(390px, 0.86fr) minmax(0, 1.14fr);
+        gap: 58px;
+    }
+
+    .profession-overview__visual {
+        min-height: 570px;
+    }
+
+    .profession-tasks__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .profession-workflows__layout {
+        grid-template-columns: minmax(270px, 0.34fr) minmax(0, 1fr);
+        gap: 64px;
+    }
+
+    .profession-workflow-card {
+        grid-template-columns: minmax(135px, 0.25fr) minmax(0, 0.75fr);
+    }
+
+    .profession-prompts__list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .profession-prompt-card:nth-child(3) {
+        grid-column: 1 / -1;
+        min-height: 360px;
+    }
+
+    .profession-tools__panel {
+        grid-template-columns: minmax(280px, 0.36fr) minmax(0, 0.64fr);
+        gap: 48px;
+    }
+
+    .profession-review__layout {
+        grid-template-columns: minmax(0, 0.92fr) minmax(390px, 1.08fr);
+    }
+
+    .profession-review__content {
+        padding-inline: 56px;
+    }
+
+    .profession-learning-card {
+        min-height: 500px;
+    }
+
+    .profession-faq__layout {
+        grid-template-columns: minmax(270px, 0.36fr) minmax(0, 1fr);
+        gap: 74px;
+    }
+}
+
+@media (max-width: 991px) {
+    .profession-hero {
+        min-height: auto;
+    }
+
+    .profession-hero__grid {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+
+    .profession-hero__content {
+        min-height: 610px;
+        padding: 82px var(--page-padding);
+    }
+
+    .profession-hero__media,
+    .profession-hero__image {
+        min-height: 690px;
+    }
+
+    .profession-hero__media::before {
+        background:
+            linear-gradient(180deg,
+                rgba(8, 10, 13, 0.24),
+                transparent 30%,
+                rgba(8, 10, 13, 0.65));
+    }
+
+    .profession-subnav {
+        top: var(--header-height);
+    }
+
+    .profession-subnav__link {
+        min-height: 58px;
+    }
+
+    .profession-overview__layout,
+    .profession-workflows__layout,
+    .profession-faq__layout,
+    .profession-next__layout {
+        grid-template-columns: 1fr;
+    }
+
+    .profession-overview__visual {
+        min-height: 680px;
+        max-width: 760px;
+    }
+
+    .profession-overview__content {
+        max-width: 900px;
+    }
+
+    .profession-workflows__intro,
+    .profession-faq__intro {
+        max-width: 840px;
+    }
+
+    .profession-tools__panel {
+        grid-template-columns: 1fr;
+    }
+
+    .profession-review__layout {
+        grid-template-columns: 1fr;
+    }
+
+    .profession-review__media {
+        min-height: 580px;
+        order: -1;
+    }
+
+    .profession-review__content {
+        padding-block: 64px;
+    }
+
+    .profession-next__aside {
+        max-width: 780px;
+    }
+}
+
+@media (max-width: 767px) {
+    .profession-hero__content {
+        min-height: auto;
+        padding-block: 64px;
+    }
+
+    .profession-hero__text {
+        font-size: 1rem;
+    }
+
+    .profession-hero__actions {
+        align-items: stretch;
+    }
+
+    .profession-hero__actions .ui-button {
+        flex: 1 1 100%;
+    }
+
+    .profession-hero__media,
+    .profession-hero__image {
+        min-height: 610px;
+    }
+
+    .profession-hero__card {
+        right: 18px;
+        bottom: 18px;
+        left: 18px;
+        width: auto;
+        padding: 18px;
+        border-radius: 22px;
+    }
+
+    .profession-subnav__inner {
+        margin-inline: calc(var(--page-padding) * -1);
+        padding-inline: var(--page-padding);
+    }
+
+    .profession-subnav__link {
+        padding-inline: 17px;
+    }
+
+    .profession-overview__visual {
+        min-height: 550px;
+    }
+
+    .profession-overview__image--primary {
+        width: 82%;
+        height: 80%;
+    }
+
+    .profession-overview__image--secondary {
+        width: 62%;
+        height: 42%;
+        border-width: 7px;
+    }
+
+    .profession-overview__shape {
+        right: 3%;
+        width: 78%;
+    }
+
+    .profession-tasks__grid {
+        display: flex;
+        gap: 14px;
+        margin-inline: calc(var(--page-padding) * -1);
+        padding-inline: var(--page-padding);
+        padding-bottom: 14px;
+        overflow-x: auto;
+        border: 0;
+        scroll-padding-inline: var(--page-padding);
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+    }
+
+    .profession-tasks__grid::-webkit-scrollbar {
+        display: none;
+    }
+
+    .profession-task-card {
+        flex: 0 0 min(87vw, 390px);
+        min-height: 390px;
+        border: 1px solid var(--color-border-dark);
+        scroll-snap-align: start;
+    }
+
+    .profession-workflow-card {
+        grid-template-columns: 1fr;
+        padding: 26px;
+    }
+
+    .profession-workflow-card__details {
+        grid-template-columns: 1fr;
+    }
+
+    .profession-prompts__list {
+        display: flex;
+        gap: 14px;
+        margin-inline: calc(var(--page-padding) * -1);
+        padding-inline: var(--page-padding);
+        padding-bottom: 14px;
+        overflow-x: auto;
+        scroll-padding-inline: var(--page-padding);
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+    }
+
+    .profession-prompts__list::-webkit-scrollbar {
+        display: none;
+    }
+
+    .profession-prompt-card,
+    .profession-prompt-card:nth-child(3) {
+        flex: 0 0 min(87vw, 400px);
+        min-height: 460px;
+        scroll-snap-align: start;
+    }
+
+    .profession-prompts__footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .profession-tools__panel {
+        padding: 26px;
+        border-radius: 26px;
+    }
+
+    .profession-tools__detail {
+        grid-template-columns: 1fr;
+        gap: 7px;
+    }
+
+    .profession-review__layout {
+        border-radius: 28px;
+    }
+
+    .profession-review__media {
+        min-height: 470px;
+    }
+
+    .profession-review__content {
+        padding: 48px 26px;
+    }
+
+    .profession-review__badge {
+        right: 18px;
+        bottom: 18px;
+        left: 18px;
+        max-width: none;
+        justify-content: center;
+    }
+
+    .profession-learning__cards {
+        display: flex;
+        gap: 14px;
+        margin-inline: calc(var(--page-padding) * -1);
+        padding-inline: var(--page-padding);
+        padding-bottom: 14px;
+        overflow-x: auto;
+        scroll-padding-inline: var(--page-padding);
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+    }
+
+    .profession-learning__cards::-webkit-scrollbar {
+        display: none;
+    }
+
+    .profession-learning-card {
+        flex: 0 0 min(87vw, 410px);
+        min-height: 520px;
+        border-radius: 28px;
+        scroll-snap-align: start;
+    }
+
+    .profession-learning-card:nth-child(2),
+    .profession-learning-card:nth-child(3) {
+        border-radius: 28px;
+    }
+
+    .profession-disclaimer__panel {
+        grid-template-columns: 1fr;
+    }
+
+    .profession-next__actions {
+        align-items: stretch;
+    }
+
+    .profession-next__actions .ui-button {
+        flex: 1 1 100%;
+    }
+}
+
+@media (max-width: 575px) {
+
+    .profession-hero__media,
+    .profession-hero__image {
+        min-height: 570px;
+    }
+
+    .profession-hero__card-tags {
+        flex-wrap: nowrap;
+        padding-bottom: 6px;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .profession-hero__card-tags::-webkit-scrollbar {
+        display: none;
+    }
+
+    .profession-hero__card-tag {
+        flex: 0 0 auto;
+    }
+
+    .profession-overview__visual {
+        min-height: 480px;
+    }
+
+    .profession-overview__image {
+        border-radius: 26px;
+    }
+
+    .profession-overview__image--secondary {
+        border-width: 5px;
+    }
+
+    .profession-task-card {
+        flex-basis: 86vw;
+        min-height: 370px;
+        padding: 24px;
+    }
+
+    .profession-workflow-card {
+        padding: 22px;
+        border-radius: 22px;
+    }
+
+    .profession-prompt-card,
+    .profession-prompt-card:nth-child(3) {
+        flex-basis: 86vw;
+        min-height: 480px;
+        padding: 22px;
+    }
+
+    .profession-tools__panel {
+        padding: 22px;
+    }
+
+    .profession-review__media {
+        min-height: 410px;
+    }
+
+    .profession-review__badge {
+        font-size: 0.75rem;
+    }
+
+    .profession-learning-card {
+        flex-basis: 86vw;
+        min-height: 490px;
+    }
+
+    .profession-disclaimer__panel {
+        padding: 26px 22px;
+    }
+
+    .profession-disclaimer__icon {
+        width: 52px;
+        height: 52px;
+    }
+}
+
+@media (max-width: 430px) {
+    .profession-hero__content {
+        padding-block: 54px;
+    }
+
+    .profession-hero__media,
+    .profession-hero__image {
+        min-height: 540px;
+    }
+
+    .profession-hero__card {
+        right: 14px;
+        bottom: 14px;
+        left: 14px;
+        padding: 16px;
+    }
+
+    .profession-hero__card-text {
+        display: none;
+    }
+
+    .profession-overview__visual {
+        min-height: 420px;
+    }
+
+    .profession-task-card {
+        flex-basis: 85vw;
+        min-height: 350px;
+    }
+
+    .profession-task-card__title {
+        padding-top: 62px;
+    }
+
+    .profession-prompt-card,
+    .profession-prompt-card:nth-child(3) {
+        flex-basis: 85vw;
+    }
+
+    .profession-prompt-card__top {
+        gap: 10px;
+    }
+
+    .profession-prompt-card__copy {
+        padding-inline: 10px;
+    }
+
+    .profession-review__media {
+        min-height: 360px;
+    }
+
+    .profession-review__content {
+        padding-inline: 22px;
+    }
+
+    .profession-learning-card {
+        flex-basis: 85vw;
+        min-height: 460px;
+    }
+
+    .profession-next__link {
+        font-size: 0.84rem;
+    }
+}
+
+@media (max-width: 360px) {
+
+    .profession-hero__media,
+    .profession-hero__image {
+        min-height: 510px;
+    }
+
+    .profession-overview__visual {
+        min-height: 380px;
+    }
+
+    .profession-task-card,
+    .profession-prompt-card,
+    .profession-prompt-card:nth-child(3),
+    .profession-learning-card {
+        flex-basis: 84vw;
+    }
+
+    .profession-review__media {
+        min-height: 330px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .profession-hero__image,
+    .profession-task-card,
+    .profession-workflow-card,
+    .profession-prompt-card,
+    .profession-learning-card__image {
+        transition: none;
+    }
+
+    .profession-hero:hover .profession-hero__image,
+    .profession-task-card:hover,
+    .profession-workflow-card:hover,
+    .profession-prompt-card:hover,
+    .profession-learning-card:hover .profession-learning-card__image {
+        transform: none;
+    }
+}

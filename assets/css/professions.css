@@ -1,0 +1,1695 @@
+.professions-page {
+    background: var(--color-warm-white);
+}
+
+.professions-hero {
+    background:
+        radial-gradient(circle at 16% 26%, rgba(117, 103, 255, 0.15), transparent 34%),
+        linear-gradient(135deg, var(--color-black), var(--color-charcoal));
+}
+
+.professions-hero__title {
+    max-width: 900px;
+}
+
+.professions-hero__title-accent {
+    display: block;
+    color: var(--color-primary-light);
+}
+
+.professions-hero__media {
+    isolation: isolate;
+}
+
+.professions-hero__media::before {
+    position: absolute;
+    top: clamp(32px, 5vw, 74px);
+    right: clamp(30px, 5vw, 74px);
+    z-index: 2;
+    width: clamp(92px, 11vw, 170px);
+    aspect-ratio: 1;
+    border: 1px solid rgba(84, 214, 208, 0.3);
+    border-radius: 50%;
+    pointer-events: none;
+    content: "";
+}
+
+.professions-hero__media::after {
+    z-index: 1;
+    background:
+        linear-gradient(90deg, rgba(8, 10, 13, 0.48), transparent 34%),
+        linear-gradient(180deg, transparent 54%, rgba(8, 10, 13, 0.52));
+}
+
+.professions-hero__image {
+    transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.professions-hero:hover .professions-hero__image {
+    transform: scale(1.018);
+}
+
+.professions-hero__marker {
+    position: absolute;
+    right: clamp(26px, 4vw, 60px);
+    bottom: clamp(26px, 4vw, 58px);
+    z-index: 3;
+    display: grid;
+    gap: 7px;
+    width: min(340px, calc(100% - 52px));
+    padding: 18px 20px;
+    border: 1px solid var(--color-border);
+    border-radius: 20px;
+    background: rgba(17, 21, 26, 0.92);
+    box-shadow: var(--shadow-dark);
+}
+
+.professions-hero__marker-label {
+    color: var(--color-cyan);
+    font-family: var(--font-heading);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.professions-hero__marker-text {
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-size: 0.94rem;
+    font-weight: 700;
+    line-height: 1.48;
+}
+
+.professions-directory {
+    background: var(--color-white);
+}
+
+.professions-directory__header {
+    align-items: end;
+}
+
+.professions-directory__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.professions-directory-card {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 430px;
+    padding: clamp(26px, 3vw, 40px);
+    overflow: clip;
+    border: 1px solid var(--color-border-dark);
+    border-radius: 30px;
+    background: var(--color-warm-white);
+    color: var(--color-text-dark);
+    transition:
+        border-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-base),
+        box-shadow var(--transition-base);
+}
+
+.professions-directory-card::before {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    background:
+        linear-gradient(180deg, rgba(8, 10, 13, 0.08), rgba(8, 10, 13, 0.88)),
+        var(--directory-image, none) center / cover no-repeat;
+    opacity: 0;
+    content: "";
+    transform: scale(1.04);
+    transition:
+        opacity var(--transition-base),
+        transform 850ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.professions-directory-card::after {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(145deg, rgba(117, 103, 255, 0.09), transparent 45%);
+    pointer-events: none;
+    content: "";
+}
+
+.professions-directory-card:hover,
+.professions-directory-card:focus-visible {
+    border-color: rgba(154, 145, 255, 0.48);
+    color: var(--color-white);
+    box-shadow: var(--shadow-soft);
+    transform: translateY(-6px);
+}
+
+.professions-directory-card:hover::before,
+.professions-directory-card:focus-visible::before {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.professions-directory-card__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.professions-directory-card__icon {
+    width: 42px;
+    height: 42px;
+    color: var(--color-primary);
+    stroke-width: 1.6;
+    transition: color var(--transition-fast);
+}
+
+.professions-directory-card:hover .professions-directory-card__icon,
+.professions-directory-card:focus-visible .professions-directory-card__icon {
+    color: var(--color-cyan);
+}
+
+.professions-directory-card__arrow {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--color-border-dark);
+    border-radius: 50%;
+    color: var(--color-text-soft);
+    transition:
+        border-color var(--transition-fast),
+        background-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.professions-directory-card:hover .professions-directory-card__arrow,
+.professions-directory-card:focus-visible .professions-directory-card__arrow {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: var(--color-white);
+    transform: rotate(7deg);
+}
+
+.professions-directory-card__arrow svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 1.8;
+}
+
+.professions-directory-card__content {
+    display: grid;
+    gap: 16px;
+    margin-top: auto;
+    padding-top: 88px;
+}
+
+.professions-directory-card__title {
+    font-size: clamp(1.55rem, 2.5vw, 2.55rem);
+    line-height: 1.08;
+}
+
+.professions-directory-card__description {
+    color: var(--color-text-soft);
+    font-size: 0.92rem;
+    line-height: 1.68;
+    transition: color var(--transition-fast);
+}
+
+.professions-directory-card:hover .professions-directory-card__description,
+.professions-directory-card:focus-visible .professions-directory-card__description {
+    color: var(--color-text-muted);
+}
+
+.professions-directory-card__tasks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 8px;
+}
+
+.professions-directory-card__task {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 6px 11px;
+    border: 1px solid var(--color-border-dark);
+    border-radius: var(--radius-pill);
+    color: var(--color-text-soft);
+    font-size: 0.72rem;
+    font-weight: 650;
+    transition:
+        border-color var(--transition-fast),
+        background-color var(--transition-fast),
+        color var(--transition-fast);
+}
+
+.professions-directory-card:hover .professions-directory-card__task,
+.professions-directory-card:focus-visible .professions-directory-card__task {
+    border-color: var(--color-border);
+    background: rgba(8, 10, 13, 0.3);
+    color: var(--color-white);
+}
+
+.professions-mosaic {
+    background: var(--color-black);
+    color: var(--color-white);
+}
+
+.professions-mosaic__grid {
+    display: grid;
+    grid-template-columns: 0.92fr 0.68fr 1.4fr;
+    grid-template-rows: repeat(2, minmax(300px, 1fr));
+    min-height: 780px;
+    border-top: 1px solid var(--color-border);
+    border-left: 1px solid var(--color-border);
+}
+
+.professions-mosaic__card {
+    position: relative;
+    min-width: 0;
+    overflow: clip;
+    border-right: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-surface);
+    color: var(--color-white);
+}
+
+.professions-mosaic__card--wide {
+    grid-column: 3;
+}
+
+.professions-mosaic__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.professions-mosaic__card:hover .professions-mosaic__image,
+.professions-mosaic__card:focus-visible .professions-mosaic__image {
+    transform: scale(1.06);
+}
+
+.professions-mosaic__overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, transparent 24%, rgba(8, 10, 13, 0.9) 100%),
+        linear-gradient(90deg, rgba(8, 10, 13, 0.16), transparent 65%);
+    pointer-events: none;
+}
+
+.professions-mosaic__content {
+    position: absolute;
+    right: clamp(22px, 3vw, 42px);
+    bottom: clamp(22px, 3vw, 40px);
+    left: clamp(22px, 3vw, 42px);
+    z-index: 2;
+    display: grid;
+    gap: 9px;
+}
+
+.professions-mosaic__label {
+    color: var(--color-cyan);
+    font-family: var(--font-heading);
+    font-size: 0.69rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.professions-mosaic__title {
+    font-size: clamp(1.35rem, 2.4vw, 2.6rem);
+}
+
+.professions-mosaic__arrow {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    z-index: 3;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    background: rgba(8, 10, 13, 0.34);
+    color: var(--color-white);
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+        opacity var(--transition-fast),
+        transform var(--transition-fast),
+        background-color var(--transition-fast);
+}
+
+.professions-mosaic__card:hover .professions-mosaic__arrow,
+.professions-mosaic__card:focus-visible .professions-mosaic__arrow {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.professions-mosaic__arrow svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 1.8;
+}
+
+.professions-selector {
+    position: relative;
+    background: var(--color-charcoal);
+    color: var(--color-white);
+}
+
+.professions-selector::before {
+    position: absolute;
+    top: 10%;
+    left: 4%;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(84, 214, 208, 0.08), transparent 68%);
+    pointer-events: none;
+    content: "";
+}
+
+.professions-selector__header {
+    position: relative;
+    z-index: 1;
+    align-items: end;
+}
+
+.professions-selector__layout {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: minmax(320px, 0.42fr) minmax(0, 1fr);
+    align-items: start;
+    gap: clamp(44px, 7vw, 104px);
+}
+
+.professions-selector__nav {
+    display: grid;
+    gap: 5px;
+}
+
+.professions-selector__button {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    min-height: 68px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-muted);
+    text-align: left;
+    transition:
+        color var(--transition-fast),
+        padding-left var(--transition-fast),
+        background-color var(--transition-fast);
+}
+
+.professions-selector__button:first-child {
+    border-top: 1px solid var(--color-border);
+}
+
+.professions-selector__button:hover,
+.professions-selector__button:focus-visible,
+.professions-selector__button.is-active,
+.professions-selector__button[aria-selected="true"] {
+    padding-left: 22px;
+    background: var(--color-surface);
+    color: var(--color-white);
+}
+
+.professions-selector__button-icon {
+    width: 25px;
+    height: 25px;
+    color: var(--color-cyan);
+    stroke-width: 1.65;
+}
+
+.professions-selector__button-label {
+    font-family: var(--font-heading);
+    font-size: clamp(1rem, 1.45vw, 1.24rem);
+    font-weight: 750;
+    letter-spacing: -0.02em;
+}
+
+.professions-selector__button-arrow {
+    width: 18px;
+    height: 18px;
+    color: var(--color-primary-light);
+    opacity: 0;
+    stroke-width: 1.7;
+    transform: translateX(-8px);
+    transition:
+        opacity var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.professions-selector__button:hover .professions-selector__button-arrow,
+.professions-selector__button:focus-visible .professions-selector__button-arrow,
+.professions-selector__button.is-active .professions-selector__button-arrow,
+.professions-selector__button[aria-selected="true"] .professions-selector__button-arrow {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.professions-selector__stage {
+    min-width: 0;
+}
+
+.professions-selector__media {
+    position: relative;
+    min-height: 690px;
+    overflow: clip;
+    border-radius: 38px;
+    background: var(--color-surface);
+}
+
+.professions-selector__media::after {
+    position: absolute;
+    inset: 34% 0 0;
+    background: linear-gradient(180deg, transparent, rgba(8, 10, 13, 0.94));
+    pointer-events: none;
+    content: "";
+}
+
+.professions-selector__image {
+    width: 100%;
+    height: 690px;
+    object-fit: cover;
+    transition:
+        opacity 220ms ease,
+        transform 760ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.professions-selector__stage.is-changing .professions-selector__image {
+    opacity: 0.32;
+    transform: scale(1.025);
+}
+
+.professions-selector__details {
+    position: absolute;
+    right: clamp(26px, 4vw, 58px);
+    bottom: clamp(26px, 4vw, 56px);
+    left: clamp(26px, 4vw, 58px);
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 30px;
+}
+
+.professions-selector__details-main {
+    display: grid;
+    gap: 14px;
+    max-width: 740px;
+}
+
+.professions-selector__details-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    color: var(--color-cyan);
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+}
+
+.professions-selector__details-label svg {
+    width: 21px;
+    height: 21px;
+    stroke-width: 1.7;
+}
+
+.professions-selector__details-title {
+    font-size: clamp(2rem, 4vw, 4.5rem);
+    line-height: 1;
+}
+
+.professions-selector__details-text {
+    max-width: 680px;
+    color: var(--color-text-muted);
+    font-size: clamp(0.96rem, 1.25vw, 1.1rem);
+    line-height: 1.68;
+}
+
+.professions-selector__tasks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.professions-selector__task {
+    display: inline-flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 7px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: rgba(8, 10, 13, 0.3);
+    color: var(--color-white);
+    font-size: 0.75rem;
+    font-weight: 650;
+}
+
+.professions-selector__mobile {
+    display: none;
+    margin-bottom: 24px;
+}
+
+.professions-selector__mobile-list {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+}
+
+.professions-selector__mobile-list::-webkit-scrollbar {
+    display: none;
+}
+
+.professions-selector__mobile-button {
+    flex: 0 0 auto;
+    min-height: 42px;
+    padding: 10px 16px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--color-text-muted);
+    font-family: var(--font-heading);
+    font-size: 0.82rem;
+    font-weight: 750;
+    scroll-snap-align: start;
+}
+
+.professions-selector__mobile-button.is-active,
+.professions-selector__mobile-button[aria-selected="true"] {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+
+.professions-workflows {
+    background: var(--color-white);
+}
+
+.professions-workflows__header {
+    align-items: end;
+}
+
+.professions-workflows__list {
+    display: grid;
+    border-top: 1px solid var(--color-border-dark);
+}
+
+.professions-workflows__row {
+    display: grid;
+    grid-template-columns: minmax(210px, 0.28fr) minmax(0, 0.72fr) auto;
+    align-items: center;
+    gap: clamp(26px, 5vw, 72px);
+    min-height: 190px;
+    padding: clamp(28px, 4vw, 48px) 0;
+    border-bottom: 1px solid var(--color-border-dark);
+    transition:
+        background-color var(--transition-fast),
+        padding-inline var(--transition-base);
+}
+
+.professions-workflows__row:hover {
+    padding-inline: 24px;
+    background: var(--color-warm-white);
+}
+
+.professions-workflows__profession {
+    display: grid;
+    gap: 12px;
+}
+
+.professions-workflows__profession-icon {
+    width: 30px;
+    height: 30px;
+    color: var(--color-primary);
+    stroke-width: 1.65;
+}
+
+.professions-workflows__profession-title {
+    font-size: clamp(1.45rem, 2.6vw, 2.7rem);
+}
+
+.professions-workflows__content {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(24px, 4vw, 52px);
+}
+
+.professions-workflows__group {
+    display: grid;
+    gap: 12px;
+}
+
+.professions-workflows__group-label {
+    color: var(--color-primary);
+    font-family: var(--font-heading);
+    font-size: 0.69rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.professions-workflows__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.professions-workflows__tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 33px;
+    padding: 7px 11px;
+    border: 1px solid var(--color-border-dark);
+    border-radius: var(--radius-pill);
+    color: var(--color-text-soft);
+    font-size: 0.74rem;
+    font-weight: 650;
+}
+
+.professions-workflows__link {
+    display: grid;
+    place-items: center;
+    width: 50px;
+    height: 50px;
+    border: 1px solid var(--color-border-dark);
+    border-radius: 50%;
+    color: var(--color-text-dark);
+    transition:
+        border-color var(--transition-fast),
+        background-color var(--transition-fast),
+        color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.professions-workflows__row:hover .professions-workflows__link {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: var(--color-white);
+    transform: rotate(7deg);
+}
+
+.professions-workflows__link svg {
+    width: 20px;
+    height: 20px;
+    stroke-width: 1.8;
+}
+
+.professions-skills {
+    position: relative;
+    overflow: clip;
+    background:
+        radial-gradient(circle at 18% 24%, rgba(84, 214, 208, 0.08), transparent 30%),
+        linear-gradient(135deg, var(--color-black), var(--color-charcoal));
+    color: var(--color-white);
+}
+
+.professions-skills::after {
+    position: absolute;
+    right: -220px;
+    bottom: -280px;
+    width: 650px;
+    height: 650px;
+    border: 1px solid rgba(117, 103, 255, 0.16);
+    border-radius: 50%;
+    pointer-events: none;
+    content: "";
+}
+
+.professions-skills__header {
+    position: relative;
+    z-index: 1;
+    align-items: end;
+}
+
+.professions-skills__grid {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--color-border);
+    border-left: 1px solid var(--color-border);
+}
+
+.professions-skill {
+    display: flex;
+    flex-direction: column;
+    min-height: 340px;
+    padding: clamp(28px, 3vw, 42px);
+    border-right: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    background: rgba(25, 30, 37, 0.58);
+    transition:
+        background-color var(--transition-fast),
+        transform var(--transition-base);
+}
+
+.professions-skill:hover {
+    background: var(--color-surface);
+    transform: translateY(-4px);
+}
+
+.professions-skill__icon {
+    width: 40px;
+    height: 40px;
+    color: var(--color-cyan);
+    stroke-width: 1.6;
+}
+
+.professions-skill__title {
+    margin-top: auto;
+    padding-top: 74px;
+    font-size: clamp(1.45rem, 2.4vw, 2.35rem);
+}
+
+.professions-skill__text {
+    margin-top: 15px;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.68;
+}
+
+.professions-prompts {
+    background: var(--color-warm-white);
+}
+
+.professions-prompts__header {
+    align-items: end;
+}
+
+.professions-prompts__controls {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.professions-prompts__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.professions-prompt-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 430px;
+    padding: clamp(24px, 2.6vw, 36px);
+    border: 1px solid var(--color-border-dark);
+    border-radius: 28px;
+    background: var(--color-white);
+    transition:
+        border-color var(--transition-fast),
+        transform var(--transition-base),
+        box-shadow var(--transition-base);
+}
+
+.professions-prompt-card:hover {
+    border-color: rgba(117, 103, 255, 0.44);
+    box-shadow: var(--shadow-soft);
+    transform: translateY(-5px);
+}
+
+.professions-prompt-card__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.professions-prompt-card__category {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-primary);
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+}
+
+.professions-prompt-card__category::before {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    content: "";
+}
+
+.professions-prompt-card__copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 36px;
+    padding: 8px 12px;
+    border: 1px solid var(--color-border-dark);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: var(--color-text-soft);
+    font-family: var(--font-heading);
+    font-size: 0.74rem;
+    font-weight: 750;
+    transition:
+        border-color var(--transition-fast),
+        background-color var(--transition-fast),
+        color var(--transition-fast);
+}
+
+.professions-prompt-card__copy:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+
+.professions-prompt-card__copy.is-copied {
+    border-color: #3b9d5d;
+    background: rgba(127, 218, 154, 0.16);
+    color: #267542;
+}
+
+.professions-prompt-card__copy svg {
+    width: 15px;
+    height: 15px;
+    stroke-width: 1.8;
+}
+
+.professions-prompt-card__title {
+    margin-top: 32px;
+    font-size: clamp(1.4rem, 2vw, 1.95rem);
+}
+
+.professions-prompt-card__prompt {
+    flex: 1 1 auto;
+    margin-top: 20px;
+    color: var(--color-text-soft);
+    font-size: 0.92rem;
+    line-height: 1.72;
+}
+
+.professions-prompt-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid var(--color-border-dark);
+    color: var(--color-text-soft);
+    font-size: 0.75rem;
+}
+
+.professions-prompt-card__profession {
+    color: var(--color-text-dark);
+    font-family: var(--font-heading);
+    font-weight: 750;
+}
+
+.professions-prompts__cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 42px;
+}
+
+.professions-tools {
+    background: var(--color-white);
+}
+
+.professions-tools__header {
+    align-items: end;
+}
+
+.professions-tools__tabs {
+    margin-bottom: 38px;
+}
+
+.professions-tools__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.professions-tool-card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 24px;
+    min-width: 0;
+    padding: clamp(26px, 3vw, 38px);
+    border: 1px solid var(--color-border-dark);
+    border-radius: 26px;
+    background: var(--color-warm-white);
+}
+
+.professions-tool-card__icon {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border: 1px solid var(--color-border-dark);
+    border-radius: 50%;
+    color: var(--color-primary);
+}
+
+.professions-tool-card__icon svg {
+    width: 25px;
+    height: 25px;
+    stroke-width: 1.65;
+}
+
+.professions-tool-card__content {
+    display: grid;
+    gap: 15px;
+}
+
+.professions-tool-card__profession {
+    color: var(--color-primary);
+    font-family: var(--font-heading);
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.professions-tool-card__title {
+    font-size: clamp(1.35rem, 2vw, 1.9rem);
+}
+
+.professions-tool-card__description {
+    color: var(--color-text-soft);
+    font-size: 0.9rem;
+    line-height: 1.68;
+}
+
+.professions-tool-card__meta {
+    display: grid;
+    gap: 10px;
+    margin-top: 4px;
+    padding-top: 17px;
+    border-top: 1px solid var(--color-border-dark);
+}
+
+.professions-tool-card__meta-row {
+    display: grid;
+    grid-template-columns: minmax(110px, 0.3fr) minmax(0, 0.7fr);
+    gap: 18px;
+    color: var(--color-text-soft);
+    font-size: 0.78rem;
+    line-height: 1.55;
+}
+
+.professions-tool-card__meta-label {
+    color: var(--color-text-dark);
+    font-family: var(--font-heading);
+    font-weight: 750;
+}
+
+.professions-learning {
+    background: var(--color-warm-white);
+}
+
+.professions-learning__header {
+    align-items: end;
+}
+
+.professions-learning__cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.professions-learning-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 580px;
+    overflow: clip;
+    border-radius: 34px;
+    background: var(--color-surface);
+    color: var(--color-white);
+}
+
+.professions-learning-card:nth-child(2) {
+    border-radius: 70px 22px 70px 22px;
+}
+
+.professions-learning-card:nth-child(3) {
+    border-radius: 22px 70px 22px 70px;
+}
+
+.professions-learning-card__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 850ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.professions-learning-card:hover .professions-learning-card__image {
+    transform: scale(1.05);
+}
+
+.professions-learning-card__overlay {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(8, 10, 13, 0.05) 16%, rgba(8, 10, 13, 0.92) 94%),
+        linear-gradient(90deg, rgba(8, 10, 13, 0.12), transparent);
+}
+
+.professions-learning-card__content {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    align-content: end;
+    gap: 15px;
+    flex: 1 1 auto;
+    padding: clamp(28px, 3.5vw, 44px);
+}
+
+.professions-learning-card__icon {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    color: var(--color-cyan);
+}
+
+.professions-learning-card__icon svg {
+    width: 23px;
+    height: 23px;
+    stroke-width: 1.7;
+}
+
+.professions-learning-card__title {
+    font-size: clamp(1.65rem, 2.6vw, 2.45rem);
+}
+
+.professions-learning-card__text {
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+    line-height: 1.67;
+}
+
+.professions-learning-card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    width: fit-content;
+    margin-top: 5px;
+    color: var(--color-white);
+    font-family: var(--font-heading);
+    font-size: 0.84rem;
+    font-weight: 800;
+}
+
+.professions-learning-card__link svg {
+    width: 17px;
+    height: 17px;
+    color: var(--color-primary-light);
+    stroke-width: 1.7;
+    transition: transform var(--transition-fast);
+}
+
+.professions-learning-card:hover .professions-learning-card__link svg {
+    transform: translateX(4px);
+}
+
+.professions-start {
+    position: relative;
+    overflow: clip;
+    background:
+        radial-gradient(circle at 80% 50%, rgba(117, 103, 255, 0.18), transparent 36%),
+        linear-gradient(135deg, var(--color-black), var(--color-charcoal));
+    color: var(--color-white);
+}
+
+.professions-start::before {
+    position: absolute;
+    top: -180px;
+    right: -120px;
+    width: 500px;
+    height: 500px;
+    border: 1px solid rgba(154, 145, 255, 0.18);
+    border-radius: 50%;
+    pointer-events: none;
+    content: "";
+}
+
+.professions-start::after {
+    position: absolute;
+    right: 160px;
+    bottom: -280px;
+    width: 560px;
+    height: 560px;
+    border: 1px solid rgba(84, 214, 208, 0.12);
+    border-radius: 50%;
+    pointer-events: none;
+    content: "";
+}
+
+.professions-start__layout {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.55fr);
+    align-items: end;
+    gap: clamp(44px, 8vw, 140px);
+}
+
+.professions-start__content {
+    display: grid;
+    gap: 28px;
+}
+
+.professions-start__title {
+    max-width: 980px;
+}
+
+.professions-start__text {
+    max-width: 720px;
+    color: var(--color-text-muted);
+    font-size: clamp(1rem, 1.35vw, 1.16rem);
+    line-height: 1.74;
+}
+
+.professions-start__aside {
+    display: grid;
+    gap: 28px;
+}
+
+.professions-start__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.professions-start__chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding: 9px 14px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    color: var(--color-text-muted);
+    font-family: var(--font-heading);
+    font-size: 0.79rem;
+    font-weight: 700;
+    transition:
+        border-color var(--transition-fast),
+        background-color var(--transition-fast),
+        color var(--transition-fast);
+}
+
+.professions-start__chip:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+
+.professions-start__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+@media (max-width: 1399px) {
+    .professions-directory-card {
+        min-height: 405px;
+    }
+
+    .professions-mosaic__grid {
+        min-height: 700px;
+    }
+
+    .professions-selector__layout {
+        grid-template-columns: minmax(300px, 0.4fr) minmax(0, 1fr);
+        gap: 68px;
+    }
+
+    .professions-selector__media,
+    .professions-selector__image {
+        height: 630px;
+        min-height: 630px;
+    }
+
+    .professions-learning-card {
+        min-height: 540px;
+    }
+}
+
+@media (max-width: 1199px) {
+    .professions-directory__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .professions-mosaic__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: repeat(3, minmax(280px, 1fr));
+    }
+
+    .professions-mosaic__card--wide {
+        grid-column: auto;
+    }
+
+    .professions-selector__layout {
+        grid-template-columns: minmax(280px, 0.38fr) minmax(0, 1fr);
+        gap: 50px;
+    }
+
+    .professions-selector__details {
+        grid-template-columns: 1fr;
+    }
+
+    .professions-selector__details .ui-button {
+        width: fit-content;
+    }
+
+    .professions-workflows__row {
+        grid-template-columns: minmax(180px, 0.26fr) minmax(0, 0.74fr) auto;
+    }
+
+    .professions-skills__grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .professions-prompts__list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .professions-prompt-card:nth-child(3) {
+        grid-column: 1 / -1;
+        min-height: 360px;
+    }
+
+    .professions-learning-card {
+        min-height: 500px;
+    }
+}
+
+@media (max-width: 991px) {
+    .professions-hero__media::before {
+        top: 30px;
+        right: 30px;
+    }
+
+    .professions-selector__layout {
+        grid-template-columns: 1fr;
+    }
+
+    .professions-selector__nav {
+        display: none;
+    }
+
+    .professions-selector__mobile {
+        display: block;
+    }
+
+    .professions-selector__media,
+    .professions-selector__image {
+        height: 650px;
+        min-height: 650px;
+    }
+
+    .professions-workflows__row {
+        grid-template-columns: minmax(170px, 0.25fr) minmax(0, 0.75fr) auto;
+        gap: 30px;
+    }
+
+    .professions-workflows__content {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .professions-tools__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .professions-start__layout {
+        grid-template-columns: 1fr;
+    }
+
+    .professions-start__aside {
+        max-width: 800px;
+    }
+}
+
+@media (max-width: 767px) {
+    .professions-hero__marker {
+        right: 20px;
+        bottom: 20px;
+        left: 20px;
+        width: auto;
+    }
+
+    .professions-directory__grid {
+        display: flex;
+        gap: 14px;
+        margin-inline: calc(var(--page-padding) * -1);
+        padding-inline: var(--page-padding);
+        padding-bottom: 14px;
+        overflow-x: auto;
+        scroll-padding-inline: var(--page-padding);
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+    }
+
+    .professions-directory__grid::-webkit-scrollbar {
+        display: none;
+    }
+
+    .professions-directory-card {
+        flex: 0 0 min(87vw, 400px);
+        min-height: 440px;
+        scroll-snap-align: start;
+    }
+
+    .professions-mosaic__grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: none;
+        min-height: 0;
+    }
+
+    .professions-mosaic__card {
+        min-height: 430px;
+    }
+
+    .professions-selector__media,
+    .professions-selector__image {
+        height: 570px;
+        min-height: 570px;
+    }
+
+    .professions-selector__details {
+        right: 22px;
+        bottom: 22px;
+        left: 22px;
+        gap: 18px;
+    }
+
+    .professions-selector__details-text {
+        font-size: 0.9rem;
+    }
+
+    .professions-selector__tasks {
+        display: none;
+    }
+
+    .professions-workflows__row {
+        grid-template-columns: 1fr auto;
+        gap: 22px;
+        min-height: 0;
+        padding-block: 34px;
+    }
+
+    .professions-workflows__content {
+        grid-column: 1 / -1;
+    }
+
+    .professions-workflows__row:hover {
+        padding-inline: 16px;
+    }
+
+    .professions-skills__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .professions-skill {
+        min-height: 280px;
+    }
+
+    .professions-skill__title {
+        padding-top: 56px;
+    }
+
+    .professions-prompts__header {
+        grid-template-columns: 1fr;
+    }
+
+    .professions-prompts__controls {
+        justify-content: flex-start;
+    }
+
+    .professions-prompts__list {
+        display: flex;
+        gap: 14px;
+        margin-inline: calc(var(--page-padding) * -1);
+        padding-inline: var(--page-padding);
+        padding-bottom: 14px;
+        overflow-x: auto;
+        scroll-padding-inline: var(--page-padding);
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+    }
+
+    .professions-prompts__list::-webkit-scrollbar {
+        display: none;
+    }
+
+    .professions-prompt-card,
+    .professions-prompt-card:nth-child(3) {
+        flex: 0 0 min(87vw, 400px);
+        min-height: 450px;
+        scroll-snap-align: start;
+    }
+
+    .professions-tool-card {
+        grid-template-columns: 1fr;
+    }
+
+    .professions-tool-card__icon {
+        width: 48px;
+        height: 48px;
+    }
+
+    .professions-learning__cards {
+        display: flex;
+        gap: 14px;
+        margin-inline: calc(var(--page-padding) * -1);
+        padding-inline: var(--page-padding);
+        padding-bottom: 14px;
+        overflow-x: auto;
+        scroll-padding-inline: var(--page-padding);
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+    }
+
+    .professions-learning__cards::-webkit-scrollbar {
+        display: none;
+    }
+
+    .professions-learning-card {
+        flex: 0 0 min(87vw, 410px);
+        min-height: 530px;
+        border-radius: 28px;
+        scroll-snap-align: start;
+    }
+
+    .professions-learning-card:nth-child(2),
+    .professions-learning-card:nth-child(3) {
+        border-radius: 28px;
+    }
+
+    .professions-start__actions {
+        align-items: stretch;
+    }
+
+    .professions-start__actions .ui-button {
+        flex: 1 1 100%;
+    }
+}
+
+@media (max-width: 575px) {
+    .professions-directory-card {
+        flex-basis: 86vw;
+        min-height: 420px;
+    }
+
+    .professions-mosaic__card {
+        min-height: 390px;
+    }
+
+    .professions-selector__media,
+    .professions-selector__image {
+        height: 520px;
+        min-height: 520px;
+    }
+
+    .professions-selector__details-title {
+        font-size: 2.3rem;
+    }
+
+    .professions-selector__details .ui-button {
+        width: 100%;
+    }
+
+    .professions-workflows__profession-title {
+        font-size: 1.75rem;
+    }
+
+    .professions-workflows__link {
+        width: 46px;
+        height: 46px;
+    }
+
+    .professions-skill {
+        min-height: 260px;
+        padding: 26px 22px;
+    }
+
+    .professions-prompt-card,
+    .professions-prompt-card:nth-child(3) {
+        flex-basis: 86vw;
+        min-height: 470px;
+        padding: 22px;
+    }
+
+    .professions-tool-card {
+        padding: 24px 22px;
+    }
+
+    .professions-tool-card__meta-row {
+        grid-template-columns: 1fr;
+        gap: 5px;
+    }
+
+    .professions-learning-card {
+        flex-basis: 86vw;
+        min-height: 500px;
+    }
+}
+
+@media (max-width: 430px) {
+    .professions-hero__marker {
+        padding: 14px 16px;
+    }
+
+    .professions-directory-card {
+        flex-basis: 85vw;
+        min-height: 400px;
+        padding: 24px;
+    }
+
+    .professions-directory-card__content {
+        padding-top: 70px;
+    }
+
+    .professions-mosaic__card {
+        min-height: 360px;
+    }
+
+    .professions-selector__media,
+    .professions-selector__image {
+        height: 480px;
+        min-height: 480px;
+    }
+
+    .professions-selector__details {
+        right: 18px;
+        bottom: 18px;
+        left: 18px;
+    }
+
+    .professions-selector__details-text {
+        display: none;
+    }
+
+    .professions-workflows__row {
+        padding-block: 30px;
+    }
+
+    .professions-prompt-card,
+    .professions-prompt-card:nth-child(3) {
+        flex-basis: 85vw;
+    }
+
+    .professions-prompt-card__top {
+        gap: 10px;
+    }
+
+    .professions-prompt-card__copy {
+        padding-inline: 10px;
+    }
+
+    .professions-learning-card {
+        flex-basis: 85vw;
+        min-height: 470px;
+    }
+
+    .professions-start__chip {
+        font-size: 0.74rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .professions-directory-card {
+        flex-basis: 84vw;
+    }
+
+    .professions-selector__media,
+    .professions-selector__image {
+        height: 450px;
+        min-height: 450px;
+    }
+
+    .professions-selector__details-title {
+        font-size: 2rem;
+    }
+
+    .professions-prompt-card,
+    .professions-prompt-card:nth-child(3),
+    .professions-learning-card {
+        flex-basis: 84vw;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .professions-hero__image,
+    .professions-directory-card,
+    .professions-directory-card::before,
+    .professions-mosaic__image,
+    .professions-selector__image,
+    .professions-workflows__row,
+    .professions-skill,
+    .professions-prompt-card,
+    .professions-learning-card__image {
+        transition: none;
+    }
+
+    .professions-hero:hover .professions-hero__image,
+    .professions-directory-card:hover,
+    .professions-directory-card:focus-visible,
+    .professions-mosaic__card:hover .professions-mosaic__image,
+    .professions-mosaic__card:focus-visible .professions-mosaic__image,
+    .professions-skill:hover,
+    .professions-prompt-card:hover,
+    .professions-learning-card:hover .professions-learning-card__image {
+        transform: none;
+    }
+}

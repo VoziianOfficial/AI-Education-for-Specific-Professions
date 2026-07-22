@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Rolewise AI favicon</title>
+
+  <defs>
+    <linearGradient id="borderGradient" x1="72" y1="64" x2="438" y2="454" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#7567FF"/>
+      <stop offset="0.52" stop-color="#A49CFF"/>
+      <stop offset="1" stop-color="#54D6D0"/>
+    </linearGradient>
+
+    <linearGradient id="letterGradient" x1="142" y1="126" x2="386" y2="390" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F7F8F6"/>
+      <stop offset="0.56" stop-color="#EDEEEA"/>
+      <stop offset="1" stop-color="#54D6D0"/>
+    </linearGradient>
+
+    <radialGradient id="surfaceGlow" cx="0" cy="0" r="1" gradientTransform="translate(164 126) rotate(49) scale(390)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#232A33"/>
+      <stop offset="0.55" stop-color="#11151A"/>
+      <stop offset="1" stop-color="#080A0D"/>
+    </radialGradient>
+
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#000000" flood-opacity="0.42"/>
+    </filter>
+  </defs>
+
+  <rect
+    x="18"
+    y="18"
+    width="476"
+    height="476"
+    rx="132"
+    fill="url(#surfaceGlow)"
+    filter="url(#shadow)"
+  />
+
+  <rect
+    x="30"
+    y="30"
+    width="452"
+    height="452"
+    rx="118"
+    fill="none"
+    stroke="url(#borderGradient)"
+    stroke-width="12"
+  />
+
+  <path
+    d="M154 376V138H264C332 138 370 174 370 230C370 286 332 318 264 318H154"
+    fill="none"
+    stroke="url(#letterGradient)"
+    stroke-width="42"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <path
+    d="M266 318L374 382"
+    fill="none"
+    stroke="url(#letterGradient)"
+    stroke-width="42"
+    stroke-linecap="round"
+  />
+
+  <circle cx="378" cy="132" r="18" fill="#D6FF63"/>
+  <circle cx="378" cy="132" r="8" fill="#F7F8F6"/>
+</svg>
