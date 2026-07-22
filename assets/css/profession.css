@@ -523,14 +523,6 @@
     color: var(--color-cyan);
 }
 
-.profession-task-card__number {
-    color: var(--color-text-soft);
-    font-family: var(--font-heading);
-    font-size: 0.7rem;
-    font-weight: 800;
-    letter-spacing: 0.09em;
-}
-
 .profession-task-card__title {
     margin-top: auto;
     padding-top: 78px;
@@ -650,14 +642,6 @@
     display: grid;
     align-content: start;
     gap: 16px;
-}
-
-.profession-workflow-card__number {
-    color: var(--profession-accent-light);
-    font-family: var(--font-heading);
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
 }
 
 .profession-workflow-card__title {

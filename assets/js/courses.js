@@ -146,8 +146,6 @@
         }
 
         grid.innerHTML = config.courses.learningFormats.map(function (format, index) {
-            const number = String(index + 1).padStart(2, "0");
-
             return [
                 '<article class="courses-format-card" data-aos="fade-up" data-aos-delay="',
                 String(Math.min(index * 50, 200)),
@@ -156,9 +154,6 @@
                 '<i class="courses-format-card__icon" data-lucide="',
                 escapeHtml(format.icon),
                 '" aria-hidden="true"></i>',
-                '<span class="courses-format-card__index">',
-                number,
-                "</span>",
                 "</div>",
                 '<div class="courses-format-card__content">',
                 '<h3 class="courses-format-card__title">',

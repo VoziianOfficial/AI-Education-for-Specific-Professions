@@ -149,14 +149,6 @@
     stroke-width: 1.6;
 }
 
-.courses-format-card__index {
-    color: var(--color-text-soft);
-    font-family: var(--font-heading);
-    font-size: 0.72rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
-}
-
 .courses-format-card__content {
     display: grid;
     gap: 17px;
@@ -584,23 +576,9 @@
 
 .courses-process__step {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
     gap: clamp(22px, 4vw, 48px);
     padding: clamp(30px, 4vw, 48px) 0;
     border-bottom: 1px solid var(--color-border);
-}
-
-.courses-process__number {
-    display: grid;
-    place-items: center;
-    width: 52px;
-    height: 52px;
-    border: 1px solid var(--color-border);
-    border-radius: 50%;
-    color: var(--color-primary-light);
-    font-family: var(--font-heading);
-    font-size: 0.75rem;
-    font-weight: 800;
 }
 
 .courses-process__step-content {
@@ -1276,11 +1254,6 @@
 
     .courses-process__step {
         grid-template-columns: 1fr;
-    }
-
-    .courses-process__number {
-        width: 48px;
-        height: 48px;
     }
 
     .courses-teams__panel,

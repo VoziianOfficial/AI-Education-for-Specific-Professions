@@ -2464,7 +2464,7 @@
 
 .home-ref-faq__trigger {
     display: grid;
-    grid-template-columns: 28px minmax(0, 1fr) 24px;
+    grid-template-columns: minmax(0, 1fr) 24px;
     align-items: center;
     gap: 5px;
     width: 100%;
@@ -2491,15 +2491,6 @@
     border-radius: 10px;
     outline: 2px solid var(--color-accent);
     outline-offset: -3px;
-}
-
-.home-ref-faq__number {
-    align-self: start;
-    padding-top: 1px;
-    font-family: var(--font-heading);
-    font-size: clamp(0.98rem, 1.2vw, 1.15rem);
-    font-weight: 800;
-    line-height: 1.45;
 }
 
 .home-ref-faq__question {
@@ -2659,7 +2650,7 @@
     }
 
     .home-ref-faq__trigger {
-        grid-template-columns: 26px minmax(0, 1fr) 20px;
+        grid-template-columns: minmax(0, 1fr) 20px;
         min-height: 68px;
         padding-block: 18px;
     }
@@ -2684,7 +2675,7 @@
     }
 
     .home-ref-faq__trigger {
-        grid-template-columns: 24px minmax(0, 1fr) 18px;
+        grid-template-columns: minmax(0, 1fr) 18px;
         gap: 3px;
         min-height: 64px;
         padding-block: 16px;
@@ -2696,7 +2687,6 @@
         padding-left: 0;
     }
 
-    .home-ref-faq__number,
     .home-ref-faq__question {
         font-size: 0.91rem;
     }

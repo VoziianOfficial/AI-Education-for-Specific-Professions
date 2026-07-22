@@ -311,24 +311,10 @@
 
 .legal-section__header {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
     align-items: start;
     gap: 18px;
     padding-bottom: 22px;
     border-bottom: 1px solid var(--color-border-dark);
-}
-
-.legal-section__number {
-    display: grid;
-    place-items: center;
-    width: 45px;
-    height: 45px;
-    border: 1px solid var(--color-border-dark);
-    border-radius: 50%;
-    color: var(--color-primary);
-    font-family: var(--font-heading);
-    font-size: 0.69rem;
-    font-weight: 800;
 }
 
 .legal-section__title {
@@ -656,14 +642,6 @@
     color: var(--color-cyan);
 }
 
-.legal-related-card__number {
-    color: var(--color-text-soft);
-    font-family: var(--font-heading);
-    font-size: 0.69rem;
-    font-weight: 800;
-    letter-spacing: 0.09em;
-}
-
 .legal-related-card__content {
     display: grid;
     gap: 14px;
@@ -974,11 +952,6 @@
 
     .legal-section__header {
         grid-template-columns: 1fr;
-    }
-
-    .legal-section__number {
-        width: 42px;
-        height: 42px;
     }
 
     .legal-section__definition {

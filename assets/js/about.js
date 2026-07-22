@@ -163,20 +163,6 @@
         );
     }
 
-    function updateStatementCounter(root) {
-        const counter = root.querySelector("[data-about-needs-counter]");
-
-        if (!counter) {
-            return;
-        }
-
-        counter.textContent =
-            "Statement " +
-            String(aboutState.activeStatement + 1) +
-            " of " +
-            String(aboutState.statementCount);
-    }
-
     function showStatement(index, announce) {
         const root = document.querySelector("[data-about-needs-slider]");
 
@@ -220,8 +206,6 @@
                 String(!active)
             );
         });
-
-        updateStatementCounter(root);
 
         if (announce) {
             const liveRegion = root.querySelector(
