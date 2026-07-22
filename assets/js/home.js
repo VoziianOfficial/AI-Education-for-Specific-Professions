@@ -999,6 +999,78 @@
         });
     }
 
+    function initProfessionalPerspectivesSwiper() {
+        const root = document.querySelector(
+            "[data-home-perspectives]"
+        );
+
+        if (
+            !root ||
+            root.dataset.perspectivesInitialized === "true"
+        ) {
+            return;
+        }
+
+        const swiperElement = root.querySelector(
+            "[data-home-perspectives-swiper]"
+        );
+
+        const pagination = root.querySelector(
+            "[data-home-perspectives-pagination]"
+        );
+
+        if (
+            !swiperElement ||
+            !window.Swiper ||
+            typeof window.Swiper !== "function"
+        ) {
+            return;
+        }
+
+        root.dataset.perspectivesInitialized = "true";
+
+        const instance = new window.Swiper(
+            swiperElement,
+            {
+                slidesPerView: 1,
+                slidesPerGroup: 1,
+                spaceBetween: 0,
+                speed: Rolewise.state.reducedMotion ? 0 : 720,
+                loop: false,
+                grabCursor: true,
+                watchOverflow: true,
+                observer: true,
+                observeParents: true,
+                keyboard: {
+                    enabled: true,
+                    onlyInViewport: true
+                },
+                pagination: pagination
+                    ? {
+                        el: pagination,
+                        clickable: true
+                    }
+                    : undefined,
+                autoplay: Rolewise.state.reducedMotion
+                    ? false
+                    : {
+                        delay: 6500,
+                        disableOnInteraction: false,
+                        pauseOnMouseEnter: true
+                    },
+                a11y: {
+                    enabled: true,
+                    containerMessage: "Professional perspectives slider",
+                    nextSlideMessage: "Next perspective",
+                    prevSlideMessage: "Previous perspective",
+                    paginationBulletMessage: "Open perspective {{index}}"
+                }
+            }
+        );
+
+        homeState.swipers.push(instance);
+    }
+
     function initHomeSwipers() {
         if (
             !window.Swiper ||
@@ -1080,6 +1152,7 @@
             return;
         }
 
+        initProfessionalPerspectivesSwiper();
         renderHeroSelector();
         renderProfessionRail();
         initBuiltTabs();
