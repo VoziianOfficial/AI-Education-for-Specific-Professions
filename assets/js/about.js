@@ -401,6 +401,74 @@
         }
     }
 
+    function initPerspectivesSwiper() {
+        const root = document.querySelector(
+            "[data-about-perspectives]"
+        );
+
+        if (
+            !root ||
+            root.dataset.perspectivesInitialized === "true"
+        ) {
+            return;
+        }
+
+        const swiperElement = root.querySelector(
+            "[data-about-perspectives-swiper]"
+        );
+
+        const pagination = root.querySelector(
+            "[data-about-perspectives-pagination]"
+        );
+
+        if (
+            !swiperElement ||
+            !window.Swiper ||
+            typeof window.Swiper !== "function"
+        ) {
+            return;
+        }
+
+        root.dataset.perspectivesInitialized = "true";
+
+        new window.Swiper(swiperElement, {
+            slidesPerView: 1,
+            slidesPerGroup: 1,
+            spaceBetween: 0,
+            speed: Rolewise.state.reducedMotion ? 0 : 720,
+            loop: false,
+            grabCursor: true,
+            watchOverflow: true,
+            observer: true,
+            observeParents: true,
+            updateOnWindowResize: true,
+            keyboard: {
+                enabled: true,
+                onlyInViewport: true
+            },
+            pagination: pagination
+                ? {
+                    el: pagination,
+                    clickable: true
+                }
+                : undefined,
+            autoplay: Rolewise.state.reducedMotion
+                ? false
+                : {
+                    delay: 6800,
+                    disableOnInteraction: false,
+                    pauseOnMouseEnter: true
+                },
+            a11y: {
+                enabled: true,
+                containerMessage: "Professional perspectives slider",
+                nextSlideMessage: "Next perspective",
+                prevSlideMessage: "Previous perspective",
+                paginationBulletMessage: "Open perspective {{index}}"
+            }
+        });
+    }
+
     function initializeAbout() {
         if (!document.body.classList.contains("about-page")) {
             return;
@@ -408,10 +476,12 @@
 
         initPurposeTabs();
         initNeedsSlider();
+        initPerspectivesSwiper();
         renderProfessionLinks();
         initCircularRing();
         Rolewise.refreshGlobalUI(document);
     }
+    
 
     if (document.readyState === "loading") {
         document.addEventListener(
