@@ -236,6 +236,113 @@ function mimeSubject(string $subject): string
     return $subject;
 }
 
+function loadRolewiseConfig(): array
+{
+    $configPath = __DIR__
+        . DIRECTORY_SEPARATOR
+        . 'config'
+        . DIRECTORY_SEPARATOR
+        . 'config.js';
+
+    if (!is_readable($configPath)) {
+        respond(
+            500,
+            false,
+            'The inquiry service configuration is unavailable.'
+        );
+    }
+
+    $source = file_get_contents($configPath);
+
+    if (!is_string($source) || trim($source) === '') {
+        respond(
+            500,
+            false,
+            'The inquiry service configuration is unavailable.'
+        );
+    }
+
+    $source = preg_replace(
+        '/^\xEF\xBB\xBF/',
+        '',
+        $source
+    ) ?? $source;
+
+    $matched = preg_match(
+        '/^\s*window\.ROLEWISE_CONFIG\s*=\s*(\{.*\})\s*;\s*$/s',
+        $source,
+        $matches
+    );
+
+    if (
+        $matched !== 1 ||
+        !isset($matches[1])
+    ) {
+        respond(
+            500,
+            false,
+            'The inquiry service configuration is invalid.'
+        );
+    }
+
+    try {
+        $config = json_decode(
+            $matches[1],
+            true,
+            512,
+            JSON_THROW_ON_ERROR
+        );
+    } catch (JsonException $exception) {
+        respond(
+            500,
+            false,
+            'The inquiry service configuration is invalid.'
+        );
+    }
+
+    if (!is_array($config)) {
+        respond(
+            500,
+            false,
+            'The inquiry service configuration is invalid.'
+        );
+    }
+
+    return $config;
+}
+
+function configString(
+    array $config,
+    array $path,
+    string $fallback = ''
+): string {
+    $value = $config;
+
+    foreach ($path as $key) {
+        if (
+            !is_array($value) ||
+            !array_key_exists($key, $value)
+        ) {
+            return $fallback;
+        }
+
+        $value = $value[$key];
+    }
+
+    if (
+        !is_string($value) &&
+        !is_numeric($value)
+    ) {
+        return $fallback;
+    }
+
+    $value = trim((string) $value);
+
+    return $value !== ''
+        ? $value
+        : $fallback;
+}
+
 if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     header('Allow: POST');
 

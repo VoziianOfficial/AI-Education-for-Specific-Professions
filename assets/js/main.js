@@ -1761,3 +1761,1005 @@
         initialize();
     }
 }());
+
+(function () {
+    "use strict";
+
+    if (window.__ROLEWISE_SITE_IDENTITY_INITIALIZED__) {
+        return;
+    }
+
+    const config = window.ROLEWISE_CONFIG;
+
+    if (!config || !config.siteIdentity) {
+        return;
+    }
+
+    window.__ROLEWISE_SITE_IDENTITY_INITIALIZED__ = true;
+
+    const defaults = {
+        brandName: "Rolewise AI",
+        shortName: "Rolewise",
+        email: "hello@rolewise.ai",
+        phoneDisplay: "+46 00 000 00 00",
+        phoneHref: "+46000000000",
+        address: "Stockholm, Sweden",
+        website: "https://rolewise.ai"
+    };
+
+    const identityState = {
+        applying: false,
+        refreshQueued: false,
+        observer: null
+    };
+
+    function stringValue(value, fallback) {
+        if (
+            typeof value === "string" &&
+            value.trim() !== ""
+        ) {
+            return value.trim();
+        }
+
+        return fallback || "";
+    }
+
+    function escapeIdentityHtml(value) {
+        return String(value)
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+    }
+
+    function normalizePhoneHref(value) {
+        const phone = stringValue(value, "");
+
+        if (!phone) {
+            return "";
+        }
+
+        if (phone.startsWith("tel:")) {
+            return phone;
+        }
+
+        const normalized = phone.replace(/[^\d+]/g, "");
+
+        return normalized ? "tel:" + normalized : "";
+    }
+
+    function getSiteIdentity() {
+        const source = config.siteIdentity || {};
+
+        const phoneDisplay = stringValue(
+            source.phoneDisplay,
+            defaults.phoneDisplay
+        );
+
+        const configuredPhoneHref = stringValue(
+            source.phoneHref,
+            ""
+        );
+
+        return {
+            brandName: stringValue(
+                source.brandName,
+                defaults.brandName
+            ),
+            shortName: stringValue(
+                source.shortName,
+                defaults.shortName
+            ),
+            logoPrimaryText: stringValue(
+                source.logoPrimaryText,
+                source.shortName || defaults.shortName
+            ),
+            logoSecondaryText: stringValue(
+                source.logoSecondaryText,
+                "AI"
+            ),
+            email: stringValue(
+                source.email,
+                defaults.email
+            ),
+            phoneDisplay: phoneDisplay,
+            phoneHref: normalizePhoneHref(
+                configuredPhoneHref || phoneDisplay
+            ),
+            address: stringValue(
+                source.address,
+                defaults.address
+            ),
+            website: stringValue(
+                source.website,
+                defaults.website
+            ).replace(/\/+$/, ""),
+            favicon: stringValue(
+                source.favicon,
+                "assets/images/favicon.svg"
+            )
+        };
+    }
+
+    function replaceIdentityString(value, identity) {
+        if (typeof value !== "string" || value === "") {
+            return value;
+        }
+
+        const brandToken =
+            "__ROLEWISE_COMPLETE_BRAND_NAME__";
+
+        let result = value;
+
+        result = result
+            .split(defaults.brandName)
+            .join(brandToken);
+
+        result = result
+            .split(defaults.shortName)
+            .join(identity.shortName);
+
+        result = result
+            .split(brandToken)
+            .join(identity.brandName);
+
+        const replacements = [
+            [
+                "mailto:" + defaults.email,
+                "mailto:" + identity.email
+            ],
+            [
+                defaults.email,
+                identity.email
+            ],
+            [
+                "tel:" + defaults.phoneHref,
+                identity.phoneHref
+            ],
+            [
+                defaults.phoneHref,
+                identity.phoneHref.replace(/^tel:/, "")
+            ],
+            [
+                defaults.phoneDisplay,
+                identity.phoneDisplay
+            ],
+            [
+                defaults.address,
+                identity.address
+            ],
+            [
+                defaults.website,
+                identity.website
+            ]
+        ];
+
+        replacements.forEach(function (replacement) {
+            const currentValue = replacement[0];
+            const nextValue = replacement[1];
+
+            if (
+                !currentValue ||
+                !nextValue ||
+                currentValue === nextValue
+            ) {
+                return;
+            }
+
+            result = result
+                .split(currentValue)
+                .join(nextValue);
+        });
+
+        return result;
+    }
+
+    function replaceConfigValue(value, identity) {
+        if (typeof value === "string") {
+            return replaceIdentityString(
+                value,
+                identity
+            );
+        }
+
+        if (Array.isArray(value)) {
+            return value.map(function (entry) {
+                return replaceConfigValue(
+                    entry,
+                    identity
+                );
+            });
+        }
+
+        if (
+            value &&
+            typeof value === "object"
+        ) {
+            Object.keys(value).forEach(function (key) {
+                value[key] = replaceConfigValue(
+                    value[key],
+                    identity
+                );
+            });
+        }
+
+        return value;
+    }
+
+    function synchronizeConfig(identity) {
+        Object.keys(config).forEach(function (key) {
+            if (key === "siteIdentity") {
+                return;
+            }
+
+            config[key] = replaceConfigValue(
+                config[key],
+                identity
+            );
+        });
+
+        config.brand = config.brand || {};
+        config.company = config.company || {};
+        config.mail = config.mail || {};
+
+        config.brand.name = identity.brandName;
+        config.brand.shortName = identity.shortName;
+        config.brand.logoPrimaryText =
+            identity.logoPrimaryText;
+        config.brand.logoSecondaryText =
+            identity.logoSecondaryText;
+
+        config.company.legalName =
+            identity.brandName;
+        config.company.email =
+            identity.email;
+        config.company.phone =
+            identity.phoneDisplay;
+        config.company.phoneHref =
+            identity.phoneHref;
+        config.company.address =
+            identity.address;
+        config.company.website =
+            identity.website;
+
+        config.mail.recipientEmail =
+            identity.email;
+
+        if (
+            !config.mail.fromName ||
+            config.mail.fromName ===
+            defaults.brandName + " Website"
+        ) {
+            config.mail.fromName =
+                identity.brandName + " Website";
+        }
+
+        if (
+            !config.mail.subjectPrefix ||
+            config.mail.subjectPrefix ===
+            "[" + defaults.brandName + " Inquiry]"
+        ) {
+            config.mail.subjectPrefix =
+                "[" + identity.brandName + " Inquiry]";
+        }
+    }
+
+    function queryElements(root, selector) {
+        const elements = [];
+
+        if (
+            root instanceof Element &&
+            root.matches(selector)
+        ) {
+            elements.push(root);
+        }
+
+        if (
+            root &&
+            typeof root.querySelectorAll === "function"
+        ) {
+            root.querySelectorAll(selector)
+                .forEach(function (element) {
+                    elements.push(element);
+                });
+        }
+
+        return Array.from(new Set(elements));
+    }
+
+    function setElementText(element, value) {
+        if (
+            !element ||
+            element.textContent === value
+        ) {
+            return;
+        }
+
+        element.textContent = value;
+    }
+
+    function setElementAttribute(
+        element,
+        attribute,
+        value
+    ) {
+        if (
+            !element ||
+            !value ||
+            element.getAttribute(attribute) === value
+        ) {
+            return;
+        }
+
+        element.setAttribute(attribute, value);
+    }
+
+    function replaceTextNodes(
+        root,
+        identity
+    ) {
+        const walker = document.createTreeWalker(
+            root,
+            NodeFilter.SHOW_TEXT,
+            {
+                acceptNode: function (node) {
+                    const parent =
+                        node.parentElement;
+
+                    if (!parent) {
+                        return NodeFilter.FILTER_REJECT;
+                    }
+
+                    if (
+                        parent.closest(
+                            "script, style, noscript, template, textarea"
+                        )
+                    ) {
+                        return NodeFilter.FILTER_REJECT;
+                    }
+
+                    if (
+                        !node.nodeValue ||
+                        node.nodeValue.trim() === ""
+                    ) {
+                        return NodeFilter.FILTER_REJECT;
+                    }
+
+                    return NodeFilter.FILTER_ACCEPT;
+                }
+            }
+        );
+
+        const nodes = [];
+
+        while (walker.nextNode()) {
+            nodes.push(walker.currentNode);
+        }
+
+        nodes.forEach(function (node) {
+            const nextValue =
+                replaceIdentityString(
+                    node.nodeValue,
+                    identity
+                );
+
+            if (nextValue !== node.nodeValue) {
+                node.nodeValue = nextValue;
+            }
+        });
+    }
+
+    function replaceElementAttributes(
+        root,
+        identity
+    ) {
+        const attributes = [
+            "href",
+            "src",
+            "content",
+            "title",
+            "aria-label",
+            "alt",
+            "placeholder"
+        ];
+
+        queryElements(root, "*")
+            .forEach(function (element) {
+                attributes.forEach(function (attribute) {
+                    if (
+                        !element.hasAttribute(attribute)
+                    ) {
+                        return;
+                    }
+
+                    const currentValue =
+                        element.getAttribute(attribute);
+
+                    const nextValue =
+                        replaceIdentityString(
+                            currentValue,
+                            identity
+                        );
+
+                    if (nextValue !== currentValue) {
+                        element.setAttribute(
+                            attribute,
+                            nextValue
+                        );
+                    }
+                });
+            });
+    }
+
+    function updateEmailElements(
+        root,
+        identity
+    ) {
+        queryElements(
+            root,
+            [
+                "[data-contact-email]",
+                "[data-company-email]"
+            ].join(",")
+        ).forEach(function (element) {
+            setElementText(
+                element,
+                identity.email
+            );
+
+            if (element.matches("a")) {
+                setElementAttribute(
+                    element,
+                    "href",
+                    "mailto:" + identity.email
+                );
+            }
+        });
+
+        queryElements(
+            root,
+            [
+                "a[href^='mailto:']",
+                "[data-contact-email-link]"
+            ].join(",")
+        ).forEach(function (element) {
+            if (!element.matches("a")) {
+                return;
+            }
+
+            setElementAttribute(
+                element,
+                "href",
+                "mailto:" + identity.email
+            );
+
+            if (
+                element.textContent.includes("@")
+            ) {
+                setElementText(
+                    element,
+                    identity.email
+                );
+            }
+
+            const ariaLabel =
+                element.getAttribute("aria-label");
+
+            if (ariaLabel) {
+                setElementAttribute(
+                    element,
+                    "aria-label",
+                    replaceIdentityString(
+                        ariaLabel,
+                        identity
+                    )
+                );
+            }
+        });
+    }
+
+    function updatePhoneElements(
+        root,
+        identity
+    ) {
+        queryElements(
+            root,
+            [
+                "[data-contact-phone]",
+                "[data-company-phone]"
+            ].join(",")
+        ).forEach(function (element) {
+            setElementText(
+                element,
+                identity.phoneDisplay
+            );
+
+            if (element.matches("a")) {
+                setElementAttribute(
+                    element,
+                    "href",
+                    identity.phoneHref
+                );
+            }
+        });
+
+        queryElements(
+            root,
+            [
+                "a[href^='tel:']",
+                "[data-contact-phone-link]"
+            ].join(",")
+        ).forEach(function (element) {
+            if (!element.matches("a")) {
+                return;
+            }
+
+            setElementAttribute(
+                element,
+                "href",
+                identity.phoneHref
+            );
+
+            if (/\d/.test(element.textContent)) {
+                setElementText(
+                    element,
+                    identity.phoneDisplay
+                );
+            }
+
+            const ariaLabel =
+                element.getAttribute("aria-label");
+
+            if (ariaLabel) {
+                setElementAttribute(
+                    element,
+                    "aria-label",
+                    replaceIdentityString(
+                        ariaLabel,
+                        identity
+                    )
+                );
+            }
+        });
+    }
+
+    function updateAddressElements(
+        root,
+        identity
+    ) {
+        queryElements(
+            root,
+            [
+                "[data-contact-address]",
+                "[data-company-address]"
+            ].join(",")
+        ).forEach(function (element) {
+            setElementText(
+                element,
+                identity.address
+            );
+        });
+    }
+
+    function updateBrandElements(
+        root,
+        identity
+    ) {
+        queryElements(
+            root,
+            [
+                "[data-brand-name]",
+                "[data-company-name]",
+                "[data-company-legal-name]"
+            ].join(",")
+        ).forEach(function (element) {
+            setElementText(
+                element,
+                identity.brandName
+            );
+        });
+
+        queryElements(
+            root,
+            "[data-logo-primary]"
+        ).forEach(function (element) {
+            setElementText(
+                element,
+                identity.logoPrimaryText
+            );
+        });
+
+        queryElements(
+            root,
+            "[data-logo-secondary]"
+        ).forEach(function (element) {
+            setElementText(
+                element,
+                identity.logoSecondaryText
+            );
+        });
+    }
+
+    function updateTextLogos(
+        root,
+        identity
+    ) {
+        const logoSelectors = [
+            ".site-logo",
+            "[data-site-logo]",
+            ".site-header__logo",
+            ".site-footer__logo",
+            ".mobile-navigation__logo",
+            ".mobile-menu__logo"
+        ].join(",");
+
+        const links = new Set();
+
+        queryElements(
+            root,
+            logoSelectors
+        ).forEach(function (candidate) {
+            const link = candidate.matches("a")
+                ? candidate
+                : candidate.closest("a") ||
+                candidate.querySelector("a");
+
+            if (link) {
+                links.add(link);
+            }
+        });
+
+        links.forEach(function (link) {
+            let primary = link.querySelector(
+                ".site-logo__primary"
+            );
+
+            let secondary = link.querySelector(
+                ".site-logo__suffix"
+            );
+
+            if (!primary || !secondary) {
+                link.innerHTML = [
+                    '<span class="site-logo__primary">',
+                    escapeIdentityHtml(
+                        identity.logoPrimaryText
+                    ),
+                    "</span>",
+                    '<span class="site-logo__suffix">',
+                    escapeIdentityHtml(
+                        identity.logoSecondaryText
+                    ),
+                    "</span>"
+                ].join("");
+
+                primary = link.querySelector(
+                    ".site-logo__primary"
+                );
+
+                secondary = link.querySelector(
+                    ".site-logo__suffix"
+                );
+            }
+
+            setElementText(
+                primary,
+                identity.logoPrimaryText
+            );
+
+            setElementText(
+                secondary,
+                identity.logoSecondaryText
+            );
+
+            setElementAttribute(
+                link,
+                "href",
+                "index.html"
+            );
+
+            setElementAttribute(
+                link,
+                "aria-label",
+                identity.brandName + " home"
+            );
+        });
+    }
+
+    function updateFavicon(identity) {
+        document.querySelectorAll(
+            "link[rel~='icon']"
+        ).forEach(function (link) {
+            setElementAttribute(
+                link,
+                "href",
+                identity.favicon
+            );
+        });
+    }
+
+    function replaceJsonValue(
+        value,
+        identity
+    ) {
+        if (typeof value === "string") {
+            return replaceIdentityString(
+                value,
+                identity
+            );
+        }
+
+        if (Array.isArray(value)) {
+            return value.map(function (entry) {
+                return replaceJsonValue(
+                    entry,
+                    identity
+                );
+            });
+        }
+
+        if (
+            value &&
+            typeof value === "object"
+        ) {
+            Object.keys(value).forEach(function (key) {
+                value[key] = replaceJsonValue(
+                    value[key],
+                    identity
+                );
+            });
+        }
+
+        return value;
+    }
+
+    function updateJsonLd(identity) {
+        document.querySelectorAll(
+            'script[type="application/ld+json"]'
+        ).forEach(function (script) {
+            try {
+                const schema = JSON.parse(
+                    script.textContent
+                );
+
+                const nextSchema =
+                    replaceJsonValue(
+                        schema,
+                        identity
+                    );
+
+                const serialized =
+                    JSON.stringify(nextSchema);
+
+                if (
+                    serialized !==
+                    script.textContent
+                ) {
+                    script.textContent =
+                        serialized;
+                }
+            } catch (error) {
+                return;
+            }
+        });
+    }
+
+    function updateDocumentHead(identity) {
+        const nextTitle =
+            replaceIdentityString(
+                document.title,
+                identity
+            );
+
+        if (nextTitle !== document.title) {
+            document.title = nextTitle;
+        }
+
+        replaceElementAttributes(
+            document.head,
+            identity
+        );
+
+        updateFavicon(identity);
+        updateJsonLd(identity);
+    }
+
+    function applySiteIdentity(root) {
+        if (identityState.applying) {
+            return;
+        }
+
+        identityState.applying = true;
+
+        try {
+            const identity =
+                getSiteIdentity();
+
+            const target =
+                root &&
+                    (
+                        root instanceof Document ||
+                        root instanceof Element ||
+                        root instanceof DocumentFragment
+                    )
+                    ? root
+                    : document;
+
+            replaceTextNodes(
+                target,
+                identity
+            );
+
+            replaceElementAttributes(
+                target,
+                identity
+            );
+
+            updateBrandElements(
+                target,
+                identity
+            );
+
+            updateEmailElements(
+                target,
+                identity
+            );
+
+            updatePhoneElements(
+                target,
+                identity
+            );
+
+            updateAddressElements(
+                target,
+                identity
+            );
+
+            updateTextLogos(
+                target,
+                identity
+            );
+
+            updateDocumentHead(identity);
+        } finally {
+            identityState.applying = false;
+        }
+    }
+
+    function scheduleIdentityRefresh() {
+        if (identityState.refreshQueued) {
+            return;
+        }
+
+        identityState.refreshQueued = true;
+
+        window.requestAnimationFrame(function () {
+            identityState.refreshQueued = false;
+            applySiteIdentity(document);
+        });
+    }
+
+    function patchRolewiseRefresh() {
+        window.Rolewise =
+            window.Rolewise || {};
+
+        const Rolewise =
+            window.Rolewise;
+
+        if (
+            Rolewise.__siteIdentityPatched
+        ) {
+            return;
+        }
+
+        Rolewise.__siteIdentityPatched = true;
+
+        const originalRefresh =
+            Rolewise.refreshGlobalUI;
+
+        if (
+            typeof originalRefresh ===
+            "function"
+        ) {
+            Rolewise.refreshGlobalUI =
+                function () {
+                    const result =
+                        originalRefresh.apply(
+                            this,
+                            arguments
+                        );
+
+                    applySiteIdentity(
+                        arguments[0] || document
+                    );
+
+                    return result;
+                };
+        }
+
+        Rolewise.applySiteIdentity =
+            applySiteIdentity;
+
+        Rolewise.getSiteIdentity =
+            getSiteIdentity;
+    }
+
+    function initializeIdentityObserver() {
+        if (
+            identityState.observer ||
+            !document.documentElement
+        ) {
+            return;
+        }
+
+        identityState.observer =
+            new MutationObserver(
+                function (mutations) {
+                    const addedContent =
+                        mutations.some(
+                            function (mutation) {
+                                return (
+                                    mutation.addedNodes.length >
+                                    0
+                                );
+                            }
+                        );
+
+                    if (addedContent) {
+                        scheduleIdentityRefresh();
+                    }
+                }
+            );
+
+        identityState.observer.observe(
+            document.documentElement,
+            {
+                childList: true,
+                subtree: true
+            }
+        );
+    }
+
+    function initializeSiteIdentity() {
+        patchRolewiseRefresh();
+        applySiteIdentity(document);
+        initializeIdentityObserver();
+
+        window.setTimeout(
+            scheduleIdentityRefresh,
+            100
+        );
+
+        window.setTimeout(
+            scheduleIdentityRefresh,
+            500
+        );
+    }
+
+    const identity = getSiteIdentity();
+
+    synchronizeConfig(identity);
+    patchRolewiseRefresh();
+
+    if (
+        document.readyState === "loading"
+    ) {
+        document.addEventListener(
+            "DOMContentLoaded",
+            initializeSiteIdentity,
+            {
+                once: true
+            }
+        );
+    } else {
+        initializeSiteIdentity();
+    }
+
+    window.addEventListener(
+        "load",
+        scheduleIdentityRefresh,
+        {
+            once: true
+        }
+    );
+}());
