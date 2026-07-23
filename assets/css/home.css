@@ -5406,20 +5406,7 @@
         0 22px 52px rgba(117, 103, 255, 0.2);
 }
 
-/*
- * Нижняя выемка как в референсе:
- * CTA будто встроена в нижний край карточки.
- */
 
-.home-human-ref__primary::before,
-.home-human-ref__primary::after {
-    position: absolute;
-    bottom: 0;
-    width: 48px;
-    height: 48px;
-    background: var(--color-charcoal);
-    content: "";
-}
 
 .home-human-ref__primary::before {
     left: calc(50% - 116px);
@@ -5471,7 +5458,7 @@
 
 .home-human-ref__primary-cta {
     position: absolute;
-    bottom: -1px;
+    bottom: 12px;
     left: 50%;
     z-index: 4;
     display: inline-flex;
