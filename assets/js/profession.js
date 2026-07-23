@@ -1672,6 +1672,211 @@
         Rolewise.refreshAOS();
     }
 
+    function renderProfessionCapabilities(profession) {
+        const root = document.querySelector(
+            "[data-profession-capabilities]"
+        );
+
+        if (!root || !profession) {
+            return;
+        }
+
+        const shortTitle = getText(
+            profession,
+            [
+                "shortTitle",
+                "label",
+                "profession"
+            ],
+            profession.title || "Professionals"
+        );
+
+        const intro = getText(
+            profession,
+            [
+                "overview.description",
+                "overview.copy",
+                "overviewText",
+                "description"
+            ],
+            "Explore practical AI learning through recognizable workplace tasks, clear context, useful tool categories, and responsible human review."
+        );
+
+        const imageSource = getText(
+            profession,
+            [
+                "overview.primaryImage",
+                "overviewPrimaryImage",
+                "images.overviewPrimary",
+                "mosaicImage",
+                "directoryImage",
+                "hero.image",
+                "heroImage"
+            ],
+            ""
+        );
+
+        const titleElement = root.querySelector(
+            "[data-profession-capabilities-title]"
+        );
+
+        const introElement = root.querySelector(
+            "[data-profession-capabilities-intro]"
+        );
+
+        const labelElement = root.querySelector(
+            "[data-profession-capabilities-label]"
+        );
+
+        const imageElement = root.querySelector(
+            "[data-profession-capabilities-image]"
+        );
+
+        const grid = root.querySelector(
+            "[data-profession-capabilities-grid]"
+        );
+
+        if (titleElement) {
+            titleElement.textContent =
+                "Practical AI for " + shortTitle;
+        }
+
+        if (introElement) {
+            introElement.textContent = intro;
+        }
+
+        if (labelElement) {
+            labelElement.textContent =
+                shortTitle + " Learning Path";
+        }
+
+        if (imageElement && imageSource) {
+            imageElement.src = imageSource;
+            imageElement.alt =
+                shortTitle +
+                " professional exploring a practical AI workflow";
+        }
+
+        if (!grid) {
+            return;
+        }
+
+        const workflows = getArray(
+            profession,
+            [
+                "workflows",
+                "workflowExamples"
+            ]
+        );
+
+        const tasks = getArray(
+            profession,
+            [
+                "tasks",
+                "taskExamples"
+            ]
+        );
+
+        const cardSettings = [
+            {
+                tone: "primary",
+                label: "Professional Context",
+                icon: profession.icon || "briefcase-business",
+                href: "#prompts",
+                fallbackTitle: "Role-Specific Context",
+                fallbackDescription: "Connect AI learning with the terminology, responsibilities, information, and decisions already present in this profession."
+            },
+            {
+                tone: "cyan",
+                label: "Practical Application",
+                icon: "workflow",
+                href: "#tools",
+                fallbackTitle: "Useful AI Workflows",
+                fallbackDescription: "Explore how AI may assist with preparation, organization, drafting, comparison, documentation, and structured review."
+            },
+            {
+                tone: "lime",
+                label: "Responsible Use",
+                icon: "shield-check",
+                href: "#review",
+                fallbackTitle: "Human Review",
+                fallbackDescription: "Keep accuracy, privacy, permissions, professional standards, accountability, and final human judgment visible."
+            }
+        ];
+
+        const cards = cardSettings.map(function (setting, index) {
+            const source =
+                workflows[index] ||
+                tasks[index] ||
+                {};
+
+            return {
+                tone: setting.tone,
+                label: setting.label,
+                icon: setting.icon,
+                href: setting.href,
+                title: getEntryTitle(
+                    source,
+                    setting.fallbackTitle
+                ),
+                description: getEntryDescription(
+                    source,
+                    setting.fallbackDescription
+                )
+            };
+        });
+
+        grid.innerHTML = cards.map(function (card, index) {
+            return [
+                '<article class="profession-capability-card profession-capability-card--',
+                escapeHtml(card.tone),
+                '" data-aos="fade-up" data-aos-delay="',
+                String(index * 70),
+                '">',
+
+                '<span class="profession-capability-card__icon" aria-hidden="true">',
+                '<i data-lucide="',
+                escapeHtml(card.icon),
+                '"></i>',
+                "</span>",
+
+                '<div class="profession-capability-card__content">',
+
+                '<span class="profession-capability-card__label">',
+                escapeHtml(card.label),
+                "</span>",
+
+                '<h3 class="profession-capability-card__title">',
+                escapeHtml(card.title),
+                "</h3>",
+
+                '<p class="profession-capability-card__text">',
+                escapeHtml(card.description),
+                "</p>",
+
+                '<a class="profession-capability-card__link" href="',
+                escapeHtml(card.href),
+                '" aria-label="Explore ',
+                escapeHtml(card.title),
+                '">',
+
+                "<span>Explore</span>",
+                '<i data-lucide="arrow-right" aria-hidden="true"></i>',
+
+                "</a>",
+
+                "</div>",
+
+                '<span class="profession-capability-card__corner" aria-hidden="true"></span>',
+
+                "</article>"
+            ].join("");
+        }).join("");
+
+        Rolewise.refreshIcons();
+        Rolewise.refreshAOS();
+    }
+
     function initializeProfession() {
         if (!document.body.classList.contains("profession-page")) {
             return;
@@ -1697,6 +1902,7 @@
         renderNextLinks(profession);
         renderProfessionFeatureCards();
         renderProfessionProofStrip(profession);
+        renderProfessionCapabilities(profession);
         initSubnavigation();
         Rolewise.refreshGlobalUI(document);
     }
