@@ -748,17 +748,17 @@ window.ROLEWISE_CONFIG = {
                 {
                     "title": "Campaign Brief Structure",
                     "category": "Planning",
-                    "prompt": "Act as a campaign planning assistant. Using only the information below, organize a draft campaign brief with these sections: objective, primary audience, audience problem, offer, approved claims, supporting evidence, channels, required deliverables, timing, dependencies, review questions, and items that are still unknown. Do not invent research, performance data, customer quotes, or claims. Mark missing information clearly. Context: [paste approved campaign information]."
+                    "prompt": "Act as a campaign planning assistant. Using only the information below, organize a draft campaign brief with these sections: objective, primary audience, audience problem, offer, approved claims, supporting evidence, channels, required deliverables, timing, dependencies, review questions, and items that are still unknown."
                 },
                 {
                     "title": "Repurpose Approved Content",
                     "category": "Content",
-                    "prompt": "Transform the approved source below into three channel-specific drafts: a concise LinkedIn post, an email introduction, and a short internal sales enablement summary. Preserve the meaning and approved claims. Use the stated brand tone. Do not add facts, statistics, testimonials, or benefits that are not in the source. After each draft, list any statement that needs human verification. Source: [paste approved content]. Brand tone: [describe tone]. Audience: [describe audience]."
+                    "prompt": "Transform the approved source below into three channel-specific drafts: a concise LinkedIn post, an email introduction, and a short internal sales enablement summary. Preserve the meaning and approved claims. Use the stated brand tone. Do not add facts, statistics, testimonials, or benefits that are not in the source."
                 },
                 {
                     "title": "Review a Content Draft",
                     "category": "Review",
-                    "prompt": "Review the marketing draft below against the supplied criteria. Create a table with: issue, why it matters, suggested revision, and human decision required. Check factual support, clarity, audience relevance, brand tone, duplication, unsupported claims, and missing context. Do not rewrite the full piece until the issues are listed. Draft: [paste draft]. Criteria: [paste brand and approval criteria]."
+                    "prompt": "Review the marketing draft below against the supplied criteria. Create a table with: issue, why it matters, suggested revision, and human decision required. Check factual support, clarity, audience relevance, brand tone, duplication, unsupported claims, and missing context.."
                 }
             ],
             "toolCategories": [
