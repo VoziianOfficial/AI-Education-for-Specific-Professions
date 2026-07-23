@@ -1584,6 +1584,94 @@
         Rolewise.refreshAOS();
     }
 
+    function renderProfessionProofStrip(profession) {
+        const grid = document.querySelector(
+            "[data-profession-proof-strip-grid]"
+        );
+
+        if (!grid || !profession) {
+            return;
+        }
+
+        const tasks = getArray(
+            profession,
+            [
+                "tasks",
+                "taskExamples"
+            ]
+        ).slice(0, 3);
+
+        const icons = [
+            profession.icon || "briefcase-business",
+            "workflow",
+            "shield-check"
+        ];
+
+        const fallbackTitles = [
+            "Professional Context",
+            "Practical Workflow",
+            "Human Review"
+        ];
+
+        const fallbackDescriptions = [
+            "Connect AI learning with the responsibilities, terminology, information, and decisions of this profession.",
+            "Explore how AI may assist with preparation, organization, drafting, comparison, and documentation.",
+            "Keep accuracy, privacy, professional standards, approval, and final human judgment visible."
+        ];
+
+        const items = [0, 1, 2].map(function (index) {
+            const task = tasks[index];
+
+            return {
+                number: String(index + 1).padStart(2, "0"),
+                title: task
+                    ? getEntryTitle(
+                        task,
+                        fallbackTitles[index]
+                    )
+                    : fallbackTitles[index],
+                description: task
+                    ? getEntryDescription(
+                        task,
+                        fallbackDescriptions[index]
+                    )
+                    : fallbackDescriptions[index],
+                icon: icons[index]
+            };
+        });
+
+        grid.innerHTML = items.map(function (item, index) {
+            return [
+                '<article class="profession-proof-strip__item" data-aos="fade-up" data-aos-delay="',
+                String(index * 70),
+                '">',
+
+                '<span class="profession-proof-strip__icon" aria-hidden="true">',
+                '<i data-lucide="',
+                escapeHtml(item.icon),
+                '"></i>',
+                "</span>",
+
+                '<strong class="profession-proof-strip__value">',
+                escapeHtml(item.number),
+                "</strong>",
+
+                '<h3 class="profession-proof-strip__title">',
+                escapeHtml(item.title),
+                "</h3>",
+
+                '<p class="profession-proof-strip__text">',
+                escapeHtml(item.description),
+                "</p>",
+
+                "</article>"
+            ].join("");
+        }).join("");
+
+        Rolewise.refreshIcons();
+        Rolewise.refreshAOS();
+    }
+
     function initializeProfession() {
         if (!document.body.classList.contains("profession-page")) {
             return;
@@ -1608,6 +1696,7 @@
         renderDisclaimer(profession);
         renderNextLinks(profession);
         renderProfessionFeatureCards();
+        renderProfessionProofStrip(profession);
         initSubnavigation();
         Rolewise.refreshGlobalUI(document);
     }
