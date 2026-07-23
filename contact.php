@@ -396,6 +396,7 @@ $fullName = singleLine(textField($_POST, 'fullName'));
 $email = singleLine(textField($_POST, 'email'));
 $phone = singleLine(textField($_POST, 'phone'));
 $inquiryType = singleLine(textField($_POST, 'inquiryType'));
+$serviceType = singleLine(textField($_POST, 'serviceType'));
 $message = multiline(textField($_POST, 'message'));
 $privacyConsent = textField($_POST, 'privacyConsent');
 $sourcePage = singleLine(textField($_POST, 'sourcePage'));
@@ -437,14 +438,28 @@ if (
 }
 
 if (
-    stringLength($inquiryType) < 2
-    || stringLength($inquiryType) > 120
-    || preg_match('/^[a-zA-Z0-9][a-zA-Z0-9 _&\/().\-]{1,119}$/', $inquiryType) !== 1
+    $inquiryType !== ''
+    && (
+        stringLength($inquiryType) > 120
+        || preg_match('/^[a-zA-Z0-9][a-zA-Z0-9 _&\/().\-]{1,119}$/', $inquiryType) !== 1
+    )
 ) {
     respond(
         422,
         false,
-        'Please select a valid inquiry type.'
+        'Please provide a valid inquiry type.'
+    );
+}
+
+if (
+    stringLength($serviceType) < 2
+    || stringLength($serviceType) > 120
+    || preg_match('/^[a-zA-Z0-9][a-zA-Z0-9 _&\/().\-]{1,119}$/', $serviceType) !== 1
+) {
+    respond(
+        422,
+        false,
+        'Please select a valid service.'
     );
 }
 
@@ -497,12 +512,12 @@ if (filter_var($senderEmail, FILTER_VALIDATE_EMAIL) === false) {
 
 $safeName = headerSafe($fullName);
 $safeEmail = headerSafe($email);
-$safeInquiryType = headerSafe($inquiryType);
+$safeServiceType = headerSafe($serviceType);
 $safeSenderEmail = headerSafe($senderEmail);
 $safeRecipientEmail = headerSafe($recipientEmail);
 
 $subject = mimeSubject(
-    'Rolewise AI inquiry: ' . $safeInquiryType
+    'Rolewise AI inquiry: ' . $safeServiceType
 );
 
 $submittedAt = gmdate('Y-m-d H:i:s') . ' UTC';
@@ -513,7 +528,8 @@ $emailBody = implode(
         'New Rolewise AI website inquiry',
         '',
         'Submitted: ' . $submittedAt,
-        'Inquiry type: ' . $inquiryType,
+        'Service: ' . $serviceType,
+        'Inquiry type: ' . ($inquiryType !== '' ? $inquiryType : 'Not provided'),
         'Full name: ' . $fullName,
         'Email: ' . $email,
         'Phone: ' . ($phone !== '' ? $phone : 'Not provided'),

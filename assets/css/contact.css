@@ -290,9 +290,9 @@
 
 .contact-form {
     display: grid;
-    gap: 28px;
+    gap: 22px;
     min-width: 0;
-    padding: clamp(30px, 5vw, 64px);
+    padding: clamp(24px, 4vw, 52px);
     border: 1px solid var(--color-border);
     border-radius: 36px;
     background: var(--color-surface);
@@ -301,8 +301,8 @@
 
 .contact-form__header {
     display: grid;
-    gap: 13px;
-    padding-bottom: 24px;
+    gap: 10px;
+    padding-bottom: 20px;
     border-bottom: 1px solid var(--color-border);
 }
 
@@ -321,13 +321,13 @@
 .contact-form__grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px;
+    gap: 15px 18px;
 }
 
 .contact-form__field {
     display: grid;
     align-content: start;
-    gap: 9px;
+    gap: 7px;
     min-width: 0;
 }
 
@@ -366,13 +366,13 @@
 
 .contact-form__input,
 .contact-form__select {
-    min-height: 54px;
-    padding: 13px 16px;
+    min-height: 48px;
+    padding: 11px 15px;
 }
 
 .contact-form__textarea {
-    min-height: 180px;
-    padding: 16px;
+    min-height: 150px;
+    padding: 14px 15px;
     resize: vertical;
     line-height: 1.65;
 }
@@ -1247,17 +1247,17 @@
     }
 
     .contact-form {
-        gap: 24px;
-        padding: 24px 20px;
+        gap: 20px;
+        padding: 22px 18px;
     }
 
     .contact-form__input,
     .contact-form__select {
-        min-height: 52px;
+        min-height: 48px;
     }
 
     .contact-form__textarea {
-        min-height: 165px;
+        min-height: 148px;
     }
 
     .contact-category-card,

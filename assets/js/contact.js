@@ -359,6 +359,31 @@
         );
 
         if (!select) {
+            if (scrollToForm) {
+                const serviceSelect = document.querySelector(
+                    "[data-contact-service]"
+                );
+                const formSection = document.getElementById(
+                    "contact-form"
+                );
+
+                if (formSection) {
+                    formSection.scrollIntoView({
+                        "behavior": Rolewise.state.reducedMotion
+                            ? "auto"
+                            : "smooth",
+                        "block": "start"
+                    });
+                }
+
+                if (serviceSelect) {
+                    window.setTimeout(function () {
+                        serviceSelect.focus({
+                            "preventScroll": true
+                        });
+                    }, Rolewise.state.reducedMotion ? 0 : 550);
+                }
+            }
             return;
         }
 
@@ -376,6 +401,63 @@
                     escapeHtml(value),
                     '">',
                     escapeHtml(title),
+                    "</option>"
+                ].join("");
+            }).join("")
+        ].join("");
+
+        if (
+            currentValue &&
+            Array.from(select.options).some(function (option) {
+                return option.value === currentValue;
+            })
+        ) {
+            select.value = currentValue;
+        }
+    }
+
+    function populateServiceSelect() {
+        const select = document.querySelector(
+            "[data-contact-service]"
+        );
+
+        if (!select) {
+            return;
+        }
+
+        const options = getArray(
+            config,
+            [
+                "forms.serviceOptions",
+                "services.options",
+                "serviceOptions"
+            ]
+        );
+
+        if (!options.length) {
+            return;
+        }
+
+        const currentValue = select.value;
+        const placeholder = getText(
+            config,
+            [
+                "forms.placeholders.serviceType",
+                "forms.placeholders.service"
+            ],
+            "Select a service"
+        );
+
+        select.innerHTML = [
+            '<option value="">',
+            escapeHtml(placeholder),
+            "</option>",
+            options.map(function (option) {
+                return [
+                    '<option value="',
+                    escapeHtml(getText(option, ["value", "slug", "id"], "")),
+                    '">',
+                    escapeHtml(getText(option, ["label", "title", "name"], "Service")),
                     "</option>"
                 ].join("");
             }).join("")
@@ -489,6 +571,32 @@
         }
     }
 
+    function selectService(value) {
+        const select = document.querySelector(
+            "[data-contact-service]"
+        );
+
+        if (!select || !value) {
+            return;
+        }
+
+        const normalizedValue = normalizeValue(value);
+        const matchedOption = Array.from(select.options).find(function (option) {
+            return normalizeValue(option.value) === normalizedValue ||
+                normalizeValue(option.textContent) === normalizedValue;
+        });
+
+        if (matchedOption) {
+            select.value = matchedOption.value;
+            select.dispatchEvent(
+                new Event("change", {
+                    "bubbles": true
+                })
+            );
+            clearFieldError(select);
+        }
+    }
+
     function applyQueryParameters() {
         const params = new URLSearchParams(
             window.location.search
@@ -497,7 +605,11 @@
         const requestedInquiry =
             params.get("inquiry") ||
             params.get("category") ||
+            "";
+
+        const requestedService =
             params.get("service") ||
+            params.get("format") ||
             "";
 
         const profession =
@@ -509,6 +621,10 @@
 
         if (requestedInquiry) {
             selectInquiry(requestedInquiry, false);
+        }
+
+        if (requestedService) {
+            selectService(requestedService);
         }
 
         const messageField = document.querySelector(
@@ -663,12 +779,12 @@
         }
 
         if (
-            field.name === "inquiryType" &&
+            field.name === "serviceType" &&
             !value
         ) {
             setFieldError(
                 field,
-                "Please select an inquiry type."
+                "Please select a service."
             );
             return false;
         }
@@ -718,7 +834,7 @@
             "fullName",
             "email",
             "phone",
-            "inquiryType",
+            "serviceType",
             "message",
             "privacyConsent"
         ];
@@ -950,19 +1066,19 @@
                 successMessage
             );
 
-            const selectedInquiry =
-                form.elements.inquiryType
-                    ? form.elements.inquiryType.value
+            const selectedService =
+                form.elements.serviceType
+                    ? form.elements.serviceType.value
                     : "";
 
             form.reset();
 
             if (
-                form.elements.inquiryType &&
-                selectedInquiry
+                form.elements.serviceType &&
+                selectedService
             ) {
-                form.elements.inquiryType.value =
-                    selectedInquiry;
+                form.elements.serviceType.value =
+                    selectedService;
             }
 
             Array.from(form.elements).forEach(function (field) {
@@ -1048,6 +1164,7 @@
         applyAdvertiseCollaborate();
         renderCategories();
         populateInquirySelect();
+        populateServiceSelect();
         bindCategoryLinks();
         initializeForm();
         applyQueryParameters();

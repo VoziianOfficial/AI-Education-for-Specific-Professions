@@ -176,6 +176,7 @@ window.ROLEWISE_CONFIG = {
             "fullName": "Full name",
             "email": "Email address",
             "inquiryType": "Inquiry type",
+            "serviceType": "Service",
             "profession": "Relevant profession",
             "organization": "Organization",
             "message": "How can we help?",
@@ -186,6 +187,7 @@ window.ROLEWISE_CONFIG = {
             "fullName": "Your full name",
             "email": "you@example.com",
             "inquiryType": "Choose an inquiry type",
+            "serviceType": "Choose a service",
             "profession": "Choose a profession",
             "organization": "Organization name, if relevant",
             "message": "Tell us about your goals, role, preferred format, or collaboration idea."
@@ -218,6 +220,44 @@ window.ROLEWISE_CONFIG = {
             {
                 "value": "general-information",
                 "label": "General information"
+            }
+        ],
+        "serviceOptions": [
+            {
+                "value": "profession-guides",
+                "label": "Profession Guides"
+            },
+            {
+                "value": "prompt-workshops",
+                "label": "Prompt Workshops"
+            },
+            {
+                "value": "tool-tutorials",
+                "label": "Tool Tutorials"
+            },
+            {
+                "value": "workflow-sessions",
+                "label": "Workflow Sessions"
+            },
+            {
+                "value": "team-training",
+                "label": "Team Training"
+            },
+            {
+                "value": "custom-programs",
+                "label": "Custom Programs"
+            },
+            {
+                "value": "advertising",
+                "label": "Advertising"
+            },
+            {
+                "value": "collaboration",
+                "label": "Collaboration"
+            },
+            {
+                "value": "not-sure",
+                "label": "Not sure yet"
             }
         ],
         "professionOptions": [
@@ -305,6 +345,42 @@ window.ROLEWISE_CONFIG = {
                 "title": "Corporate Training",
                 "description": "Discuss role-based learning for a team or organization.",
                 "icon": "presentation"
+            },
+            {
+                "value": "marketing",
+                "title": "Marketing",
+                "description": "Ask about AI learning paths for marketing work.",
+                "icon": "megaphone"
+            },
+            {
+                "value": "real-estate",
+                "title": "Real Estate",
+                "description": "Ask about AI learning paths for real estate work.",
+                "icon": "building-2"
+            },
+            {
+                "value": "accounting",
+                "title": "Accounting",
+                "description": "Ask about AI learning paths for accounting work.",
+                "icon": "calculator"
+            },
+            {
+                "value": "business-owners",
+                "title": "Business Owners",
+                "description": "Ask about AI learning paths for business owners.",
+                "icon": "briefcase-business"
+            },
+            {
+                "value": "sales",
+                "title": "Sales Teams",
+                "description": "Ask about AI learning paths for sales teams.",
+                "icon": "handshake"
+            },
+            {
+                "value": "customer-service",
+                "title": "Customer Service",
+                "description": "Ask about AI learning paths for customer service teams.",
+                "icon": "headset"
             },
             {
                 "value": "advertising",
