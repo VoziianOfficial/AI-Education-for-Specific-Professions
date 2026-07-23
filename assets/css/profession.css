@@ -3649,3 +3649,28 @@
         display: none;
     }
 }
+
+/* =========================================================
+   PROFESSION PAGES — WIDER HERO HEADING
+   ========================================================= */
+
+@media (min-width: 1200px) {
+    .profession-hero__grid {
+        grid-template-columns:
+            minmax(0, 1.08fr) minmax(480px, 0.92fr);
+    }
+
+    .profession-hero__content {
+        padding-right: clamp(28px, 3vw, 52px);
+    }
+
+    .profession-hero__title {
+        width: 100%;
+        max-width: 1180px;
+        text-wrap: balance;
+    }
+
+    .profession-hero__text {
+        max-width: 780px;
+    }
+}

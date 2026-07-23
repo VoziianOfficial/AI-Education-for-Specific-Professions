@@ -3492,3 +3492,454 @@ a.site-header__info-value:hover {
         font-size: 0.76rem;
     }
 }
+
+
+/* =========================================================
+   ROLEWISE AI — PREMIUM PHOTO CTA
+   Shared final section system
+   ========================================================= */
+
+.rolewise-photo-cta {
+    --photo-cta-radius:
+        58px 96px 52px 82px / 52px 74px 58px 78px;
+
+    --photo-cta-overlay:
+        linear-gradient(90deg,
+            rgba(8, 10, 13, 0.93) 0%,
+            rgba(8, 10, 13, 0.78) 38%,
+            rgba(8, 10, 13, 0.26) 72%,
+            rgba(8, 10, 13, 0.14) 100%);
+
+    position: relative;
+    padding-block: clamp(58px, 6vw, 96px);
+    overflow: clip;
+    background: var(--color-warm-white);
+    color: var(--color-white);
+}
+
+/* Outer volume behind the card */
+
+.rolewise-photo-cta::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: min(82vw, 1380px);
+    height: 58%;
+    border-radius: 50%;
+    background: rgba(117, 103, 255, 0.09);
+    filter: blur(70px);
+    pointer-events: none;
+    content: "";
+    transform: translate(-50%, -45%);
+}
+
+/* Main horizontal photo card */
+
+.rolewise-photo-cta__card {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    align-items: center;
+    min-height: clamp(370px, 31vw, 460px);
+    overflow: hidden;
+    border: 8px solid rgba(255, 255, 255, 0.94);
+    border-radius: var(--photo-cta-radius);
+    background: var(--color-black);
+    box-shadow:
+        0 34px 88px rgba(8, 10, 13, 0.19),
+        0 14px 34px rgba(117, 103, 255, 0.08),
+        0 0 0 1px rgba(8, 10, 13, 0.08);
+    transform: translateZ(0);
+    transition:
+        border-radius var(--transition-slow),
+        box-shadow var(--transition-base),
+        transform var(--transition-base);
+}
+
+/* Fine inner line */
+
+.rolewise-photo-cta__card::before {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    border: 1px solid rgba(255, 255, 255, 0.17);
+    border-radius: calc(58px - 8px);
+    pointer-events: none;
+    content: "";
+}
+
+/* Soft volumetric reflection */
+
+.rolewise-photo-cta__card::after {
+    position: absolute;
+    top: -78%;
+    right: -16%;
+    z-index: 2;
+    width: 52%;
+    height: 250%;
+    border: 1px solid rgba(255, 255, 255, 0.11);
+    border-radius: 50%;
+    background:
+        linear-gradient(90deg,
+            rgba(154, 145, 255, 0.03),
+            rgba(154, 145, 255, 0.17),
+            rgba(84, 214, 208, 0.05));
+    pointer-events: none;
+    content: "";
+    transform: rotate(9deg);
+    transition:
+        opacity var(--transition-base),
+        transform var(--transition-slow);
+}
+
+.rolewise-photo-cta__card:hover {
+    border-radius:
+        70px 84px 62px 94px / 62px 82px 66px 84px;
+    box-shadow:
+        0 43px 106px rgba(8, 10, 13, 0.24),
+        0 20px 48px rgba(117, 103, 255, 0.13),
+        0 0 0 1px rgba(8, 10, 13, 0.1);
+    transform: translateY(-6px);
+}
+
+.rolewise-photo-cta__card:hover::after {
+    opacity: 0.78;
+    transform: rotate(4deg) translateX(-16px);
+}
+
+/* Full photo */
+
+.rolewise-photo-cta__image {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition:
+        filter var(--transition-slow),
+        transform 1000ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rolewise-photo-cta__card:hover .rolewise-photo-cta__image {
+    filter: saturate(1.04) contrast(1.03);
+    transform: scale(1.035);
+}
+
+/* Readability overlay */
+
+.rolewise-photo-cta__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background:
+        var(--photo-cta-overlay),
+        linear-gradient(180deg,
+            rgba(8, 10, 13, 0.08),
+            rgba(8, 10, 13, 0.32));
+    pointer-events: none;
+}
+
+/* Subtle lilac curved layer */
+
+.rolewise-photo-cta__curve {
+    position: absolute;
+    top: -52%;
+    right: -13%;
+    z-index: 2;
+    width: 48%;
+    height: 205%;
+    border-radius: 50%;
+    background:
+        radial-gradient(ellipse at center,
+            rgba(117, 103, 255, 0.22),
+            rgba(117, 103, 255, 0.07) 48%,
+            transparent 70%);
+    pointer-events: none;
+    transform: rotate(8deg);
+}
+
+/* Content */
+
+.rolewise-photo-cta__content {
+    position: relative;
+    z-index: 4;
+    display: grid;
+    gap: 19px;
+    width: min(1360px, 70%);
+    padding:
+        clamp(42px, 5vw, 72px) clamp(38px, 6vw, 92px);
+}
+
+.rolewise-photo-cta__eyebrow {
+    color: var(--color-primary-light);
+}
+
+.rolewise-photo-cta__eyebrow::before {
+    box-shadow:
+        0 0 0 5px rgba(154, 145, 255, 0.1),
+        0 0 18px rgba(154, 145, 255, 0.42);
+}
+
+.rolewise-photo-cta__title {
+    max-width: 780px;
+    color: var(--color-white);
+    font-size: clamp(2.6rem, 4.5vw, 5rem);
+    line-height: 0.98;
+    letter-spacing: -0.052em;
+}
+
+.rolewise-photo-cta__text {
+    max-width: 680px;
+    color: rgba(247, 248, 246, 0.74);
+    font-size: clamp(0.96rem, 1.2vw, 1.12rem);
+    line-height: 1.68;
+}
+
+.rolewise-photo-cta__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 11px;
+    margin-top: 7px;
+}
+
+.rolewise-photo-cta__secondary {
+    border: 1px solid rgba(255, 255, 255, 0.26);
+    background: rgba(8, 10, 13, 0.24);
+    color: var(--color-white);
+    box-shadow: none;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.rolewise-photo-cta__secondary::before {
+    display: none;
+}
+
+.rolewise-photo-cta__secondary:hover {
+    border-color: rgba(255, 255, 255, 0.46);
+    background: rgba(247, 248, 246, 0.94);
+    color: var(--color-black);
+}
+
+/* Content on the right */
+
+.rolewise-photo-cta__card--content-right .rolewise-photo-cta__content {
+    justify-self: end;
+    justify-items: end;
+    text-align: right;
+}
+
+.rolewise-photo-cta__card--content-right .rolewise-photo-cta__actions {
+    justify-content: flex-end;
+}
+
+/* =========================================================
+   HOME VARIANT
+   ========================================================= */
+
+.rolewise-photo-cta--home {
+    --photo-cta-radius:
+        52px 108px 52px 82px / 48px 76px 56px 82px;
+}
+
+.rolewise-photo-cta--home .rolewise-photo-cta__image {
+    object-position: center 45%;
+}
+
+/* =========================================================
+   PROFESSIONS VARIANT
+   ========================================================= */
+
+.rolewise-photo-cta--professions {
+    --photo-cta-radius:
+        104px 50px 88px 56px / 76px 48px 80px 54px;
+
+    --photo-cta-overlay:
+        linear-gradient(270deg,
+            rgba(8, 10, 13, 0.94) 0%,
+            rgba(8, 10, 13, 0.79) 40%,
+            rgba(8, 10, 13, 0.24) 76%,
+            rgba(8, 10, 13, 0.08) 100%);
+}
+
+.rolewise-photo-cta--professions .rolewise-photo-cta__curve {
+    right: auto;
+    left: -13%;
+    transform: rotate(-8deg);
+}
+
+.rolewise-photo-cta--professions .rolewise-photo-cta__card::after {
+    right: auto;
+    left: -16%;
+    transform: rotate(-9deg);
+}
+
+.rolewise-photo-cta--professions .rolewise-photo-cta__card:hover::after {
+    transform: rotate(-4deg) translateX(16px);
+}
+
+/* =========================================================
+   COURSES VARIANT
+   ========================================================= */
+
+.rolewise-photo-cta--courses {
+    --photo-cta-radius:
+        86px 56px 104px 62px / 60px 84px 58px 88px;
+}
+
+.rolewise-photo-cta--courses .rolewise-photo-cta__curve {
+    top: -68%;
+    right: 7%;
+    width: 38%;
+    height: 230%;
+    transform: rotate(-4deg);
+}
+
+.rolewise-photo-cta--courses .rolewise-photo-cta__image {
+    object-position: center 38%;
+}
+
+/* =========================================================
+   PROFESSION DETAIL VARIANT
+   ========================================================= */
+
+.rolewise-photo-cta--profession {
+    --photo-cta-radius:
+        48px 78px 44px 94px / 50px 62px 46px 76px;
+}
+
+.rolewise-photo-cta--profession {
+    padding-block: clamp(52px, 5vw, 82px);
+}
+
+.rolewise-photo-cta--profession .rolewise-photo-cta__card {
+    min-height: clamp(350px, 28vw, 420px);
+}
+
+.rolewise-photo-cta--profession .rolewise-photo-cta__title {
+    font-size: clamp(2.45rem, 4vw, 4.4rem);
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 991px) {
+    .rolewise-photo-cta {
+        padding-block: 68px;
+    }
+
+    .rolewise-photo-cta__card,
+    .rolewise-photo-cta--profession .rolewise-photo-cta__card {
+        min-height: 470px;
+        border-width: 6px;
+        border-radius: 42px 62px 42px 58px;
+    }
+
+    .rolewise-photo-cta__content,
+    .rolewise-photo-cta__card--content-right .rolewise-photo-cta__content {
+        justify-self: start;
+        justify-items: start;
+        width: min(760px, 88%);
+        padding: 48px 42px;
+        text-align: left;
+    }
+
+    .rolewise-photo-cta__card--content-right .rolewise-photo-cta__actions {
+        justify-content: flex-start;
+    }
+
+    .rolewise-photo-cta--professions {
+        --photo-cta-overlay:
+            linear-gradient(90deg,
+                rgba(8, 10, 13, 0.94),
+                rgba(8, 10, 13, 0.72) 62%,
+                rgba(8, 10, 13, 0.26));
+    }
+
+    .rolewise-photo-cta--professions .rolewise-photo-cta__curve {
+        right: -13%;
+        left: auto;
+    }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 575px) {
+    .rolewise-photo-cta {
+        padding-block: 52px;
+    }
+
+    .rolewise-photo-cta__card,
+    .rolewise-photo-cta--profession .rolewise-photo-cta__card {
+        min-height: 490px;
+        border-width: 5px;
+        border-radius:
+            32px 48px 34px 44px / 34px 42px 36px 46px;
+    }
+
+    .rolewise-photo-cta__image {
+        object-position: 62% center;
+    }
+
+    .rolewise-photo-cta__overlay,
+    .rolewise-photo-cta--professions .rolewise-photo-cta__overlay {
+        background:
+            linear-gradient(180deg,
+                rgba(8, 10, 13, 0.38) 0%,
+                rgba(8, 10, 13, 0.7) 40%,
+                rgba(8, 10, 13, 0.96) 100%);
+    }
+
+    .rolewise-photo-cta__curve {
+        top: -28%;
+        right: -42%;
+        width: 92%;
+        height: 120%;
+    }
+
+    .rolewise-photo-cta__content,
+    .rolewise-photo-cta__card--content-right .rolewise-photo-cta__content {
+        align-self: end;
+        width: 100%;
+        padding: 34px 24px;
+    }
+
+    .rolewise-photo-cta__title,
+    .rolewise-photo-cta--profession .rolewise-photo-cta__title {
+        font-size: clamp(2.25rem, 11vw, 3.45rem);
+    }
+
+    .rolewise-photo-cta__text {
+        font-size: 0.92rem;
+        line-height: 1.58;
+    }
+
+    .rolewise-photo-cta__actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 100%;
+    }
+
+    .rolewise-photo-cta__actions .ui-button {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .rolewise-photo-cta__card,
+    .rolewise-photo-cta__card::after,
+    .rolewise-photo-cta__image {
+        transition: none;
+    }
+
+    .rolewise-photo-cta__card:hover,
+    .rolewise-photo-cta__card:hover .rolewise-photo-cta__image {
+        transform: none;
+    }
+}
