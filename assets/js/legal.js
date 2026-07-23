@@ -244,15 +244,6 @@
             ""
         );
 
-        const phone = getText(
-            config,
-            [
-                "company.phone",
-                "contact.phone"
-            ],
-            ""
-        );
-
         const address = getText(
             config,
             [
@@ -277,14 +268,6 @@
 
             if (element.tagName === "A" && email) {
                 element.href = "mailto:" + email;
-            }
-        });
-
-        document.querySelectorAll("[data-contact-phone]").forEach(function (element) {
-            element.textContent = phone;
-
-            if (element.tagName === "A" && phone) {
-                element.href = "tel:" + phone.replace(/[^\d+]/g, "");
             }
         });
 

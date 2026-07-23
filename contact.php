@@ -394,7 +394,6 @@ if ($honeypot !== '') {
 
 $fullName = singleLine(textField($_POST, 'fullName'));
 $email = singleLine(textField($_POST, 'email'));
-$phone = singleLine(textField($_POST, 'phone'));
 $inquiryType = singleLine(textField($_POST, 'inquiryType'));
 $serviceType = singleLine(textField($_POST, 'serviceType'));
 $message = multiline(textField($_POST, 'message'));
@@ -420,20 +419,6 @@ if (
         422,
         false,
         'Please enter a valid email address.'
-    );
-}
-
-if (
-    $phone !== ''
-    && (
-        stringLength($phone) > 30
-        || preg_match('/^[+()\d\s.\-]{6,30}$/', $phone) !== 1
-    )
-) {
-    respond(
-        422,
-        false,
-        'Please enter a valid phone number.'
     );
 }
 
@@ -532,7 +517,6 @@ $emailBody = implode(
         'Inquiry type: ' . ($inquiryType !== '' ? $inquiryType : 'Not provided'),
         'Full name: ' . $fullName,
         'Email: ' . $email,
-        'Phone: ' . ($phone !== '' ? $phone : 'Not provided'),
         'Source page: ' . ($sourcePage !== '' ? $sourcePage : 'Not provided'),
         'Privacy consent: Confirmed',
         '',

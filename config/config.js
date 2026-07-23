@@ -6,8 +6,6 @@ window.ROLEWISE_CONFIG = {
         "logoPrimaryText": "Rolewise",
         "logoSecondaryText": "AI",
         "email": "hello@rolewise.ai",
-        "phoneDisplay": "+46 00 000 00 00",
-        "phoneHref": "+46000000000",
         "address": "Stockholm, Sweden",
         "website": "https://rolewise.ai",
         "favicon": "assets/images/favicon.svg"

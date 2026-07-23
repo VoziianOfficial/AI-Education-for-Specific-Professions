@@ -171,15 +171,6 @@
             ""
         );
 
-        const phone = getText(
-            config,
-            [
-                "company.phone",
-                "contact.phone"
-            ],
-            ""
-        );
-
         const address = getText(
             config,
             [
@@ -194,14 +185,6 @@
 
             if (element.tagName === "A") {
                 element.href = "mailto:" + email;
-            }
-        });
-
-        document.querySelectorAll("[data-contact-phone]").forEach(function (element) {
-            element.textContent = phone;
-
-            if (element.tagName === "A") {
-                element.href = "tel:" + phone.replace(/[^\d+]/g, "");
             }
         });
 
@@ -353,7 +336,7 @@
         Rolewise.refreshIcons();
     }
 
-    function populateInquirySelect() {
+    function populateInquirySelect(scrollToForm) {
         const select = document.querySelector(
             "[data-contact-inquiry]"
         );
@@ -712,14 +695,6 @@
         );
     }
 
-    function validatePhone(value) {
-        if (!value) {
-            return true;
-        }
-
-        return /^[+()\d\s.-]{6,30}$/.test(value);
-    }
-
     function validateField(field) {
         if (!field || !field.name) {
             return true;
@@ -765,17 +740,6 @@
                 );
                 return false;
             }
-        }
-
-        if (
-            field.name === "phone" &&
-            !validatePhone(value)
-        ) {
-            setFieldError(
-                field,
-                "Please enter a valid phone number."
-            );
-            return false;
         }
 
         if (
@@ -833,7 +797,6 @@
         const fieldNames = [
             "fullName",
             "email",
-            "phone",
             "serviceType",
             "message",
             "privacyConsent"

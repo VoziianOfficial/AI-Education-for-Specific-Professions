@@ -65,7 +65,7 @@
             return fallback || "";
         }
 
-        if (/^(https?:|mailto:|tel:)/i.test(href)) {
+        if (/^(https?:|mailto:)/i.test(href)) {
             return href;
         }
 
@@ -2166,8 +2166,6 @@
         brandName: "Rolewise AI",
         shortName: "Rolewise",
         email: "hello@rolewise.ai",
-        phoneDisplay: "+46 00 000 00 00",
-        phoneHref: "+46000000000",
         address: "Stockholm, Sweden",
         website: "https://rolewise.ai"
     };
@@ -2198,34 +2196,8 @@
             .replaceAll("'", "&#039;");
     }
 
-    function normalizePhoneHref(value) {
-        const phone = stringValue(value, "");
-
-        if (!phone) {
-            return "";
-        }
-
-        if (phone.startsWith("tel:")) {
-            return phone;
-        }
-
-        const normalized = phone.replace(/[^\d+]/g, "");
-
-        return normalized ? "tel:" + normalized : "";
-    }
-
     function getSiteIdentity() {
         const source = config.siteIdentity || {};
-
-        const phoneDisplay = stringValue(
-            source.phoneDisplay,
-            defaults.phoneDisplay
-        );
-
-        const configuredPhoneHref = stringValue(
-            source.phoneHref,
-            ""
-        );
 
         return {
             brandName: stringValue(
@@ -2247,10 +2219,6 @@
             email: stringValue(
                 source.email,
                 defaults.email
-            ),
-            phoneDisplay: phoneDisplay,
-            phoneHref: normalizePhoneHref(
-                configuredPhoneHref || phoneDisplay
             ),
             address: stringValue(
                 source.address,
@@ -2297,18 +2265,6 @@
             [
                 defaults.email,
                 identity.email
-            ],
-            [
-                "tel:" + defaults.phoneHref,
-                identity.phoneHref
-            ],
-            [
-                defaults.phoneHref,
-                identity.phoneHref.replace(/^tel:/, "")
-            ],
-            [
-                defaults.phoneDisplay,
-                identity.phoneDisplay
             ],
             [
                 defaults.address,
@@ -2399,10 +2355,6 @@
             identity.brandName;
         config.company.email =
             identity.email;
-        config.company.phone =
-            identity.phoneDisplay;
-        config.company.phoneHref =
-            identity.phoneHref;
         config.company.address =
             identity.address;
         config.company.website =
@@ -2625,71 +2577,6 @@
                 setElementText(
                     element,
                     identity.email
-                );
-            }
-
-            const ariaLabel =
-                element.getAttribute("aria-label");
-
-            if (ariaLabel) {
-                setElementAttribute(
-                    element,
-                    "aria-label",
-                    replaceIdentityString(
-                        ariaLabel,
-                        identity
-                    )
-                );
-            }
-        });
-    }
-
-    function updatePhoneElements(
-        root,
-        identity
-    ) {
-        queryElements(
-            root,
-            [
-                "[data-contact-phone]",
-                "[data-company-phone]"
-            ].join(",")
-        ).forEach(function (element) {
-            setElementText(
-                element,
-                identity.phoneDisplay
-            );
-
-            if (element.matches("a")) {
-                setElementAttribute(
-                    element,
-                    "href",
-                    identity.phoneHref
-                );
-            }
-        });
-
-        queryElements(
-            root,
-            [
-                "a[href^='tel:']",
-                "[data-contact-phone-link]"
-            ].join(",")
-        ).forEach(function (element) {
-            if (!element.matches("a")) {
-                return;
-            }
-
-            setElementAttribute(
-                element,
-                "href",
-                identity.phoneHref
-            );
-
-            if (/\d/.test(element.textContent)) {
-                setElementText(
-                    element,
-                    identity.phoneDisplay
                 );
             }
 
@@ -2986,11 +2873,6 @@
             );
 
             updateEmailElements(
-                target,
-                identity
-            );
-
-            updatePhoneElements(
                 target,
                 identity
             );
