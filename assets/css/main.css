@@ -889,7 +889,7 @@ textarea:focus-visible {
 .site-logo {
     display: inline-flex;
     align-items: baseline;
-    gap: 8px;
+    gap: clamp(10px, 0.85vw, 14px);
     width: fit-content;
     min-width: 0;
     white-space: nowrap;
@@ -900,18 +900,29 @@ textarea:focus-visible {
     font-size: clamp(1.85rem, 2.3vw, 2.5rem);
     font-style: italic;
     font-weight: 600;
-    letter-spacing: -0.055em;
+    letter-spacing: 0;
     line-height: 1;
 }
 
-.site-logo__secondary {
-    color: var(--color-primary-light);
+.site-logo__secondary,
+.site-logo__suffix {
+    color: #35f1b6;
     font-family: var(--font-heading);
     font-size: clamp(0.95rem, 1.25vw, 1.18rem);
     font-weight: 800;
-    letter-spacing: 0.08em;
+    letter-spacing: 0;
     line-height: 1;
+    margin-inline-start: 2px;
+    text-shadow: 0 0 18px rgba(53, 241, 182, 0.34);
     text-transform: uppercase;
+}
+
+.site-logo__secondary,
+.site-logo__suffix {
+    background: linear-gradient(135deg, #8fffe0 0%, #35f1b6 48%, #5fa8ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .site-nav {
@@ -2330,14 +2341,15 @@ html:not(.aos-ready) [data-aos],
 
 @media (max-width: 575px) {
     .site-logo {
-        gap: 6px;
+        gap: 8px;
     }
 
     .site-logo__primary {
         font-size: 1.85rem;
     }
 
-    .site-logo__secondary {
+    .site-logo__secondary,
+    .site-logo__suffix {
         font-size: 0.88rem;
     }
 
@@ -2419,7 +2431,8 @@ html:not(.aos-ready) [data-aos],
         font-size: 1.7rem;
     }
 
-    .site-logo__secondary {
+    .site-logo__secondary,
+    .site-logo__suffix {
         font-size: 0.8rem;
     }
 
