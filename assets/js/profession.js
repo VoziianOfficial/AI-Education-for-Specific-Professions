@@ -2507,6 +2507,192 @@
         updateActiveSection();
     }
 
+    function renderProfessionFormats(profession) {
+        const grid = document.querySelector(
+            "[data-profession-formats-grid]"
+        );
+
+        if (!grid || !profession) {
+            return;
+        }
+
+        const shortTitle = getText(
+            profession,
+            [
+                "shortTitle",
+                "label",
+                "profession"
+            ],
+            profession.title || "Professionals"
+        );
+
+        const tasks = getArray(
+            profession,
+            [
+                "tasks",
+                "taskExamples"
+            ]
+        );
+
+        const workflows = getArray(
+            profession,
+            [
+                "workflows",
+                "workflowExamples"
+            ]
+        );
+
+        const prompts = getArray(
+            profession,
+            [
+                "prompts",
+                "promptExamples"
+            ]
+        );
+
+        function createItems(source, fallbackItems) {
+            return fallbackItems.map(function (fallback, index) {
+                const entry = source[index];
+
+                return entry
+                    ? getEntryTitle(entry, fallback)
+                    : fallback;
+            });
+        }
+
+        const cards = [
+            {
+                number: "01",
+                label: "Role Guide",
+                title: shortTitle + " AI Guide",
+                description:
+                    "Begin with recognizable professional responsibilities and useful workplace context.",
+                icon: profession.icon || "briefcase-business",
+                href: "courses.html",
+                linkText: "Explore Guide",
+                items: createItems(
+                    tasks,
+                    [
+                        "Role-specific task examples",
+                        "Clear context preparation",
+                        "Useful input structures",
+                        "Human review checkpoints"
+                    ]
+                )
+            },
+            {
+                number: "02",
+                label: "Prompt Practice",
+                title: "Applied Prompt Work",
+                description:
+                    "Explore compact prompt examples connected with realistic tasks and controlled context.",
+                icon: "message-square-text",
+                href: "#prompts",
+                linkText: "View Prompts",
+                items: createItems(
+                    prompts,
+                    [
+                        "Controlled prompt context",
+                        "Clear output structure",
+                        "Missing-information flags",
+                        "Review before professional use"
+                    ]
+                )
+            },
+            {
+                number: "03",
+                label: "Workflow Learning",
+                title: "Practical Workflows",
+                description:
+                    "Connect preparation, AI support, verification, and final human responsibility.",
+                icon: "workflow",
+                href:
+                    "contact.html?inquiry=" +
+                    encodeURIComponent(
+                        profession.slug + "-team-learning"
+                    ),
+                linkText: "Start an Inquiry",
+                items: createItems(
+                    workflows,
+                    [
+                        "Workplace workflow examples",
+                        "AI contribution boundaries",
+                        "Verification requirements",
+                        "Human approval and ownership"
+                    ]
+                )
+            }
+        ];
+
+        grid.innerHTML = cards.map(function (card) {
+            return [
+                '<article class="profession-format-card">',
+
+                '<div class="profession-format-card__top">',
+
+                '<div class="profession-format-card__row">',
+
+                '<span class="profession-format-card__kicker">',
+                escapeHtml(card.label),
+                "</span>",
+
+                '<span class="profession-format-card__corner" aria-hidden="true">',
+                '<i data-lucide="',
+                escapeHtml(card.icon),
+                '"></i>',
+                "</span>",
+
+                "</div>",
+
+                '<span class="profession-format-card__number">',
+                escapeHtml(card.number),
+                "</span>",
+
+                '<h3 class="profession-format-card__title">',
+                escapeHtml(card.title),
+                "</h3>",
+
+                '<p class="profession-format-card__caption">',
+                escapeHtml(card.description),
+                "</p>",
+
+                "</div>",
+
+                '<div class="profession-format-card__bottom">',
+
+                '<ul class="profession-format-card__list">',
+
+                card.items.map(function (item) {
+                    return [
+                        "<li>",
+                        escapeHtml(item),
+                        "</li>"
+                    ].join("");
+                }).join(""),
+
+                "</ul>",
+
+                '<a class="profession-format-card__link" href="',
+                escapeHtml(card.href),
+                '">',
+
+                "<span>",
+                escapeHtml(card.linkText),
+                "</span>",
+
+                '<i data-lucide="arrow-right" aria-hidden="true"></i>',
+
+                "</a>",
+
+                "</div>",
+                "</article>"
+            ].join("");
+        }).join("");
+
+        Rolewise.refreshIcons();
+        Rolewise.refreshAOS();
+    }
+
     function initializeProfession() {
         if (!document.body.classList.contains("profession-page")) {
             return;
@@ -2524,6 +2710,7 @@
         renderTasks(profession);
         renderWorkflows(profession);
         renderPrompts(profession);
+        renderProfessionFormats(profession);
         renderTools(profession);
         renderReviewPoints(profession);
         renderLearningFormats(profession);
