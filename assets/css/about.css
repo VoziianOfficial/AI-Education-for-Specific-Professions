@@ -112,7 +112,9 @@
     position: relative;
     display: grid;
     place-items: center;
+    max-width: 100%;
     min-height: 560px;
+    overflow: hidden;
 }
 
 .about-why__image-wrap {
@@ -2894,7 +2896,9 @@
 .about-perspectives__slide {
     flex: 0 0 100%;
     width: 100%;
+    max-width: 100%;
     height: auto;
+    overflow: hidden;
     background: transparent;
 }
 
@@ -2903,7 +2907,9 @@
     grid-template-columns: minmax(430px, 0.88fr) minmax(0, 1.12fr);
     align-items: start;
     gap: clamp(62px, 8vw, 132px);
+    max-width: 100%;
     min-height: 650px;
+    overflow: hidden;
 }
 
 .about-perspectives__media {

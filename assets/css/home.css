@@ -1146,8 +1146,10 @@
 
 .home-marquee {
     position: relative;
+    max-width: 100%;
     padding-block: clamp(58px, 7vw, 96px);
-    overflow: clip;
+    overflow: hidden;
+    contain: layout paint;
     border-top: 1px solid var(--color-border);
     border-bottom: 1px solid var(--color-border);
     background: var(--color-charcoal);
@@ -1157,6 +1159,7 @@
 .home-marquee__viewport {
     display: flex;
     width: max-content;
+    max-width: none;
     animation: home-marquee-scroll 44s linear infinite;
 }
 
