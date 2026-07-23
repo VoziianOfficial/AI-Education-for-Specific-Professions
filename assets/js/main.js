@@ -149,10 +149,7 @@
         header.removeAttribute("data-aos-duration");
         header.removeAttribute("data-aos-offset");
 
-        header.classList.remove(
-            "aos-init",
-            "aos-animate"
-        );
+        header.classList.remove("aos-init", "aos-animate");
 
         header.style.removeProperty("transform");
         header.style.removeProperty("opacity");
@@ -160,11 +157,41 @@
 
         header.classList.add("site-header");
 
+        const configuredInfoItems = Array.isArray(
+            config.navigation.headerInfoItems
+        )
+            ? config.navigation.headerInfoItems
+            : [];
+
+        const platformItem = configuredInfoItems[2] || {
+            icon: "badge-info",
+            label: "Platform",
+            value: "Independent AI Education",
+            href: "about.html"
+        };
+
+        const headerInfoItems = [
+            {
+                icon: "mail",
+                label: "Email us",
+                value: config.company.email,
+                href: "mailto:" + config.company.email
+            },
+            {
+                icon: "map-pin",
+                label: "Location",
+                value: config.company.address,
+                href: ""
+            },
+            platformItem
+        ];
+
         const desktopLinks = config.navigation.headerLinks.map(function (item) {
             const hasDropdown = item.hasDropdown === true;
             const itemClass = hasDropdown
                 ? "site-nav__item site-nav__item--dropdown"
                 : "site-nav__item";
+
             const dropdownId = hasDropdown
                 ? "site-profession-dropdown"
                 : "";
@@ -196,35 +223,178 @@
                 ? '<div class="site-mobile-menu__dropdown" id="' + mobileDropdownId + '" aria-hidden="true" inert><div class="site-mobile-menu__dropdown-inner"><ul class="site-mobile-menu__dropdown-list">' + config.navigation.professionDropdown.map(function (profession) {
                     return '<li><a class="site-mobile-menu__dropdown-link" href="' + escapeHtml(safeHref(profession.href, "professions.html")) + '" data-nav-href="' + escapeHtml(profession.href) + '">' + escapeHtml(profession.label) + "</a></li>";
                 }).join("") + "</ul></div></div>"
+                
                 : "";
 
             return '<li class="site-mobile-menu__item" data-nav-page="' + escapeHtml(item.page) + '"><div class="site-mobile-menu__row"><a class="site-mobile-menu__link" href="' + escapeHtml(safeHref(item.href, "index.html")) + '" data-nav-href="' + escapeHtml(item.href) + '">' + escapeHtml(item.label) + "</a>" + toggle + "</div>" + dropdown + "</li>";
         }).join("");
 
+        const infoItemsDesktop = headerInfoItems.map(function (item) {
+            const valueMarkup = item.href
+                ? '<a class="site-header__info-value" href="' + escapeHtml(safeHref(item.href, "")) + '">' + escapeHtml(item.value) + "</a>"
+                : '<span class="site-header__info-value">' + escapeHtml(item.value) + "</span>";
+
+            return [
+                '<div class="site-header__info-item">',
+                '<div class="site-header__info-icon">',
+                '<i data-lucide="' + escapeHtml(item.icon || "circle") + '" aria-hidden="true"></i>',
+                "</div>",
+                '<div class="site-header__info-copy">',
+                '<span class="site-header__info-label">' + escapeHtml(item.label) + "</span>",
+                valueMarkup,
+                "</div>",
+                "</div>"
+            ].join("");
+        }).join("");
+
+        const infoItemsMobile = headerInfoItems.map(function (item) {
+            const valueMarkup = item.href
+                ? '<a class="site-mobile-menu__info-value" href="' + escapeHtml(safeHref(item.href, "")) + '">' + escapeHtml(item.value) + "</a>"
+                : '<span class="site-mobile-menu__info-value">' + escapeHtml(item.value) + "</span>";
+
+            return [
+                '<div class="site-mobile-menu__info-item">',
+                '<div class="site-mobile-menu__info-icon">',
+                '<i data-lucide="' + escapeHtml(item.icon || "circle") + '" aria-hidden="true"></i>',
+                "</div>",
+                '<div class="site-mobile-menu__info-copy">',
+                '<span class="site-mobile-menu__info-label">' + escapeHtml(item.label) + "</span>",
+                valueMarkup,
+                "</div>",
+                "</div>"
+            ].join("");
+        }).join("");
+
         header.innerHTML = [
-            '<div class="site-container-wide site-header__inner">',
-            '<a href="index.html" class="site-header__brand" aria-label="' + escapeHtml(config.brand.name + " home") + '">',
+            '<div class="site-header__top">',
+
+            '<div class="site-container-wide site-header__top-inner">',
+
+            '<a href="index.html" class="site-header__brand" aria-label="' +
+            escapeHtml(config.brand.name + " home") +
+            '">',
+
             buildLogoMarkup("site-header__logo"),
+
             "</a>",
+
             '<nav class="site-nav" aria-label="Primary navigation">',
-            '<ul class="site-nav__list">' + desktopLinks + "</ul>",
+
+            '<ul class="site-nav__list">' +
+            desktopLinks +
+            "</ul>",
+
             "</nav>",
+
             '<div class="site-header__actions">',
-            '<a class="ui-button ui-button--primary site-header__cta" href="' + escapeHtml(safeHref(config.navigation.headerCta.href, "professions.html")) + '"><span>' + escapeHtml(config.navigation.headerCta.label) + '</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></a>',
-            '<button class="site-menu-toggle" type="button" aria-expanded="false" aria-controls="site-mobile-menu" aria-label="Open menu"><span class="site-menu-toggle__lines" aria-hidden="true"><span></span></span></button>',
+
+            '<button class="site-menu-toggle" type="button" aria-expanded="false" aria-controls="site-mobile-menu" aria-label="Open menu">',
+
+            '<span class="site-menu-toggle__lines" aria-hidden="true">',
+            "<span></span>",
+            "</span>",
+
+            "</button>",
+
             "</div>",
+
             "</div>",
+
+            "</div>",
+
+            '<div class="site-header__bottom">',
+
+            '<div class="site-container-wide site-header__bottom-inner">',
+
+            '<div class="site-header__info-grid">' +
+            infoItemsDesktop +
+            "</div>",
+
+            '<div class="site-header__bottom-action">',
+
+            '<a class="site-header__bottom-cta" href="' +
+            escapeHtml(
+                safeHref(
+                    config.navigation.headerCta.href,
+                    "professions.html"
+                )
+            ) +
+            '">',
+
+            '<span class="site-header__bottom-cta-label">' +
+            escapeHtml(config.navigation.headerCta.label) +
+            "</span>",
+
+            '<span class="site-header__bottom-cta-icon">',
+
+            '<i data-lucide="arrow-up-right" aria-hidden="true"></i>',
+
+            "</span>",
+
+            "</a>",
+
+            "</div>",
+
+            "</div>",
+
+            "</div>",
+
             '<div class="site-mobile-menu" id="site-mobile-menu" aria-hidden="true">',
+
             '<div class="site-mobile-menu__inner site-container">',
-            '<nav class="site-mobile-menu__nav" aria-label="Mobile navigation"><ul>' + mobileLinks + "</ul></nav>",
+
+            '<nav class="site-mobile-menu__nav" aria-label="Mobile navigation">',
+
+            "<ul>" +
+            mobileLinks +
+            "</ul>",
+
+            "</nav>",
+
+            '<div class="site-mobile-menu__info-grid">' +
+            infoItemsMobile +
+            "</div>",
+
             '<div class="site-mobile-menu__footer">',
-            '<p class="site-mobile-menu__footer-copy">' + escapeHtml(config.brand.shortDescription) + "</p>",
-            '<a class="ui-button ui-button--primary" href="' + escapeHtml(safeHref(config.navigation.headerCta.href, "professions.html")) + '"><span>' + escapeHtml(config.navigation.headerCta.label) + '</span><i data-lucide="arrow-up-right" aria-hidden="true"></i></a>',
-            '<div class="site-mobile-menu__footer-links">' + config.navigation.legalLinks.map(function (item) {
-                return '<a href="' + escapeHtml(safeHref(item.href, "privacy-policy.html")) + '">' + escapeHtml(item.label) + "</a>";
-            }).join("") + "</div>",
+
+            '<a class="ui-button ui-button--primary" href="' +
+            escapeHtml(
+                safeHref(
+                    config.navigation.headerCta.href,
+                    "professions.html"
+                )
+            ) +
+            '">',
+
+            "<span>" +
+            escapeHtml(config.navigation.headerCta.label) +
+            "</span>",
+
+            '<i data-lucide="arrow-up-right" aria-hidden="true"></i>',
+
+            "</a>",
+
+            '<div class="site-mobile-menu__footer-links">' +
+
+            config.navigation.legalLinks.map(function (item) {
+                return '<a href="' +
+                    escapeHtml(
+                        safeHref(
+                            item.href,
+                            "privacy-policy.html"
+                        )
+                    ) +
+                    '">' +
+                    escapeHtml(item.label) +
+                    "</a>";
+            }).join("") +
+
             "</div>",
+
             "</div>",
+
+            "</div>",
+
             "</div>"
         ].join("");
     }

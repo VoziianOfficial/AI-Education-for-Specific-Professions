@@ -100,6 +100,26 @@ window.ROLEWISE_CONFIG = {
             "label": "Explore Professions",
             "href": "professions.html"
         },
+        "headerInfoItems": [
+            {
+                "icon": "mail",
+                "label": "Email us",
+                "value": "hello@rolewise.ai",
+                "href": "mailto:hello@rolewise.ai"
+            },
+            {
+                "icon": "map-pin",
+                "label": "Location",
+                "value": "Stockholm, Sweden",
+                "href": ""
+            },
+            {
+                "icon": "badge-info",
+                "label": "Platform",
+                "value": "Independent AI Education",
+                "href": "about.html"
+            }
+        ],
         "footerPrimaryLinks": [
             {
                 "label": "Home",
