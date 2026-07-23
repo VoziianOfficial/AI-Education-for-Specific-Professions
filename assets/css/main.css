@@ -825,7 +825,8 @@ textarea:focus-visible {
     transition: grid-template-rows var(--transition-base);
 }
 
-.ui-accordion__trigger[aria-expanded="true"]+.ui-accordion__panel {
+.ui-accordion__trigger[aria-expanded="true"]+.ui-accordion__panel,
+.ui-accordion__item.is-open .ui-accordion__panel {
     grid-template-rows: 1fr;
 }
 

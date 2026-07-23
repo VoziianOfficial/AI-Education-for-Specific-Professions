@@ -1462,8 +1462,7 @@
                     }
                 },
                 {
-                    rootMargin:
-                        "calc((var(--header-height) + 90px) * -1) 0px -55% 0px",
+                    rootMargin: "-170px 0px -55% 0px",
                     threshold: [0.08, 0.2, 0.4, 0.6]
                 }
             );
@@ -1473,6 +1472,116 @@
         });
 
         activate(sections[0].id);
+    }
+
+    function renderProfessionFeatureCards() {
+        const grid = document.querySelector(
+            "[data-profession-feature-cards-grid]"
+        );
+
+        if (!grid) {
+            return;
+        }
+
+        const currentProfession = getCurrentProfession();
+
+        if (!currentProfession) {
+            return;
+        }
+
+        const workflows = Array.isArray(
+            currentProfession.workflows
+        )
+            ? currentProfession.workflows
+            : [];
+
+        const tasks = Array.isArray(
+            currentProfession.tasks
+        )
+            ? currentProfession.tasks
+            : [];
+
+        const cardStyles = [
+            {
+                tone: "lime",
+                icon: currentProfession.icon || "briefcase-business"
+            },
+            {
+                tone: "dark",
+                icon: "workflow"
+            },
+            {
+                tone: "gradient",
+                icon: "shield-check"
+            }
+        ];
+
+        const cards = cardStyles.map(function (style, index) {
+            const workflow = workflows[index] || {};
+            const task = tasks[index] || "";
+
+            const title =
+                workflow.title ||
+                task ||
+                "Practical AI Workflow";
+
+            const description =
+                workflow.summary ||
+                workflow.description ||
+                (
+                    task
+                        ? "Explore how AI may support " +
+                        task.toLowerCase() +
+                        " while keeping professional context, verification, and human review visible."
+                        : "Explore a practical workflow with clear inputs, responsible boundaries, and human review."
+                );
+
+            return {
+                title: title,
+                description: description,
+                icon: style.icon,
+                tone: style.tone
+            };
+        });
+
+        grid.innerHTML = cards.map(function (card, index) {
+            return [
+                '<article class="profession-feature-card profession-feature-card--',
+                Rolewise.escapeHtml(card.tone),
+                '" data-aos="fade-up" data-aos-delay="',
+                String(index * 60),
+                '">',
+
+                '<div class="profession-feature-card__content">',
+
+                '<h3 class="profession-feature-card__title">',
+                Rolewise.escapeHtml(card.title),
+                "</h3>",
+
+                '<p class="profession-feature-card__text">',
+                Rolewise.escapeHtml(card.description),
+                "</p>",
+
+                "</div>",
+
+                '<a class="profession-feature-card__link" href="#workflows" aria-label="Explore ',
+                Rolewise.escapeHtml(card.title),
+                '">',
+
+                '<i data-lucide="arrow-up-right" aria-hidden="true"></i>',
+
+                "</a>",
+
+                '<i class="profession-feature-card__icon" data-lucide="',
+                Rolewise.escapeHtml(card.icon),
+                '" aria-hidden="true"></i>',
+
+                "</article>"
+            ].join("");
+        }).join("");
+
+        Rolewise.refreshIcons();
+        Rolewise.refreshAOS();
     }
 
     function initializeProfession() {
@@ -1498,6 +1607,7 @@
         renderFaq(profession);
         renderDisclaimer(profession);
         renderNextLinks(profession);
+        renderProfessionFeatureCards();
         initSubnavigation();
         Rolewise.refreshGlobalUI(document);
     }

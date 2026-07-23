@@ -1116,7 +1116,57 @@
     function initAccordions(scope) {
         const root = scope || document;
 
-        root.querySelectorAll(".ui-accordion").forEach(function (accordion) {
+        function findPanel(accordion, trigger) {
+            const panelId = trigger.getAttribute("aria-controls");
+
+            if (panelId) {
+                const panel = document.getElementById(panelId);
+
+                if (
+                    panel &&
+                    accordion.contains(panel)
+                ) {
+                    return panel;
+                }
+            }
+
+            return trigger.parentElement
+                ? trigger.parentElement.nextElementSibling
+                : null;
+        }
+
+        function setExpanded(accordion, trigger, expanded) {
+            const panel = findPanel(
+                accordion,
+                trigger
+            );
+
+            trigger.setAttribute(
+                "aria-expanded",
+                String(expanded)
+            );
+
+            if (panel) {
+                panel.hidden = !expanded;
+                panel.classList.toggle(
+                    "is-open",
+                    expanded
+                );
+            }
+
+            const item = trigger.closest(
+                "[data-accordion-item]"
+            );
+
+            if (item) {
+                item.classList.toggle(
+                    "is-open",
+                    expanded
+                );
+            }
+        }
+
+        root.querySelectorAll("[data-accordion]").forEach(function (accordion) {
             if (accordion.dataset.initialized) {
                 return;
             }
@@ -1126,34 +1176,53 @@
             const single =
                 accordion.dataset.accordionSingle === "true";
 
-            accordion.querySelectorAll(".ui-accordion__trigger").forEach(function (trigger) {
-                trigger.addEventListener("click", function () {
-                    const expanded =
-                        trigger.getAttribute("aria-expanded") === "true";
+            accordion.querySelectorAll("[data-accordion-trigger]").forEach(function (trigger) {
+                setExpanded(
+                    accordion,
+                    trigger,
+                    trigger.getAttribute("aria-expanded") === "true"
+                );
+            });
 
-                    if (single && !expanded) {
-                        accordion.querySelectorAll(
-                            '.ui-accordion__trigger[aria-expanded="true"]'
-                        ).forEach(function (openTrigger) {
-                            if (openTrigger !== trigger) {
-                                openTrigger.setAttribute(
-                                    "aria-expanded",
-                                    "false"
-                                );
-                            }
-                        });
-                    }
+            accordion.addEventListener("click", function (event) {
+                const trigger = event.target.closest(
+                    "[data-accordion-trigger]"
+                );
 
-                    trigger.setAttribute(
-                        "aria-expanded",
-                        String(!expanded)
-                    );
+                if (
+                    !trigger ||
+                    !accordion.contains(trigger)
+                ) {
+                    return;
+                }
 
-                    window.setTimeout(
-                        refreshSchemas,
-                        0
-                    );
-                });
+                const expanded =
+                    trigger.getAttribute("aria-expanded") === "true";
+
+                if (single && !expanded) {
+                    accordion.querySelectorAll(
+                        '[data-accordion-trigger][aria-expanded="true"]'
+                    ).forEach(function (openTrigger) {
+                        if (openTrigger !== trigger) {
+                            setExpanded(
+                                accordion,
+                                openTrigger,
+                                false
+                            );
+                        }
+                    });
+                }
+
+                setExpanded(
+                    accordion,
+                    trigger,
+                    !expanded
+                );
+
+                window.setTimeout(
+                    refreshSchemas,
+                    0
+                );
             });
         });
     }
