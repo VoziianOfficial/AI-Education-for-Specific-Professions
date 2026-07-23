@@ -3210,3 +3210,442 @@
         transform: none;
     }
 }
+
+/* =========================================================
+   PROFESSION PAGE — INFINITE SECTION SUBNAV
+   ========================================================= */
+
+.profession-subnav {
+    --profession-subnav-speed: 42s;
+
+    position: sticky;
+    top: var(--header-height);
+    z-index: 900;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    border-top: 1px solid rgba(154, 145, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+    background:
+        linear-gradient(90deg,
+            rgba(117, 103, 255, 0.08),
+            transparent 26%,
+            transparent 74%,
+            rgba(117, 103, 255, 0.06)),
+        var(--color-charcoal);
+    color: var(--color-white);
+    box-shadow: 0 12px 30px rgba(8, 10, 13, 0.13);
+    isolation: isolate;
+}
+
+/* Тонкая лиловая линия */
+
+.profession-subnav::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 5;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(117, 103, 255, 0.94) 35%,
+            rgba(154, 145, 255, 0.78) 65%,
+            transparent);
+    pointer-events: none;
+    content: "";
+}
+
+/* Мягко скрываем элементы на краях */
+
+.profession-subnav::after {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    background: linear-gradient(90deg,
+            var(--color-charcoal) 0,
+            rgba(17, 21, 26, 0.94) 2%,
+            transparent 8%,
+            transparent 92%,
+            rgba(17, 21, 26, 0.94) 98%,
+            var(--color-charcoal) 100%);
+    pointer-events: none;
+    content: "";
+}
+
+.profession-subnav__viewport {
+    width: 100%;
+    overflow: hidden;
+}
+
+.profession-subnav__track {
+    display: flex;
+    align-items: stretch;
+    width: max-content;
+    min-width: max-content;
+    animation:
+        profession-subnav-marquee var(--profession-subnav-speed) linear infinite;
+    will-change: transform;
+}
+
+.profession-subnav:hover .profession-subnav__track,
+.profession-subnav:focus-within .profession-subnav__track {
+    animation-play-state: paused;
+}
+
+.profession-subnav__group {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: stretch;
+    min-width: max-content;
+}
+
+/* Отступ между первым и дублированным набором */
+
+.profession-subnav__group::after {
+    flex: 0 0 26px;
+    width: 26px;
+    content: "";
+}
+
+.profession-subnav__link {
+    position: relative;
+    isolation: isolate;
+    display: inline-grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    gap: 9px;
+    flex: 0 0 auto;
+    min-height: 58px;
+    padding: 10px clamp(22px, 2vw, 34px);
+    border-right: 1px solid rgba(255, 255, 255, 0.09);
+    color: rgba(247, 248, 246, 0.58);
+    font-family: var(--font-heading);
+    white-space: nowrap;
+    transition:
+        color var(--transition-fast),
+        background-color var(--transition-fast);
+}
+
+/* Не огромная таблетка, а аккуратная подсветка */
+
+.profession-subnav__link::before {
+    position: absolute;
+    inset: 9px 10px;
+    z-index: -1;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    background: linear-gradient(105deg,
+            rgba(117, 103, 255, 0.18),
+            rgba(154, 145, 255, 0.06));
+    opacity: 0;
+    content: "";
+    transform: scaleX(0.88);
+    transition:
+        opacity var(--transition-fast),
+        border-color var(--transition-fast),
+        transform var(--transition-base);
+}
+
+.profession-subnav__link:hover,
+.profession-subnav__link:focus-visible {
+    color: var(--color-white);
+}
+
+.profession-subnav__link:hover::before,
+.profession-subnav__link:focus-visible::before {
+    border-color: rgba(154, 145, 255, 0.23);
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+/* Номер раздела */
+
+.profession-subnav__number {
+    color: rgba(154, 145, 255, 0.54);
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    line-height: 1;
+    transition:
+        color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.profession-subnav__label {
+    position: relative;
+    font-size: clamp(0.74rem, 0.78vw, 0.86rem);
+    font-weight: 760;
+    letter-spacing: -0.01em;
+    line-height: 1;
+    text-transform: uppercase;
+    transition: transform var(--transition-base);
+}
+
+/* Маленькая линия под названием */
+
+.profession-subnav__label::after {
+    position: absolute;
+    right: 0;
+    bottom: -7px;
+    left: 0;
+    height: 1px;
+    border-radius: 999px;
+    background: var(--color-primary-light);
+    content: "";
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--transition-base);
+}
+
+/* Active section */
+
+.profession-subnav__link.is-active {
+    color: var(--color-white);
+}
+
+.profession-subnav__link.is-active::before {
+    border-color: rgba(154, 145, 255, 0.3);
+    background: linear-gradient(105deg,
+            rgba(117, 103, 255, 0.26),
+            rgba(117, 103, 255, 0.08));
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+.profession-subnav__link.is-active .profession-subnav__number {
+    color: var(--color-primary-light);
+}
+
+.profession-subnav__link.is-active .profession-subnav__label::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+/* Hover movement */
+
+.profession-subnav__link:hover .profession-subnav__number,
+.profession-subnav__link:focus-visible .profession-subnav__number {
+    color: var(--color-primary-light);
+    transform: translateX(2px);
+}
+
+.profession-subnav__link:hover .profession-subnav__label,
+.profession-subnav__link:focus-visible .profession-subnav__label {
+    transform: translateX(2px);
+}
+
+.profession-subnav__link:hover .profession-subnav__label::after,
+.profession-subnav__link:focus-visible .profession-subnav__label::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}
+
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 991px) {
+    .profession-subnav {
+        --profession-subnav-speed: 36s;
+
+        top: var(--header-height);
+    }
+
+    .profession-subnav__link {
+        min-height: 54px;
+        padding-inline: 24px;
+    }
+
+    .profession-subnav__label {
+        font-size: 0.76rem;
+    }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 575px) {
+    .profession-subnav {
+        --profession-subnav-speed: 31s;
+    }
+
+    .profession-subnav::after {
+        background: linear-gradient(90deg,
+                var(--color-charcoal) 0,
+                transparent 12%,
+                transparent 88%,
+                var(--color-charcoal) 100%);
+    }
+
+    .profession-subnav__link {
+        min-height: 50px;
+        gap: 8px;
+        padding-inline: 20px;
+    }
+
+    .profession-subnav__number {
+        font-size: 0.54rem;
+    }
+
+    .profession-subnav__label {
+        font-size: 0.72rem;
+    }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .profession-subnav {
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .profession-subnav::-webkit-scrollbar {
+        display: none;
+    }
+
+    .profession-subnav__viewport {
+        overflow: visible;
+    }
+
+    .profession-subnav__track {
+        animation: none;
+    }
+
+    .profession-subnav__group--duplicate {
+        display: none;
+    }
+}
+
+/* =========================================================
+   PROFESSION SUBNAV — RELIABLE INFINITE MARQUEE
+   ========================================================= */
+
+.profession-subnav {
+    --profession-subnav-speed: 38s;
+
+    position: sticky;
+    top: var(--header-height);
+    z-index: 900;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.profession-subnav__viewport {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.profession-subnav__track {
+    display: flex;
+    align-items: stretch;
+    width: max-content;
+    min-width: max-content;
+    animation: none;
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+}
+
+.profession-subnav__track.is-ready {
+    animation:
+        profession-subnav-marquee-measured var(--profession-subnav-speed) linear infinite;
+}
+
+.profession-subnav:hover .profession-subnav__track,
+.profession-subnav:focus-within .profession-subnav__track {
+    animation-play-state: paused;
+}
+
+.profession-subnav__group {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: stretch;
+    width: max-content;
+    min-width: max-content;
+
+    /*
+     * Этот промежуток входит в измеряемую
+     * JavaScript ширину группы.
+     */
+    padding-right: 26px;
+}
+
+/*
+ * Убираем старый псевдоэлемент-промежуток,
+ * поскольку его ширина могла некорректно
+ * участвовать в вычислении 50%.
+ */
+.profession-subnav__group::after {
+    display: none !important;
+    content: none !important;
+}
+
+.profession-subnav__group--duplicate {
+    flex: 0 0 auto;
+}
+
+/*
+ * Копии не скрыты через aria-hidden.
+ * Они кликабельны мышкой, но tabindex="-1"
+ * исключает их из повторной Tab-навигации.
+ */
+.profession-subnav__group--duplicate .profession-subnav__link {
+    cursor: pointer;
+}
+
+@keyframes profession-subnav-marquee-measured {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        transform: translate3d(var(--profession-subnav-shift),
+                0,
+                0);
+    }
+}
+
+@media (max-width: 991px) {
+    .profession-subnav {
+        --profession-subnav-speed: 34s;
+    }
+}
+
+@media (max-width: 575px) {
+    .profession-subnav {
+        --profession-subnav-speed: 30s;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .profession-subnav {
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .profession-subnav::-webkit-scrollbar {
+        display: none;
+    }
+
+    .profession-subnav__viewport {
+        overflow: visible;
+    }
+
+    .profession-subnav__track,
+    .profession-subnav__track.is-ready {
+        animation: none !important;
+        transform: none !important;
+    }
+
+    .profession-subnav__group--duplicate {
+        display: none;
+    }
+}

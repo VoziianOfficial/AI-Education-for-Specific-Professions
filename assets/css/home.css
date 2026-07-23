@@ -3725,3 +3725,355 @@
         white-space: normal;
     }
 }
+
+/* =========================================================
+   HOME PROFESSION INFINITE MARQUEE
+   ========================================================= */
+
+.home-profession-rail {
+    --profession-rail-duration: 34s;
+
+    position: relative;
+    z-index: 5;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    border-top: 1px solid rgba(154, 145, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+    background:
+        linear-gradient(90deg,
+            rgba(117, 103, 255, 0.08),
+            transparent 22%,
+            transparent 78%,
+            rgba(84, 214, 208, 0.055)),
+        var(--color-black);
+    color: var(--color-white);
+    isolation: isolate;
+}
+
+/* Тонкая цветная линия сверху */
+
+.home-profession-rail::before {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 4;
+    height: 1px;
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(117, 103, 255, 0.9) 30%,
+            rgba(84, 214, 208, 0.72) 70%,
+            transparent);
+    opacity: 0.65;
+    pointer-events: none;
+    content: "";
+}
+
+/* Затемнение краёв, чтобы элементы красиво появлялись */
+
+.home-profession-rail::after {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    background: linear-gradient(90deg,
+            var(--color-black) 0,
+            rgba(8, 10, 13, 0.92) 2%,
+            transparent 9%,
+            transparent 91%,
+            rgba(8, 10, 13, 0.92) 98%,
+            var(--color-black) 100%);
+    pointer-events: none;
+    content: "";
+}
+
+/* Бесконечно движущаяся дорожка */
+
+.home-profession-rail__track {
+    display: flex;
+    align-items: stretch;
+    width: max-content;
+    min-width: max-content;
+    overflow: visible;
+    scroll-snap-type: none;
+    animation:
+        home-profession-marquee var(--profession-rail-duration) linear infinite;
+    will-change: transform;
+}
+
+/*
+ * На hover или при работе с клавиатуры полоса останавливается,
+ * чтобы по ссылке было удобно нажать.
+ */
+
+.home-profession-rail:hover .home-profession-rail__track,
+.home-profession-rail:focus-within .home-profession-rail__track {
+    animation-play-state: paused;
+}
+
+.home-profession-rail__item,
+.home-profession-rail__item:first-child,
+.home-profession-rail__item:last-child {
+    position: relative;
+    flex: 0 0 auto;
+    min-width: 0;
+    margin: 0;
+    border: 0;
+    scroll-snap-align: none;
+}
+
+/* Разделитель между пунктами */
+
+.home-profession-rail__item::after {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 1px;
+    height: 22px;
+    background: rgba(255, 255, 255, 0.1);
+    content: "";
+    transform: translateY(-50%);
+}
+
+/* Ссылка средней высоты */
+
+.home-profession-rail__link {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    grid-template-columns:
+        auto auto minmax(max-content, 1fr) auto;
+    align-items: center;
+    gap: 11px;
+    min-width: clamp(210px, 15vw, 258px);
+    min-height: 66px;
+    padding: 10px clamp(22px, 2vw, 34px);
+    overflow: hidden;
+    border-radius: 0;
+    background: transparent;
+    color: rgba(247, 248, 246, 0.64);
+    transition:
+        color var(--transition-fast),
+        background-color var(--transition-fast);
+}
+
+/* Мягкое лиловое заполнение при hover */
+
+.home-profession-rail__link::before {
+    position: absolute;
+    inset: 8px 10px;
+    z-index: -1;
+    border: 1px solid rgba(154, 145, 255, 0);
+    border-radius: 999px;
+    background:
+        linear-gradient(100deg,
+            rgba(117, 103, 255, 0.18),
+            rgba(84, 214, 208, 0.055));
+    opacity: 0;
+    content: "";
+    transform: scale(0.92);
+    transition:
+        opacity var(--transition-fast),
+        transform var(--transition-base),
+        border-color var(--transition-fast);
+}
+
+.home-profession-rail__link:hover,
+.home-profession-rail__link:focus-visible {
+    color: var(--color-white);
+}
+
+.home-profession-rail__link:hover::before,
+.home-profession-rail__link:focus-visible::before {
+    border-color: rgba(154, 145, 255, 0.24);
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Номер */
+
+.home-profession-rail__number {
+    color: rgba(154, 145, 255, 0.58);
+    font-family: var(--font-heading);
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    line-height: 1;
+    transition:
+        color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+.home-profession-rail__link:hover .home-profession-rail__number,
+.home-profession-rail__link:focus-visible .home-profession-rail__number {
+    color: var(--color-primary-light);
+    transform: translateX(2px);
+}
+
+/* Иконка */
+
+.home-profession-rail__icon {
+    width: 20px;
+    height: 20px;
+    color: var(--color-primary-light);
+    stroke-width: 1.7;
+    transition:
+        color var(--transition-fast),
+        filter var(--transition-fast),
+        transform var(--transition-base);
+}
+
+.home-profession-rail__link:hover .home-profession-rail__icon,
+.home-profession-rail__link:focus-visible .home-profession-rail__icon {
+    color: var(--color-cyan);
+    filter: drop-shadow(0 0 8px rgba(84, 214, 208, 0.34));
+    transform: rotate(-5deg) scale(1.08);
+}
+
+/* Название профессии */
+
+.home-profession-rail__label {
+    min-width: 0;
+    font-family: var(--font-heading);
+    font-size: clamp(0.78rem, 0.82vw, 0.92rem);
+    font-weight: 750;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+    white-space: nowrap;
+    transition: transform var(--transition-base);
+}
+
+.home-profession-rail__link:hover .home-profession-rail__label,
+.home-profession-rail__link:focus-visible .home-profession-rail__label {
+    transform: translateX(2px);
+}
+
+/* Стрелка появляется только при взаимодействии */
+
+.home-profession-rail__arrow {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    color: var(--color-cyan);
+    opacity: 0;
+    transform: translate(-6px, 6px);
+    transition:
+        opacity var(--transition-fast),
+        transform var(--transition-base);
+}
+
+.home-profession-rail__arrow svg {
+    width: 15px;
+    height: 15px;
+    stroke-width: 1.8;
+}
+
+.home-profession-rail__link:hover .home-profession-rail__arrow,
+.home-profession-rail__link:focus-visible .home-profession-rail__arrow {
+    opacity: 1;
+    transform: translate(0, 0);
+}
+
+/* Бесшовный цикл — половина дорожки является копией */
+
+@keyframes home-profession-marquee {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        transform: translate3d(-50%, 0, 0);
+    }
+}
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 991px) {
+    .home-profession-rail {
+        --profession-rail-duration: 29s;
+    }
+
+    .home-profession-rail__track {
+        display: flex;
+        overflow: visible;
+        scroll-padding-inline: 0;
+        scroll-snap-type: none;
+    }
+
+    .home-profession-rail__item,
+    .home-profession-rail__item:first-child,
+    .home-profession-rail__item:last-child {
+        flex: 0 0 auto;
+        margin: 0;
+    }
+
+    .home-profession-rail__link {
+        min-width: 218px;
+        min-height: 62px;
+        padding-inline: 24px;
+    }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 575px) {
+    .home-profession-rail {
+        --profession-rail-duration: 25s;
+    }
+
+    .home-profession-rail::after {
+        background: linear-gradient(90deg,
+                var(--color-black) 0,
+                transparent 12%,
+                transparent 88%,
+                var(--color-black) 100%);
+    }
+
+    .home-profession-rail__link {
+        min-width: 204px;
+        min-height: 58px;
+        gap: 9px;
+        padding-inline: 20px;
+    }
+
+    .home-profession-rail__number {
+        font-size: 0.58rem;
+    }
+
+    .home-profession-rail__icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .home-profession-rail__label {
+        font-size: 0.78rem;
+    }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .home-profession-rail {
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+
+    .home-profession-rail::-webkit-scrollbar {
+        display: none;
+    }
+
+    .home-profession-rail__track {
+        animation: none;
+    }
+
+    .home-profession-rail__item[aria-hidden="true"] {
+        display: none;
+    }
+}

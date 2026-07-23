@@ -203,28 +203,68 @@
     }
 
     function renderProfessionRail() {
-        const track = document.querySelector("[data-home-profession-rail]");
+        const track = document.querySelector(
+            "[data-home-profession-rail]"
+        );
 
-        if (!track) {
+        if (!track || !Array.isArray(config.professions)) {
             return;
         }
 
-        track.innerHTML = config.professions.map(function (profession) {
-            return [
-                '<li class="home-profession-rail__item">',
-                '<a class="home-profession-rail__link" href="',
-                escapeHtml(profession.page),
-                '">',
-                '<i class="home-profession-rail__icon" data-lucide="',
-                escapeHtml(profession.icon),
-                '" aria-hidden="true"></i>',
-                '<span class="home-profession-rail__label">',
-                escapeHtml(profession.shortTitle),
-                "</span>",
-                "</a>",
-                "</li>"
-            ].join("");
-        }).join("");
+        function createProfessionItems(isDuplicate) {
+            return config.professions.map(function (profession, index) {
+                const duplicateAttributes = isDuplicate
+                    ? ' aria-hidden="true"'
+                    : "";
+
+                const linkTabIndex = isDuplicate
+                    ? ' tabindex="-1"'
+                    : "";
+
+                return [
+                    '<li class="home-profession-rail__item"',
+                    duplicateAttributes,
+                    ">",
+
+                    '<a class="home-profession-rail__link"',
+                    ' href="',
+                    escapeHtml(profession.page),
+                    '"',
+                    linkTabIndex,
+                    ">",
+
+                    '<span class="home-profession-rail__number">',
+                    String(index + 1).padStart(2, "0"),
+                    "</span>",
+
+                    '<i class="home-profession-rail__icon"',
+                    ' data-lucide="',
+                    escapeHtml(profession.icon),
+                    '"',
+                    ' aria-hidden="true"></i>',
+
+                    '<span class="home-profession-rail__label">',
+                    escapeHtml(profession.shortTitle),
+                    "</span>",
+
+                    '<span class="home-profession-rail__arrow"',
+                    ' aria-hidden="true">',
+
+                    '<i data-lucide="arrow-up-right"></i>',
+
+                    "</span>",
+
+                    "</a>",
+                    "</li>"
+                ].join("");
+            }).join("");
+        }
+
+        const originalItems = createProfessionItems(false);
+        const duplicateItems = createProfessionItems(true);
+
+       
+        track.innerHTML = originalItems + duplicateItems;
 
         Rolewise.refreshIcons();
     }
@@ -1180,3 +1220,4 @@
         initializeHome();
     }
 }());
+

@@ -1408,70 +1408,415 @@
             "[data-profession-subnav]"
         );
 
-        if (!nav) {
+        if (!nav || nav.dataset.initialized === "true") {
             return;
         }
 
-        const links = Array.from(
-            nav.querySelectorAll('a[href^="#"]')
+        const viewport = nav.querySelector(
+            ".profession-subnav__viewport"
         );
 
-        const sections = links.map(function (link) {
-            const id = link.getAttribute("href").slice(1);
+        const track = nav.querySelector(
+            "[data-profession-subnav-track]"
+        );
 
-            return document.getElementById(id);
-        }).filter(Boolean);
+        const sourceGroup = nav.querySelector(
+            "[data-profession-subnav-group]"
+        );
 
-        if (!links.length || !sections.length) {
+        if (!viewport || !track || !sourceGroup) {
             return;
         }
 
-        function activate(id) {
-            links.forEach(function (link) {
+        nav.dataset.initialized = "true";
+
+        function getTarget(link) {
+            const href = link.getAttribute("href");
+
+            if (
+                !href ||
+                !href.startsWith("#") ||
+                href.length < 2
+            ) {
+                return null;
+            }
+
+            return document.getElementById(
+                href.slice(1)
+            );
+        }
+
+        /*
+         * Удаляем пункты, для которых на текущей
+         * странице нет соответствующей секции.
+         */
+        sourceGroup.querySelectorAll(
+            ".profession-subnav__link"
+        ).forEach(function (link) {
+            if (!getTarget(link)) {
+                link.remove();
+            }
+        });
+
+        const originalLinks = Array.from(
+            sourceGroup.querySelectorAll(
+                ".profession-subnav__link"
+            )
+        );
+
+        if (!originalLinks.length) {
+            nav.hidden = true;
+            return;
+        }
+
+        /*
+         * После удаления отсутствующих секций
+         * перенумеровываем ссылки.
+         */
+        originalLinks.forEach(function (link, index) {
+            const number = link.querySelector(
+                ".profession-subnav__number"
+            );
+
+            if (number) {
+                number.textContent = String(
+                    index + 1
+                ).padStart(2, "0");
+            }
+        });
+
+        function createDuplicateGroup() {
+            const clone = sourceGroup.cloneNode(true);
+
+            clone.removeAttribute(
+                "data-profession-subnav-group"
+            );
+
+            clone.classList.add(
+                "profession-subnav__group--duplicate"
+            );
+
+            clone.dataset.marqueeClone = "true";
+
+            /*
+             * ВАЖНО:
+             * aria-hidden здесь больше не ставим.
+             * Поэтому браузер не будет ругаться,
+             * когда пользователь нажимает на копию.
+             *
+             * tabindex="-1" исключает копии только
+             * из последовательной Tab-навигации.
+             */
+            clone.querySelectorAll(
+                ".profession-subnav__link"
+            ).forEach(function (link) {
+                link.setAttribute("tabindex", "-1");
+                link.removeAttribute("aria-current");
+            });
+
+            return clone;
+        }
+
+        let resizeFrame = 0;
+
+        function rebuildMarquee() {
+            track.querySelectorAll(
+                ".profession-subnav__group--duplicate"
+            ).forEach(function (group) {
+                group.remove();
+            });
+
+            track.classList.remove("is-ready");
+
+            track.style.removeProperty(
+                "--profession-subnav-shift"
+            );
+
+            const sourceWidth = Math.ceil(
+                sourceGroup.getBoundingClientRect().width
+            );
+
+            const viewportWidth = Math.ceil(
+                viewport.getBoundingClientRect().width
+            );
+
+            if (!sourceWidth || !viewportWidth) {
+                return;
+            }
+
+            /*
+             * Создаём достаточно копий, чтобы справа
+             * никогда не появился пустой участок.
+             */
+            const requiredGroupCount = Math.max(
+                3,
+                Math.ceil(
+                    (viewportWidth + sourceWidth) /
+                    sourceWidth
+                ) + 1
+            );
+
+            for (
+                let index = 1;
+                index < requiredGroupCount;
+                index += 1
+            ) {
+                track.appendChild(
+                    createDuplicateGroup()
+                );
+            }
+
+            /*
+             * Один цикл равен точной ширине
+             * одной исходной группы.
+             */
+            track.style.setProperty(
+                "--profession-subnav-shift",
+                "-" + sourceWidth + "px"
+            );
+
+            /*
+             * Принудительный layout нужен,
+             * чтобы после resize анимация
+             * перезапустилась без старых размеров.
+             */
+            void track.offsetWidth;
+
+            track.classList.add("is-ready");
+        }
+
+        function requestMarqueeRebuild() {
+            if (resizeFrame) {
+                return;
+            }
+
+            resizeFrame = window.requestAnimationFrame(
+                function () {
+                    resizeFrame = 0;
+                    rebuildMarquee();
+                }
+            );
+        }
+
+        function setActiveLink(activeHref) {
+            nav.querySelectorAll(
+                ".profession-subnav__link"
+            ).forEach(function (link) {
                 const active =
-                    link.getAttribute("href") === "#" + id;
+                    link.getAttribute("href") === activeHref;
 
-                link.classList.toggle("is-active", active);
+                link.classList.toggle(
+                    "is-active",
+                    active
+                );
 
-                if (active) {
-                    link.setAttribute("aria-current", "true");
+                const isDuplicate = Boolean(
+                    link.closest(
+                        ".profession-subnav__group--duplicate"
+                    )
+                );
+
+                if (active && !isDuplicate) {
+                    link.setAttribute(
+                        "aria-current",
+                        "location"
+                    );
                 } else {
-                    link.removeAttribute("aria-current");
+                    link.removeAttribute(
+                        "aria-current"
+                    );
                 }
             });
         }
 
-        if (!("IntersectionObserver" in window)) {
-            activate(sections[0].id);
-            return;
-        }
+        /*
+         * Не позволяем копии получать mouse-focus.
+         * При этом click продолжает работать.
+         */
+        nav.addEventListener(
+            "mousedown",
+            function (event) {
+                const duplicateLink = event.target.closest(
+                    ".profession-subnav__group--duplicate .profession-subnav__link"
+                );
 
-        professionState.sectionObserver =
-            new IntersectionObserver(
-                function (entries) {
-                    const visible = entries
-                        .filter(function (entry) {
-                            return entry.isIntersecting;
-                        })
-                        .sort(function (first, second) {
-                            return second.intersectionRatio - first.intersectionRatio;
-                        });
-
-                    if (visible.length) {
-                        activate(visible[0].target.id);
-                    }
-                },
-                {
-                    rootMargin: "-170px 0px -55% 0px",
-                    threshold: [0.08, 0.2, 0.4, 0.6]
+                if (duplicateLink) {
+                    event.preventDefault();
                 }
-            );
+            }
+        );
 
-        sections.forEach(function (section) {
-            professionState.sectionObserver.observe(section);
+        /*
+         * Делегированный обработчик работает
+         * для оригинала и для всех копий.
+         */
+        nav.addEventListener(
+            "click",
+            function (event) {
+                const link = event.target.closest(
+                    ".profession-subnav__link"
+                );
+
+                if (!link || !nav.contains(link)) {
+                    return;
+                }
+
+                const target = getTarget(link);
+
+                if (!target) {
+                    event.preventDefault();
+                    return;
+                }
+
+                event.preventDefault();
+
+                const header = document.querySelector(
+                    "[data-site-header], .site-header"
+                );
+
+                const headerHeight = header
+                    ? header.getBoundingClientRect().height
+                    : 0;
+
+                const navHeight =
+                    nav.getBoundingClientRect().height;
+
+                const targetTop =
+                    target.getBoundingClientRect().top +
+                    window.scrollY -
+                    headerHeight -
+                    navHeight -
+                    16;
+
+                setActiveLink(
+                    link.getAttribute("href")
+                );
+
+                window.scrollTo({
+                    top: Math.max(0, targetTop),
+                    behavior: window.matchMedia(
+                        "(prefers-reduced-motion: reduce)"
+                    ).matches
+                        ? "auto"
+                        : "smooth"
+                });
+
+                if (
+                    window.history &&
+                    typeof window.history.replaceState ===
+                    "function"
+                ) {
+                    window.history.replaceState(
+                        null,
+                        "",
+                        link.getAttribute("href")
+                    );
+                }
+
+                link.blur();
+            }
+        );
+
+        const sections = originalLinks.map(
+            function (link) {
+                return {
+                    href: link.getAttribute("href"),
+                    element: getTarget(link)
+                };
+            }
+        ).filter(function (item) {
+            return item.element;
         });
 
-        activate(sections[0].id);
+        let scrollFrame = 0;
+
+        function updateActiveSection() {
+            scrollFrame = 0;
+
+            const header = document.querySelector(
+                "[data-site-header], .site-header"
+            );
+
+            const headerHeight = header
+                ? header.getBoundingClientRect().height
+                : 0;
+
+            const checkpoint =
+                headerHeight +
+                nav.getBoundingClientRect().height +
+                40;
+
+            let activeSection = sections[0];
+
+            sections.forEach(function (section) {
+                if (
+                    section.element
+                        .getBoundingClientRect()
+                        .top <= checkpoint
+                ) {
+                    activeSection = section;
+                }
+            });
+
+            if (activeSection) {
+                setActiveLink(activeSection.href);
+            }
+        }
+
+        function requestActiveUpdate() {
+            if (scrollFrame) {
+                return;
+            }
+
+            scrollFrame = window.requestAnimationFrame(
+                updateActiveSection
+            );
+        }
+
+        window.addEventListener(
+            "scroll",
+            requestActiveUpdate,
+            {
+                passive: true
+            }
+        );
+
+        window.addEventListener(
+            "resize",
+            function () {
+                requestMarqueeRebuild();
+                requestActiveUpdate();
+            },
+            {
+                passive: true
+            }
+        );
+
+        if ("ResizeObserver" in window) {
+            const resizeObserver = new ResizeObserver(
+                requestMarqueeRebuild
+            );
+
+            resizeObserver.observe(viewport);
+            resizeObserver.observe(sourceGroup);
+        }
+
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(
+                requestMarqueeRebuild
+            );
+        }
+
+        window.addEventListener(
+            "load",
+            requestMarqueeRebuild,
+            {
+                once: true
+            }
+        );
+
+        rebuildMarquee();
+        updateActiveSection();
     }
 
     function renderProfessionFeatureCards() {
@@ -1879,6 +2224,289 @@
         Rolewise.refreshAOS();
     }
 
+    function initProfessionSubnavMarquee() {
+        const nav = document.querySelector(
+            "[data-profession-subnav]"
+        );
+
+        if (!nav || nav.dataset.marqueeInitialized) {
+            return;
+        }
+
+        const track = nav.querySelector(
+            "[data-profession-subnav-track]"
+        );
+
+        const originalGroup = nav.querySelector(
+            "[data-profession-subnav-group]"
+        );
+
+        if (!track || !originalGroup) {
+            return;
+        }
+
+        nav.dataset.marqueeInitialized = "true";
+
+        /*
+         * Удаляем ссылки на секции, которых реально нет
+         * на текущей profession-странице.
+         */
+        originalGroup.querySelectorAll(
+            ".profession-subnav__link[href^='#']"
+        ).forEach(function (link) {
+            const href = link.getAttribute("href");
+            const target = href
+                ? document.querySelector(href)
+                : null;
+
+            if (!target) {
+                link.remove();
+            }
+        });
+
+        const originalLinks = Array.from(
+            originalGroup.querySelectorAll(
+                ".profession-subnav__link"
+            )
+        );
+
+        /*
+         * После удаления несуществующих пунктов
+         * заново назначаем последовательные номера.
+         */
+        originalLinks.forEach(function (link, index) {
+            const number = link.querySelector(
+                ".profession-subnav__number"
+            );
+
+            if (number) {
+                number.textContent = String(
+                    index + 1
+                ).padStart(2, "0");
+            }
+        });
+
+        if (!originalLinks.length) {
+            nav.hidden = true;
+            return;
+        }
+
+        /*
+         * Создаём копию для бесшовного marquee.
+         */
+        const duplicateGroup = originalGroup.cloneNode(true);
+
+        duplicateGroup.removeAttribute(
+            "data-profession-subnav-group"
+        );
+
+        duplicateGroup.classList.add(
+            "profession-subnav__group--duplicate"
+        );
+
+        duplicateGroup.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        duplicateGroup.querySelectorAll("a").forEach(
+            function (link) {
+                /*
+                 * Мышкой ссылка остаётся кликабельной,
+                 * но не дублируется в Tab-навигации.
+                 */
+                link.setAttribute("tabindex", "-1");
+            }
+        );
+
+        track.appendChild(duplicateGroup);
+
+        function getTarget(link) {
+            const href = link.getAttribute("href");
+
+            if (
+                !href ||
+                !href.startsWith("#") ||
+                href === "#"
+            ) {
+                return null;
+            }
+
+            try {
+                return document.querySelector(href);
+            } catch (error) {
+                return null;
+            }
+        }
+
+        /*
+         * Делегированный click работает и для оригинальных,
+         * и для созданных позже дублированных ссылок.
+         */
+        nav.addEventListener("click", function (event) {
+            const link = event.target.closest(
+                ".profession-subnav__link"
+            );
+
+            if (!link || !nav.contains(link)) {
+                return;
+            }
+
+            const target = getTarget(link);
+
+            if (!target) {
+                event.preventDefault();
+                return;
+            }
+
+            event.preventDefault();
+
+            const header = document.querySelector(
+                "[data-site-header], .site-header"
+            );
+
+            const headerHeight = header
+                ? header.getBoundingClientRect().height
+                : 0;
+
+            const navHeight = nav.getBoundingClientRect().height;
+
+            const targetTop =
+                target.getBoundingClientRect().top +
+                window.scrollY -
+                headerHeight -
+                navHeight -
+                16;
+
+            window.scrollTo({
+                top: Math.max(0, targetTop),
+                behavior: window.matchMedia(
+                    "(prefers-reduced-motion: reduce)"
+                ).matches
+                    ? "auto"
+                    : "smooth"
+            });
+
+            if (
+                window.history &&
+                typeof window.history.replaceState === "function"
+            ) {
+                window.history.replaceState(
+                    null,
+                    "",
+                    link.getAttribute("href")
+                );
+            }
+
+            setActiveLink(
+                link.getAttribute("href")
+            );
+        });
+
+        function setActiveLink(activeHref) {
+            nav.querySelectorAll(
+                ".profession-subnav__link"
+            ).forEach(function (link) {
+                const active =
+                    link.getAttribute("href") === activeHref;
+
+                link.classList.toggle(
+                    "is-active",
+                    active
+                );
+
+                if (
+                    active &&
+                    !link.closest(
+                        ".profession-subnav__group--duplicate"
+                    )
+                ) {
+                    link.setAttribute(
+                        "aria-current",
+                        "location"
+                    );
+                } else {
+                    link.removeAttribute(
+                        "aria-current"
+                    );
+                }
+            });
+        }
+
+        /*
+         * Scrollspy для реально существующих секций.
+         */
+        const sections = originalLinks
+            .map(function (link) {
+                return {
+                    href: link.getAttribute("href"),
+                    element: getTarget(link)
+                };
+            })
+            .filter(function (item) {
+                return item.element;
+            });
+
+        let scrollFrame = 0;
+
+        function updateActiveSection() {
+            scrollFrame = 0;
+
+            const header = document.querySelector(
+                "[data-site-header], .site-header"
+            );
+
+            const headerHeight = header
+                ? header.getBoundingClientRect().height
+                : 0;
+
+            const checkpoint =
+                headerHeight +
+                nav.getBoundingClientRect().height +
+                80;
+
+            let activeSection = sections[0] || null;
+
+            sections.forEach(function (section) {
+                if (
+                    section.element.getBoundingClientRect().top <=
+                    checkpoint
+                ) {
+                    activeSection = section;
+                }
+            });
+
+            if (activeSection) {
+                setActiveLink(activeSection.href);
+            }
+        }
+
+        function requestActiveUpdate() {
+            if (scrollFrame) {
+                return;
+            }
+
+            scrollFrame = window.requestAnimationFrame(
+                updateActiveSection
+            );
+        }
+
+        window.addEventListener(
+            "scroll",
+            requestActiveUpdate,
+            {
+                passive: true
+            }
+        );
+
+        window.addEventListener(
+            "resize",
+            requestActiveUpdate
+        );
+
+        updateActiveSection();
+    }
+
     function initializeProfession() {
         if (!document.body.classList.contains("profession-page")) {
             return;
@@ -1903,6 +2531,7 @@
         renderDisclaimer(profession);
         renderNextLinks(profession);
         renderProfessionFeatureCards();
+        initProfessionSubnavMarquee();
         renderProfessionProofStrip(profession);
         renderProfessionCapabilities(profession);
         initSubnavigation();
