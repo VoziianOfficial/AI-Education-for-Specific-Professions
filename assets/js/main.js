@@ -15,8 +15,14 @@
     const state = {
         mobileMenuOpen: false,
         lastFocusedElement: null,
-        reducedMotion: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+        reducedMotion: window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches,
         aosInitialized: false,
+        aosBootQueued: false,
+        aosRefreshFrame: 0,
+        aosRefreshTimer: 0,
+        aosHardRefreshRequested: false,
         imageObserver: null
     };
 
@@ -1243,54 +1249,388 @@
         });
     }
 
-    function initAOS() {
+    function getAOSNodes(scope) {
+        const root = scope || document;
+        const nodes = [];
+
+        if (
+            root instanceof Element &&
+            root.matches("[data-aos]")
+        ) {
+            nodes.push(root);
+        }
+
+        if (
+            root &&
+            typeof root.querySelectorAll === "function"
+        ) {
+            root.querySelectorAll("[data-aos]").forEach(function (element) {
+                nodes.push(element);
+            });
+        }
+
+        return Array.from(new Set(nodes));
+    }
+
+    function removeAOSAttributes(element) {
+        if (!element) {
+            return;
+        }
+
+        [
+            "data-aos",
+            "data-aos-delay",
+            "data-aos-duration",
+            "data-aos-easing",
+            "data-aos-offset",
+            "data-aos-anchor",
+            "data-aos-anchor-placement",
+            "data-aos-mirror",
+            "data-aos-once"
+        ].forEach(function (attribute) {
+            element.removeAttribute(attribute);
+        });
+
+        element.classList.remove(
+            "aos-init",
+            "aos-animate"
+        );
+    }
+
+    function groupSectionHeaderAnimations(scope) {
+        const root = scope || document;
+
+        if (
+            !root ||
+            typeof root.querySelectorAll !== "function"
+        ) {
+            return;
+        }
+
+        root.querySelectorAll(
+            ".site-section__header"
+        ).forEach(function (header) {
+            const animatedChildren = Array.from(
+                header.querySelectorAll("[data-aos]")
+            );
+
+            if (!animatedChildren.length) {
+                return;
+            }
+
+            animatedChildren.forEach(function (element) {
+                removeAOSAttributes(element);
+            });
+
+            header.setAttribute(
+                "data-aos",
+                "fade-up"
+            );
+        });
+    }
+
+    function normalizeAOSNodes(scope) {
+        const compactViewport =
+            window.innerWidth <= 767;
+
+        groupSectionHeaderAnimations(scope);
+
+        getAOSNodes(scope).forEach(function (element) {
+            const computedPosition =
+                window.getComputedStyle(element).position;
+
+            const mustRemainStatic =
+                element.matches(
+                    [
+                        ".site-sticky",
+                        ".swiper",
+                        ".swiper-wrapper",
+                        ".swiper-slide",
+                        "[data-accordion-panel]",
+                        "[hidden]"
+                    ].join(",")
+                ) ||
+                computedPosition === "sticky";
+
+            if (mustRemainStatic) {
+                removeAOSAttributes(element);
+                return;
+            }
+
+            const animation =
+                element.getAttribute("data-aos") ||
+                "fade-up";
+
+            if (
+                animation !== "fade-up" &&
+                animation !== "fade"
+            ) {
+                element.setAttribute(
+                    "data-aos",
+                    "fade-up"
+                );
+            }
+
+            element.removeAttribute(
+                "data-aos-duration"
+            );
+
+            element.removeAttribute(
+                "data-aos-easing"
+            );
+
+            element.removeAttribute(
+                "data-aos-offset"
+            );
+
+            element.removeAttribute(
+                "data-aos-anchor-placement"
+            );
+
+            const delay = Number(
+                element.getAttribute("data-aos-delay")
+            );
+
+            if (
+                Number.isFinite(delay) &&
+                delay > 0
+            ) {
+                element.setAttribute(
+                    "data-aos-delay",
+                    String(
+                        Math.min(
+                            delay,
+                            compactViewport
+                                ? 80
+                                : 140
+                        )
+                    )
+                );
+            } else {
+                element.removeAttribute(
+                    "data-aos-delay"
+                );
+            }
+        });
+    }
+
+    function removeAOSFromInitialViewport() {
+        const viewportLimit =
+            window.innerHeight * 0.92;
+
+        getAOSNodes(document).forEach(function (element) {
+            const rectangle =
+                element.getBoundingClientRect();
+
+            const visibleInitially =
+                rectangle.top < viewportLimit &&
+                rectangle.bottom > 0;
+
+            if (visibleInitially) {
+                removeAOSAttributes(element);
+            }
+        });
+    }
+
+    function showAOSFallback() {
+        documentElement.classList.remove(
+            "aos-ready"
+        );
+
+        documentElement.classList.add(
+            "aos-fallback"
+        );
+
+        getAOSNodes(document).forEach(function (element) {
+            element.classList.add(
+                "aos-init",
+                "aos-animate"
+            );
+        });
+    }
+
+    function initializeAOSNow() {
+        state.aosBootQueued = false;
+
         if (state.aosInitialized) {
             return;
         }
 
         if (
+            state.reducedMotion ||
             !window.AOS ||
             typeof window.AOS.init !== "function"
         ) {
-            documentElement.classList.add(
-                "aos-fallback"
-            );
+            showAOSFallback();
             return;
         }
 
-        window.AOS.init({
-            duration: state.reducedMotion ? 0 : 780,
-            easing: "ease-out-cubic",
-            once: true,
-            offset: 72,
-            delay: 0,
-            anchorPlacement: "top-bottom",
-            disable: state.reducedMotion
-        });
+        normalizeAOSNodes(document);
+        removeAOSFromInitialViewport();
 
-        state.aosInitialized = true;
+        documentElement.classList.remove(
+            "aos-fallback"
+        );
 
         documentElement.classList.add(
             "aos-ready"
         );
 
-        documentElement.classList.remove(
-            "aos-fallback"
-        );
+        try {
+            window.AOS.init({
+                once: true,
+                mirror: false,
+                duration: 680,
+                easing: "ease-out-cubic",
+                offset: 82,
+                delay: 0,
+                anchorPlacement: "top-bottom",
+                disableMutationObserver: true,
+                throttleDelay: 99,
+                debounceDelay: 50,
+                disable: function () {
+                    return state.reducedMotion;
+                }
+            });
+
+            state.aosInitialized = true;
+
+            refreshAOS({
+                hard: true
+            });
+        } catch (error) {
+            state.aosInitialized = false;
+            showAOSFallback();
+
+            console.warn(
+                "Rolewise AOS initialization failed.",
+                error
+            );
+        }
     }
 
-    function refreshAOS() {
+    function initAOS() {
         if (
-            window.AOS &&
-            typeof window.AOS.refreshHard === "function"
+            state.aosInitialized ||
+            state.aosBootQueued
         ) {
-            window.AOS.refreshHard();
-        } else if (
-            window.AOS &&
-            typeof window.AOS.refresh === "function"
-        ) {
-            window.AOS.refresh();
+            return;
         }
+
+        state.aosBootQueued = true;
+
+        const fontReadyPromise =
+            document.fonts &&
+                document.fonts.ready
+                ? document.fonts.ready
+                : Promise.resolve();
+
+        const timeoutPromise =
+            new Promise(function (resolve) {
+                window.setTimeout(
+                    resolve,
+                    320
+                );
+            });
+
+        Promise.race([
+            fontReadyPromise,
+            timeoutPromise
+        ]).then(function () {
+            window.requestAnimationFrame(function () {
+                window.requestAnimationFrame(
+                    initializeAOSNow
+                );
+            });
+        });
+    }
+
+    function refreshAOS(options) {
+        const settings =
+            options &&
+                typeof options === "object"
+                ? options
+                : {};
+
+        const requestedHardRefresh =
+            options === true ||
+            settings.hard === true;
+
+        const scope =
+            settings.scope || document;
+
+        normalizeAOSNodes(scope);
+
+        if (state.reducedMotion) {
+            showAOSFallback();
+            return;
+        }
+
+        if (!state.aosInitialized) {
+            initAOS();
+            return;
+        }
+
+        const containsNewElements =
+            Boolean(
+                document.querySelector(
+                    "[data-aos]:not(.aos-init)"
+                )
+            );
+
+        state.aosHardRefreshRequested =
+            state.aosHardRefreshRequested ||
+            requestedHardRefresh ||
+            containsNewElements;
+
+        if (state.aosRefreshTimer) {
+            window.clearTimeout(
+                state.aosRefreshTimer
+            );
+        }
+
+        state.aosRefreshTimer =
+            window.setTimeout(function () {
+                state.aosRefreshTimer = 0;
+
+                if (state.aosRefreshFrame) {
+                    window.cancelAnimationFrame(
+                        state.aosRefreshFrame
+                    );
+                }
+
+                state.aosRefreshFrame =
+                    window.requestAnimationFrame(function () {
+                        state.aosRefreshFrame = 0;
+
+                        if (
+                            !window.AOS ||
+                            !state.aosInitialized
+                        ) {
+                            showAOSFallback();
+                            return;
+                        }
+
+                        const useHardRefresh =
+                            state.aosHardRefreshRequested;
+
+                        state.aosHardRefreshRequested =
+                            false;
+
+                        if (
+                            useHardRefresh &&
+                            typeof window.AOS.refreshHard ===
+                            "function"
+                        ) {
+                            window.AOS.refreshHard();
+                        } else if (
+                            typeof window.AOS.refresh ===
+                            "function"
+                        ) {
+                            window.AOS.refresh();
+                        }
+                    });
+            }, 90);
     }
 
     function handleImage(image) {
@@ -1671,19 +2011,43 @@
                 "reduced-motion",
                 state.reducedMotion
             );
+
+            if (state.reducedMotion) {
+                showAOSFallback();
+                return;
+            }
+
+            if (!state.aosInitialized) {
+                initAOS();
+                return;
+            }
+
+            documentElement.classList.remove(
+                "aos-fallback"
+            );
+
+            documentElement.classList.add(
+                "aos-ready"
+            );
+
+            refreshAOS({
+                hard: true
+            });
         }
 
         update(media);
 
         if (
-            typeof media.addEventListener === "function"
+            typeof media.addEventListener ===
+            "function"
         ) {
             media.addEventListener(
                 "change",
                 update
             );
         } else if (
-            typeof media.addListener === "function"
+            typeof media.addListener ===
+            "function"
         ) {
             media.addListener(update);
         }
@@ -1703,11 +2067,12 @@
         refreshIcons();
         initImageFallbacks();
         updateActiveNavigation();
+        refreshSchemas();
 
-        window.setTimeout(function () {
-            refreshSchemas();
-            refreshAOS();
-        }, 0);
+        refreshAOS({
+            hard: true,
+            scope: root
+        });
     }
 
     function initialize() {
@@ -1724,12 +2089,18 @@
         createBackToTop();
         initCookieConsent();
         refreshIcons();
+        refreshSchemas();
         initAOS();
 
-        window.setTimeout(function () {
-            refreshSchemas();
-            refreshAOS();
-        }, 0);
+        window.addEventListener(
+            "load",
+            function () {
+                refreshAOS();
+            },
+            {
+                once: true
+            }
+        );
     }
 
     window.Rolewise = {
@@ -2723,7 +3094,7 @@
     function initializeSiteIdentity() {
         patchRolewiseRefresh();
         applySiteIdentity(document);
-        initializeIdentityObserver();
+    
 
         window.setTimeout(
             scheduleIdentityRefresh,
