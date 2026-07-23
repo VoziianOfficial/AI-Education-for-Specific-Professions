@@ -2550,3 +2550,759 @@
         initializeProfession();
     }
 }());
+
+
+(function () {
+    "use strict";
+
+    const Rolewise = window.Rolewise;
+    const config = window.ROLEWISE_CONFIG;
+
+    if (
+        !Rolewise ||
+        !config ||
+        !Array.isArray(config.professions)
+    ) {
+        return;
+    }
+
+    function getArray(value) {
+        return Array.isArray(value)
+            ? value
+            : [];
+    }
+
+    function getEntryText(entry, fallback) {
+        if (typeof entry === "string") {
+            return entry;
+        }
+
+        if (
+            entry &&
+            typeof entry === "object"
+        ) {
+            return (
+                entry.title ||
+                entry.name ||
+                entry.task ||
+                entry.label ||
+                entry.description ||
+                fallback ||
+                ""
+            );
+        }
+
+        return fallback || "";
+    }
+
+    function createNumber(index) {
+        return String(index + 1).padStart(
+            2,
+            "0"
+        );
+    }
+
+    function initializeProfessionProof() {
+        if (
+            !document.body.classList.contains(
+                "profession-page"
+            )
+        ) {
+            return;
+        }
+
+        if (
+            document.querySelector(
+                "[data-profession-proof]"
+            )
+        ) {
+            return;
+        }
+
+        const slug =
+            document.body.dataset.profession || "";
+
+        const profession =
+            Rolewise.findProfession(slug);
+
+        if (!profession) {
+            return;
+        }
+
+        const insertionPoint =
+            document.querySelector("#prompts") ||
+            document.querySelector(
+                ".profession-prompts"
+            );
+
+        if (!insertionPoint) {
+            return;
+        }
+
+        const tasks =
+            getArray(profession.tasks);
+
+        const workflows =
+            getArray(profession.workflows);
+
+        const aiSupport =
+            getArray(profession.aiSupport);
+
+        const humanReview =
+            getArray(profession.humanReview);
+
+        const shortTitle =
+            profession.shortTitle ||
+            profession.title ||
+            "Professional";
+
+        const image =
+            profession.overviewImage ||
+            (
+                profession.images &&
+                profession.images.overviewPrimary
+            ) ||
+            profession.mosaicImage ||
+            profession.directoryImage ||
+            profession.heroImage ||
+            "assets/images/professions-hero.webp";
+
+        const statFallbacks = [
+            "Professional context",
+            "Practical workflows",
+            "Clear instructions",
+            "Human review"
+        ];
+
+        const stats =
+            statFallbacks.map(function (
+                fallback,
+                index
+            ) {
+                return getEntryText(
+                    tasks[index],
+                    fallback
+                );
+            });
+
+        const featureFallbacks = [
+            "Prepare useful context",
+            "Structure a working draft",
+            "Review before application"
+        ];
+
+        const features =
+            featureFallbacks.map(function (
+                fallback,
+                index
+            ) {
+                const workflow =
+                    workflows[index];
+
+                const support =
+                    aiSupport[index];
+
+                return getEntryText(
+                    workflow,
+                    getEntryText(
+                        support,
+                        fallback
+                    )
+                );
+            });
+
+        const reviewFallbacks = [
+            "Verify facts, names, dates, sources, and missing context.",
+            "Confirm privacy, authorization, confidentiality, and tool suitability.",
+            "Check professional standards, audience fit, and workplace requirements.",
+            "Keep final approval, escalation, and application with a responsible person."
+        ];
+
+        const reviewItems =
+            reviewFallbacks.map(function (
+                fallback,
+                index
+            ) {
+                return getEntryText(
+                    humanReview[index],
+                    fallback
+                );
+            });
+
+        const highlightText =
+            profession.workflowCaption ||
+            profession.heroText ||
+            (
+                "Connect AI learning with real " +
+                shortTitle.toLowerCase() +
+                " work."
+            );
+
+        const mainText =
+            profession.roleContext ||
+            profession.summary ||
+            profession.description ||
+            "";
+
+        const section =
+            document.createElement("section");
+
+        section.className =
+            "profession-proof";
+
+        section.id =
+            "profession-proof";
+
+        section.dataset.professionProof =
+            "true";
+
+        section.setAttribute(
+            "aria-labelledby",
+            "profession-proof-title"
+        );
+
+        section.innerHTML = [
+            '<div class="profession-proof__hero">',
+
+            '<span class="profession-proof__hero-overlay" aria-hidden="true"></span>',
+
+            '<div class="site-container-wide profession-proof__hero-inner">',
+
+            '<div class="profession-proof__stats">',
+
+            stats.map(function (
+                item,
+                index
+            ) {
+                return [
+                    '<article class="profession-proof__stat">',
+
+                    '<strong class="profession-proof__stat-number">',
+                    Rolewise.escapeHtml(
+                        createNumber(index)
+                    ),
+                    "</strong>",
+
+                    '<span class="profession-proof__stat-label">',
+                    Rolewise.escapeHtml(item),
+                    "</span>",
+
+                    "</article>"
+                ].join("");
+            }).join(""),
+
+            "</div>",
+            "</div>",
+            "</div>",
+
+            '<div class="site-container-wide profession-proof__container">',
+
+            '<div class="profession-proof__panel">',
+
+            '<div class="profession-proof__left">',
+
+            '<div class="profession-proof__highlight" data-aos="fade-up">',
+
+            '<span class="profession-proof__highlight-icon" aria-hidden="true">',
+            '<i data-lucide="',
+            Rolewise.escapeHtml(
+                profession.icon ||
+                "briefcase-business"
+            ),
+            '"></i>',
+            "</span>",
+
+            "<p>",
+            Rolewise.escapeHtml(
+                highlightText
+            ),
+            "</p>",
+
+            "</div>",
+
+            '<div class="profession-proof__features">',
+
+            features.map(function (
+                item,
+                index
+            ) {
+                return [
+                    '<article class="profession-proof__feature">',
+
+                    '<span class="profession-proof__feature-number">',
+                    Rolewise.escapeHtml(
+                        createNumber(index)
+                    ),
+                    "</span>",
+
+                    '<div class="profession-proof__feature-copy">',
+
+                    "<h3>",
+                    Rolewise.escapeHtml(item),
+                    "</h3>",
+
+                    "<p>",
+                    index === 0
+                        ? "Professional context"
+                        : index === 1
+                            ? "Practical support"
+                            : "Human-led review",
+                    "</p>",
+
+                    "</div>",
+                    "</article>"
+                ].join("");
+            }).join(""),
+
+            "</div>",
+            "</div>",
+
+            '<div class="profession-proof__right" data-aos="fade-up">',
+
+            '<span class="site-eyebrow profession-proof__eyebrow">',
+            Rolewise.escapeHtml(
+                shortTitle + " in Context"
+            ),
+            "</span>",
+
+            '<h2 class="profession-proof__title" id="profession-proof-title">',
+            "Useful AI support for ",
+            Rolewise.escapeHtml(shortTitle),
+            " begins with real work, clear boundaries, and human review.",
+            "</h2>",
+
+            '<p class="profession-proof__text">',
+            Rolewise.escapeHtml(mainText),
+            "</p>",
+
+            '<div class="profession-proof__bottom">',
+
+            '<figure class="profession-proof__media" data-image-container>',
+
+            '<img src="',
+            Rolewise.escapeHtml(image),
+            '" alt="',
+            Rolewise.escapeHtml(
+                shortTitle +
+                " professional reviewing practical workplace material"
+            ),
+            '" width="900" height="620" loading="lazy">',
+
+            "</figure>",
+
+            '<ul class="profession-proof__checks">',
+
+            reviewItems.map(function (item) {
+                return [
+                    "<li>",
+                    '<i data-lucide="check" aria-hidden="true"></i>',
+                    "<span>",
+                    Rolewise.escapeHtml(item),
+                    "</span>",
+                    "</li>"
+                ].join("");
+            }).join(""),
+
+            "</ul>",
+            "</div>",
+            "</div>",
+            "</div>",
+            "</div>"
+        ].join("");
+
+        const hero =
+            section.querySelector(
+                ".profession-proof__hero"
+            );
+
+        if (hero) {
+            hero.style.backgroundImage =
+                'url("' +
+                String(image)
+                    .replace(/\\/g, "\\\\")
+                    .replace(/"/g, '\\"') +
+                '")';
+        }
+
+        insertionPoint.insertAdjacentElement(
+            "afterend",
+            section
+        );
+
+        Rolewise.refreshGlobalUI(section);
+    }
+
+    if (
+        document.readyState ===
+        "loading"
+    ) {
+        document.addEventListener(
+            "DOMContentLoaded",
+            initializeProfessionProof,
+            {
+                once: true
+            }
+        );
+    } else {
+        initializeProfessionProof();
+    }
+}());
+
+
+(function () {
+    "use strict";
+
+    const root = document.querySelector("[data-profession-formats-grid]");
+    const body = document.body;
+
+    if (!root || !body) {
+        return;
+    }
+
+    const slug = body.dataset.profession || "";
+    const Rolewise = window.Rolewise || {};
+    const profession = typeof Rolewise.findProfession === "function"
+        ? Rolewise.findProfession(slug)
+        : null;
+
+    const professionTitle =
+        (profession && (profession.shortTitle || profession.title)) || "This Role";
+
+    const data = {
+        marketing: [
+            {
+                kicker: "Format 01",
+                title: "Campaign Prompt Guide",
+                caption: "Start with structured marketing use cases.",
+                items: [
+                    "Campaign brief prompts",
+                    "Audience and offer framing",
+                    "Content drafting boundaries",
+                    "Review before publication"
+                ],
+                href: "courses.html",
+                linkLabel: "Explore Format"
+            },
+            {
+                kicker: "Format 02",
+                title: "Workflow Practice",
+                caption: "Learn through real promotional workflows.",
+                items: [
+                    "Ad copy review structure",
+                    "Landing page content prompts",
+                    "Email sequence planning",
+                    "Brand consistency checks"
+                ],
+                href: "#prompts",
+                linkLabel: "View Prompts"
+            },
+            {
+                kicker: "Format 03",
+                title: "Team Training Session",
+                caption: "Align prompts, review rules, and use cases.",
+                items: [
+                    "Shared marketing scenarios",
+                    "Approval and tone controls",
+                    "Human review standards",
+                    "Team inquiry route"
+                ],
+                href: "contact.html?inquiry=marketing-team-training",
+                linkLabel: "Ask About Teams"
+            }
+        ],
+
+        "real-estate": [
+            {
+                kicker: "Format 01",
+                title: "Property Workflow Guide",
+                caption: "Learn through listing and client communication tasks.",
+                items: [
+                    "Listing draft structure",
+                    "Property summary prompts",
+                    "Viewing follow-up examples",
+                    "Disclosure review habits"
+                ],
+                href: "courses.html",
+                linkLabel: "Explore Format"
+            },
+            {
+                kicker: "Format 02",
+                title: "Applied Prompt Practice",
+                caption: "Use AI in realistic real-estate scenarios.",
+                items: [
+                    "Lead response prompts",
+                    "Neighborhood summary drafts",
+                    "Client inquiry preparation",
+                    "Human review checkpoints"
+                ],
+                href: "#prompts",
+                linkLabel: "View Prompts"
+            },
+            {
+                kicker: "Format 03",
+                title: "Brokerage Team Session",
+                caption: "Create shared, safe working practices.",
+                items: [
+                    "Team prompt libraries",
+                    "Communication boundaries",
+                    "Review and approval flow",
+                    "Responsible AI use"
+                ],
+                href: "contact.html?inquiry=real-estate-team-training",
+                linkLabel: "Ask About Teams"
+            }
+        ],
+
+        accounting: [
+            {
+                kicker: "Format 01",
+                title: "Controlled Prompt Guide",
+                caption: "Build structured accounting support habits.",
+                items: [
+                    "Reconciliation draft structure",
+                    "Variance review prompts",
+                    "Document request templates",
+                    "Record and evidence checks"
+                ],
+                href: "courses.html",
+                linkLabel: "Explore Format"
+            },
+            {
+                kicker: "Format 02",
+                title: "Workflow Practice",
+                caption: "Apply prompts to real accounting tasks.",
+                items: [
+                    "Working-paper organization",
+                    "Client request preparation",
+                    "Investigation outlines",
+                    "Human review checkpoints"
+                ],
+                href: "#prompts",
+                linkLabel: "View Prompts"
+            },
+            {
+                kicker: "Format 03",
+                title: "Team Learning Session",
+                caption: "Align process, review, and prompt standards.",
+                items: [
+                    "Shared accounting scenarios",
+                    "Confidentiality boundaries",
+                    "Approval and escalation flow",
+                    "Responsible tool usage"
+                ],
+                href: "contact.html?inquiry=accounting-team-training",
+                linkLabel: "Ask About Teams"
+            }
+        ],
+
+        "business-owners": [
+            {
+                kicker: "Format 01",
+                title: "Practical Owner Guide",
+                caption: "Focus on the work you actually manage.",
+                items: [
+                    "Decision-support prompts",
+                    "Operations planning drafts",
+                    "Customer communication structure",
+                    "Human-led final review"
+                ],
+                href: "courses.html",
+                linkLabel: "Explore Format"
+            },
+            {
+                kicker: "Format 02",
+                title: "Workflow Sessions",
+                caption: "Use AI across practical business tasks.",
+                items: [
+                    "Offer and process prompts",
+                    "Internal planning structure",
+                    "Idea and task organization",
+                    "Boundary and quality checks"
+                ],
+                href: "#prompts",
+                linkLabel: "View Prompts"
+            },
+            {
+                kicker: "Format 03",
+                title: "Small Team Training",
+                caption: "Set up shared and manageable AI habits.",
+                items: [
+                    "Owner + team workflows",
+                    "Review and approval steps",
+                    "Prompt consistency",
+                    "Safe adoption practices"
+                ],
+                href: "contact.html?inquiry=business-owners-team-training",
+                linkLabel: "Ask About Teams"
+            }
+        ],
+
+        sales: [
+            {
+                kicker: "Format 01",
+                title: "Sales Prompt Guide",
+                caption: "Learn through outreach and pipeline work.",
+                items: [
+                    "Prospect research prompts",
+                    "Follow-up structure",
+                    "Objection handling drafts",
+                    "Human review before sending"
+                ],
+                href: "courses.html",
+                linkLabel: "Explore Format"
+            },
+            {
+                kicker: "Format 02",
+                title: "Applied Workflow Practice",
+                caption: "Turn prompts into useful sales routines.",
+                items: [
+                    "Call prep frameworks",
+                    "Deal-summary drafting",
+                    "Meeting follow-up examples",
+                    "CRM note organization"
+                ],
+                href: "#prompts",
+                linkLabel: "View Prompts"
+            },
+            {
+                kicker: "Format 03",
+                title: "Sales Team Session",
+                caption: "Create shared prompt and review standards.",
+                items: [
+                    "Pipeline communication rules",
+                    "Team prompt structure",
+                    "Manager review steps",
+                    "Safe AI adoption"
+                ],
+                href: "contact.html?inquiry=sales-team-training",
+                linkLabel: "Ask About Teams"
+            }
+        ],
+
+        "customer-service": [
+            {
+                kicker: "Format 01",
+                title: "Service Prompt Guide",
+                caption: "Start with safe service communication examples.",
+                items: [
+                    "Inquiry summary prompts",
+                    "Response-draft structure",
+                    "Escalation handoff examples",
+                    "Policy and review checks"
+                ],
+                href: "courses.html",
+                linkLabel: "Explore Format"
+            },
+            {
+                kicker: "Format 02",
+                title: "Workflow Practice",
+                caption: "Use realistic support and handoff scenarios.",
+                items: [
+                    "Case organization",
+                    "Response preparation",
+                    "Escalation workflows",
+                    "Human review checkpoints"
+                ],
+                href: "#prompts",
+                linkLabel: "View Prompts"
+            },
+            {
+                kicker: "Format 03",
+                title: "Support Team Session",
+                caption: "Align communication, policy, and review.",
+                items: [
+                    "Shared service workflows",
+                    "Prompt boundaries",
+                    "Escalation consistency",
+                    "Responsible use standards"
+                ],
+                href: "contact.html?inquiry=customer-service-team-training",
+                linkLabel: "Ask About Teams"
+            }
+        ]
+    };
+
+    const fallbackCards = [
+        {
+            kicker: "Format 01",
+            title: professionTitle + " Role Guide",
+            caption: "Start with structured prompts and practical scenarios.",
+            items: [
+                "Role-specific task examples",
+                "Prompt structure guidance",
+                "Workflow context",
+                "Human review checkpoints"
+            ],
+            href: "courses.html",
+            linkLabel: "Explore Format"
+        },
+        {
+            kicker: "Format 02",
+            title: "Applied Workflow Practice",
+            caption: "Learn through realistic day-to-day work.",
+            items: [
+                "Practical use cases",
+                "Controlled prompt examples",
+                "Review-ready outputs",
+                "Responsible AI habits"
+            ],
+            href: "#prompts",
+            linkLabel: "View Prompts"
+        },
+        {
+            kicker: "Format 03",
+            title: "Team Learning Session",
+            caption: "Create shared prompt and review standards.",
+            items: [
+                "Shared workflow scenarios",
+                "Prompt consistency",
+                "Review ownership",
+                "Safe team adoption"
+            ],
+            href: "contact.html",
+            linkLabel: "Ask About Teams"
+        }
+    ];
+
+    const cards = data[slug] || fallbackCards;
+
+    root.innerHTML = cards.map(function (card) {
+        return `
+            <article class="profession-format-card">
+                <div class="profession-format-card__top">
+                    <div class="profession-format-card__row">
+                        <span class="profession-format-card__kicker">${card.kicker}</span>
+
+                        <span class="profession-format-card__corner" aria-hidden="true">
+                            <i data-lucide="arrow-up-right"></i>
+                        </span>
+                    </div>
+
+                    <h3 class="profession-format-card__title">${card.title}</h3>
+
+                    <p class="profession-format-card__caption">${card.caption}</p>
+                </div>
+
+                <div class="profession-format-card__bottom">
+                    <ul class="profession-format-card__list">
+                        ${card.items.map(function (item) {
+            return `<li>${item}</li>`;
+        }).join("")}
+                    </ul>
+
+                    <a class="profession-format-card__link" href="${card.href}">
+                        <span>${card.linkLabel}</span>
+                        <i data-lucide="arrow-right"></i>
+                    </a>
+                </div>
+            </article>
+        `;
+    }).join("");
+
+    if (window.Rolewise && typeof window.Rolewise.refreshGlobalUI === "function") {
+        window.Rolewise.refreshGlobalUI(root);
+    } else if (window.lucide && typeof window.lucide.createIcons === "function") {
+        window.lucide.createIcons();
+    }
+}());
+
