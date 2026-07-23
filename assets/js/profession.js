@@ -1705,6 +1705,8 @@
         const imageSource = getText(
             profession,
             [
+                "capabilities.image",
+                "overview.image",
                 "overview.primaryImage",
                 "overviewPrimaryImage",
                 "images.overviewPrimary",

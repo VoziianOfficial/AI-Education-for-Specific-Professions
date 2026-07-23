@@ -255,7 +255,7 @@ window.ROLEWISE_CONFIG = {
         "text": "We are always open to new opportunities, high-impact collaborations, and tailored business partnerships. Whether you want to advertise your brand to our audience, launch a joint project, or book our professional services, we are ready to bring your ideas to life. Every business is unique, and we don't believe in one-size-fits-all solutions. Please reach out to us using the contact form below, tell us a bit about your goals, and our team will get back to you with an exclusive, custom-tailored proposal designed strictly for your budget and objectives. Let’s build something great together.",
         "cta": "Discuss an Opportunity",
         "href": "contact.html?inquiry=collaboration",
-        "image": "assets/images/advertise-collaborate.webp"
+        "image": "assets/images/contact-hero.webp"
     },
     "advertiseCollaborate": {
         "eyebrow": "Business Opportunities",
@@ -320,7 +320,7 @@ window.ROLEWISE_CONFIG = {
                 "title": "Profession Guides",
                 "description": "Structured introductions to AI tasks, prompts, review habits, and tool categories for a specific role.",
                 "icon": "notebook-tabs",
-                "image": "assets/images/course-profession-guides.webp",
+                "image": "assets/images/courses-hero.webp",
                 "cta": "Explore Professions",
                 "href": "professions.html"
             },
@@ -329,7 +329,7 @@ window.ROLEWISE_CONFIG = {
                 "title": "Prompt Workshops",
                 "description": "Guided practice for creating clearer instructions, useful context, review criteria, and reusable prompt patterns.",
                 "icon": "message-square-text",
-                "image": "assets/images/course-prompt-workshops.webp",
+                "image": "assets/images/home-built-primary.webp",
                 "cta": "Ask About Workshops",
                 "href": "contact.html?inquiry=course-information"
             },
@@ -338,7 +338,7 @@ window.ROLEWISE_CONFIG = {
                 "title": "Tool Tutorials",
                 "description": "Task-oriented learning focused on how different AI tool categories may fit professional workflows.",
                 "icon": "panels-top-left",
-                "image": "assets/images/course-tool-tutorials.webp",
+                "image": "assets/images/home-built-secondary.webp",
                 "cta": "Explore Options",
                 "href": "contact.html?inquiry=course-information"
             },
@@ -347,7 +347,7 @@ window.ROLEWISE_CONFIG = {
                 "title": "Workflow Sessions",
                 "description": "Practical sessions that connect preparation, generation, review, and responsible application.",
                 "icon": "workflow",
-                "image": "assets/images/course-workflow-sessions.webp",
+                "image": "assets/images/professions-hero.webp",
                 "cta": "Ask About Sessions",
                 "href": "contact.html?inquiry=custom-learning"
             },
@@ -356,7 +356,7 @@ window.ROLEWISE_CONFIG = {
                 "title": "Team Training",
                 "description": "Role-aware learning discussions for teams exploring shared AI habits, review standards, and workflow consistency.",
                 "icon": "users-round",
-                "image": "assets/images/course-team-training.webp",
+                "image": "assets/images/about-professional-needs.webp",
                 "cta": "Ask About Team Training",
                 "href": "contact.html?inquiry=corporate-training"
             },
@@ -365,7 +365,7 @@ window.ROLEWISE_CONFIG = {
                 "title": "Custom Programs",
                 "description": "Inquiry-based learning options shaped around roles, recurring tasks, existing tools, and organizational context.",
                 "icon": "settings-2",
-                "image": "assets/images/course-custom-programs.webp",
+                "image": "assets/images/contact-hero.webp",
                 "cta": "Start an Inquiry",
                 "href": "contact.html?inquiry=custom-learning"
             }
@@ -425,7 +425,7 @@ window.ROLEWISE_CONFIG = {
                     "Content review",
                     "Workflow planning"
                 ],
-                "image": "assets/images/course-marketing-path.webp",
+                "image": "assets/images/marketing-mosaic.webp",
                 "href": "ai-for-marketers.html"
             },
             {
@@ -438,7 +438,7 @@ window.ROLEWISE_CONFIG = {
                     "Client communication",
                     "Professional review"
                 ],
-                "image": "assets/images/course-real-estate-path.webp",
+                "image": "assets/images/real-estate-mosaic.webp",
                 "href": "ai-for-real-estate.html"
             },
             {
@@ -451,7 +451,7 @@ window.ROLEWISE_CONFIG = {
                     "Review criteria",
                     "Documentation"
                 ],
-                "image": "assets/images/course-accounting-path.webp",
+                "image": "assets/images/accounting-mosaic.webp",
                 "href": "ai-for-accountants.html"
             },
             {
@@ -464,7 +464,7 @@ window.ROLEWISE_CONFIG = {
                     "Idea comparison",
                     "Team workflows"
                 ],
-                "image": "assets/images/course-business-path.webp",
+                "image": "assets/images/professions-hero.webp",
                 "href": "ai-for-business-owners.html"
             },
             {
@@ -477,7 +477,7 @@ window.ROLEWISE_CONFIG = {
                     "Follow-up structure",
                     "Human personalization"
                 ],
-                "image": "assets/images/course-sales-path.webp",
+                "image": "assets/images/courses-hero.webp",
                 "href": "ai-for-sales-teams.html"
             },
             {
@@ -490,7 +490,7 @@ window.ROLEWISE_CONFIG = {
                     "Escalation logic",
                     "Privacy review"
                 ],
-                "image": "assets/images/course-service-path.webp",
+                "image": "assets/images/contact-hero.webp",
                 "href": "ai-for-customer-service.html"
             }
         ],
@@ -534,28 +534,28 @@ window.ROLEWISE_CONFIG = {
                 "title": "Profession Guide",
                 "description": "Explore role context, recurring tasks, prompt patterns, tool categories, and review habits.",
                 "icon": "book-open",
-                "image": "assets/images/learning-guide.webp"
+                "image": "assets/images/card-2.jpg"
             },
             {
                 "type": "workshop",
                 "title": "Practical Workshop",
                 "description": "Work through realistic examples and discuss how outputs should be checked before use.",
                 "icon": "presentation",
-                "image": "assets/images/learning-workshop.webp"
+                "image": "assets/images/card-4.jpg"
             },
             {
                 "type": "team",
                 "title": "Team Learning",
                 "description": "Explore shared AI habits, role differences, workflow standards, and review responsibilities.",
                 "icon": "users-round",
-                "image": "assets/images/learning-team.webp"
+                "image": "assets/images/about-purpose-primary.webp"
             },
             {
                 "type": "custom",
                 "title": "Custom Inquiry",
                 "description": "Describe your role, recurring tasks, current tools, and preferred learning format.",
                 "icon": "messages-square",
-                "image": "assets/images/learning-custom.webp"
+                "image": "assets/images/about-purpose-secondary.webp"
             }
         ]
     },
@@ -570,9 +570,16 @@ window.ROLEWISE_CONFIG = {
             "description": "Explore practical AI learning paths for campaign planning, content briefs, audience research, repurposing, reporting, and editorial review.",
             "heroText": "Learn how AI may support recurring marketing tasks while keeping strategy, brand judgment, factual review, and final decisions with people.",
             "heroImage": "assets/images/marketing-hero.webp",
-            "directoryImage": "assets/images/marketing-directory.webp",
+            "directoryImage": "assets/images/marketing-mosaic.webp",
             "mosaicImage": "assets/images/marketing-mosaic.webp",
-            "overviewImage": "assets/images/marketing-overview.webp",
+            "overviewImage": "assets/images/home-faq.webp",
+            "images": {
+                "overviewPrimary": "assets/images/marketing-mosaic.webp",
+                "overviewSecondary": "assets/images/home-built-secondary.webp"
+            },
+            "capabilities": {
+                "image": "assets/images/home-faq.webp"
+            },
             "workflowCaption": "Plan, draft, review, and adapt marketing work with clearer context.",
             "summary": "A role-focused path for marketers exploring practical prompts, tool categories, review habits, and repeatable workflows.",
             "tasks": [
@@ -720,9 +727,16 @@ window.ROLEWISE_CONFIG = {
             "description": "Explore practical AI learning paths for listing drafts, client communication, property summaries, viewing preparation, and document organization.",
             "heroText": "Learn how AI may assist with preparation and communication while professional judgment, source verification, legal review, and client responsibility remain essential.",
             "heroImage": "assets/images/real-estate-hero.webp",
-            "directoryImage": "assets/images/real-estate-directory.webp",
+            "directoryImage": "assets/images/real-estate-mosaic.webp",
             "mosaicImage": "assets/images/real-estate-mosaic.webp",
-            "overviewImage": "assets/images/real-estate-overview.webp",
+            "overviewImage": "assets/images/about-purpose-secondary.webp",
+            "images": {
+                "overviewPrimary": "assets/images/real-estate-mosaic.webp",
+                "overviewSecondary": "assets/images/home-built-primary.webp"
+            },
+            "capabilities": {
+                "image": "assets/images/about-purpose-secondary.webp"
+            },
             "workflowCaption": "Organize property information and communication without removing professional review.",
             "summary": "A role-focused path for real estate professionals exploring structured drafts, research organization, communication support, and review checkpoints.",
             "tasks": [
@@ -870,9 +884,16 @@ window.ROLEWISE_CONFIG = {
             "description": "Explore practical AI learning paths for document organization, spreadsheet assistance, reconciliation preparation, report drafting, and verification.",
             "heroText": "Learn how AI may support structured preparation while accuracy, professional standards, confidentiality, compliance, and final judgment remain human responsibilities.",
             "heroImage": "assets/images/accounting-hero.webp",
-            "directoryImage": "assets/images/accounting-directory.webp",
+            "directoryImage": "assets/images/accounting-mosaic.webp",
             "mosaicImage": "assets/images/accounting-mosaic.webp",
-            "overviewImage": "assets/images/accounting-overview.webp",
+            "overviewImage": "assets/images/about-why-rolewise.webp",
+            "images": {
+                "overviewPrimary": "assets/images/accounting-mosaic.webp",
+                "overviewSecondary": "assets/images/card-2.jpg"
+            },
+            "capabilities": {
+                "image": "assets/images/about-why-rolewise.webp"
+            },
             "workflowCaption": "Prepare, organize, and review accounting work with explicit verification checkpoints.",
             "summary": "A role-focused path for accounting professionals exploring document organization, spreadsheet support, reporting drafts, and rigorous human verification.",
             "tasks": [
@@ -1019,10 +1040,17 @@ window.ROLEWISE_CONFIG = {
             "icon": "briefcase-business",
             "description": "Explore practical AI learning paths for SOP drafts, meeting notes, planning, customer communication, research organization, and team workflows.",
             "heroText": "Learn how AI may support everyday business preparation while ownership, prioritization, confidentiality, and final decisions stay with people.",
-            "heroImage": "assets/images/business-owners-hero.webp",
-            "directoryImage": "assets/images/business-owners-directory.webp",
+            "heroImage": "assets/images/professions-hero.webp",
+            "directoryImage": "assets/images/business-owners-mosaic.webp",
             "mosaicImage": "assets/images/business-owners-mosaic.webp",
-            "overviewImage": "assets/images/business-owners-overview.webp",
+            "overviewImage": "assets/images/card-2.jpg",
+            "images": {
+                "overviewPrimary": "assets/images/business-owners-mosaic.webp",
+                "overviewSecondary": "assets/images/card-4.jpg"
+            },
+            "capabilities": {
+                "image": "assets/images/card-2.jpg"
+            },
             "workflowCaption": "Turn recurring business tasks into clearer, reviewable working processes.",
             "summary": "A role-focused path for owners exploring practical documentation, planning, communication, research organization, and team adoption.",
             "tasks": [
@@ -1169,10 +1197,17 @@ window.ROLEWISE_CONFIG = {
             "icon": "handshake",
             "description": "Explore practical AI learning paths for account research, discovery preparation, follow-up drafts, CRM notes, objections, and proposal structure.",
             "heroText": "Learn how AI may support preparation and documentation while relevance, accuracy, privacy, personalization, and customer judgment remain human responsibilities.",
-            "heroImage": "assets/images/sales-hero.webp",
-            "directoryImage": "assets/images/sales-directory.webp",
+            "heroImage": "assets/images/courses-hero.webp",
+            "directoryImage": "assets/images/sales-mosaic.webp",
             "mosaicImage": "assets/images/sales-mosaic.webp",
-            "overviewImage": "assets/images/sales-overview.webp",
+            "overviewImage": "assets/images/about-purpose-primary.webp",
+            "images": {
+                "overviewPrimary": "assets/images/sales-mosaic.webp",
+                "overviewSecondary": "assets/images/professions-hero.webp"
+            },
+            "capabilities": {
+                "image": "assets/images/about-purpose-primary.webp"
+            },
             "workflowCaption": "Prepare stronger conversations without replacing research, listening, or personalization.",
             "summary": "A role-focused path for sales teams exploring research preparation, conversation support, follow-up structure, documentation, and human personalization.",
             "tasks": [
@@ -1319,10 +1354,17 @@ window.ROLEWISE_CONFIG = {
             "icon": "headset",
             "description": "Explore practical AI learning paths for ticket triage, response drafts, knowledge content, summaries, escalation preparation, and tone consistency.",
             "heroText": "Learn how AI may support service workflows while privacy, empathy, policy accuracy, escalation, and final customer communication remain human responsibilities.",
-            "heroImage": "assets/images/customer-service-hero.webp",
-            "directoryImage": "assets/images/customer-service-directory.webp",
+            "heroImage": "assets/images/contact-hero.webp",
+            "directoryImage": "assets/images/customer-service-mosaic.webp",
             "mosaicImage": "assets/images/customer-service-mosaic.webp",
-            "overviewImage": "assets/images/customer-service-overview.webp",
+            "overviewImage": "assets/images/home-built-primary.webp",
+            "images": {
+                "overviewPrimary": "assets/images/customer-service-mosaic.webp",
+                "overviewSecondary": "assets/images/contact-hero.webp"
+            },
+            "capabilities": {
+                "image": "assets/images/home-built-primary.webp"
+            },
             "workflowCaption": "Support clearer service workflows with privacy-aware review and escalation.",
             "summary": "A role-focused path for service professionals exploring ticket organization, response preparation, knowledge content, escalation, and tone review.",
             "tasks": [
@@ -1502,7 +1544,7 @@ window.ROLEWISE_CONFIG = {
             "siteName": "Rolewise AI",
             "type": "website",
             "locale": "en_US",
-            "defaultImage": "assets/images/og-rolewise-ai.webp",
+            "defaultImage": "assets/images/home-hero.webp",
             "twitterCard": "summary_large_image"
         },
         "pages": {
@@ -1558,37 +1600,37 @@ window.ROLEWISE_CONFIG = {
                 "title": "AI for Business Owners | Rolewise AI",
                 "description": "Explore practical AI workflows, prompts, tool categories, and learning options for SOPs, meetings, customer communication, planning, and internal documentation.",
                 "canonical": "https://rolewise.ai/ai-for-business-owners.html",
-                "image": "assets/images/business-owners-hero.webp"
+                "image": "assets/images/professions-hero.webp"
             },
             "ai-for-sales-teams": {
                 "title": "AI for Sales Teams | Rolewise AI",
                 "description": "Explore practical AI workflows, prompts, tool categories, and learning options for account research, discovery preparation, follow-ups, CRM summaries, and proposals.",
                 "canonical": "https://rolewise.ai/ai-for-sales-teams.html",
-                "image": "assets/images/sales-hero.webp"
+                "image": "assets/images/courses-hero.webp"
             },
             "ai-for-customer-service": {
                 "title": "AI for Customer Service Teams | Rolewise AI",
                 "description": "Explore practical AI workflows, prompts, tool categories, and learning options for ticket triage, response drafts, knowledge content, summaries, and escalation.",
                 "canonical": "https://rolewise.ai/ai-for-customer-service.html",
-                "image": "assets/images/customer-service-hero.webp"
+                "image": "assets/images/contact-hero.webp"
             },
             "privacy-policy": {
                 "title": "Privacy Policy | Rolewise AI",
                 "description": "Read how Rolewise AI handles information submitted through inquiries, technical information, cookie preferences, storage, service providers, security, and user rights.",
                 "canonical": "https://rolewise.ai/privacy-policy.html",
-                "image": "assets/images/og-rolewise-ai.webp"
+                "image": "assets/images/home-hero.webp"
             },
             "terms-of-service": {
                 "title": "Terms of Service | Rolewise AI",
                 "description": "Read the terms governing use of the Rolewise AI educational information and inquiry platform.",
                 "canonical": "https://rolewise.ai/terms-of-service.html",
-                "image": "assets/images/og-rolewise-ai.webp"
+                "image": "assets/images/home-hero.webp"
             },
             "cookie-policy": {
                 "title": "Cookie Policy | Rolewise AI",
                 "description": "Read how Rolewise AI uses essential browser storage for cookie preferences and how optional technologies may be handled if introduced.",
                 "canonical": "https://rolewise.ai/cookie-policy.html",
-                "image": "assets/images/og-rolewise-ai.webp"
+                "image": "assets/images/home-hero.webp"
             }
         }
     }
