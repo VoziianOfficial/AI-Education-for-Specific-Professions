@@ -17,8 +17,22 @@
     color: var(--color-primary-light);
 }
 
+.professions-hero__tri {
+    top: clamp(20px, 3vw, 34px);
+    left: clamp(10px, 1.2vw, 18px);
+    --tri-color: var(--color-cyan);
+    transform: scaleX(-1);
+}
+
+.professions-hero__dot {
+    top: clamp(4px, 1vw, 12px);
+    left: clamp(56px, 7vw, 90px);
+    --dot-color: var(--color-primary-light);
+}
+
 .professions-hero__media {
     isolation: isolate;
+    border-radius: 38% 62% 16% 60% / 48% 52% 18% 64%;
 }
 
 .professions-hero__media::before {

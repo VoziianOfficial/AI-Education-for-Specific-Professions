@@ -17,8 +17,21 @@
     color: var(--color-primary-light);
 }
 
+.courses-hero__tri {
+    top: clamp(58px, 7vw, 88px);
+    left: clamp(6px, 0.9vw, 14px);
+    --tri-color: var(--color-accent);
+}
+
+.courses-hero__dot {
+    top: clamp(16px, 2.4vw, 26px);
+    left: clamp(48px, 6vw, 78px);
+    --dot-color: var(--color-primary-light);
+}
+
 .courses-hero__media {
     isolation: isolate;
+    border-radius: 50% 50% 20% 68% / 62% 38% 18% 66%;
 }
 
 .courses-hero__media::before {

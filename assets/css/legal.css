@@ -37,6 +37,46 @@
     content: "";
 }
 
+.legal-hero__tri {
+    top: clamp(-64px, -6vw, -44px);
+    left: clamp(10px, 1.2vw, 18px);
+    --tri-color: var(--color-primary-light);
+}
+
+.legal-hero__dot {
+    top: clamp(-30px, -3vw, -18px);
+    left: clamp(46px, 5vw, 68px);
+    --dot-color: var(--color-cyan);
+}
+
+body[data-legal-page="terms-of-service"] .legal-hero::before {
+    border-color: rgba(84, 214, 208, 0.18);
+}
+
+body[data-legal-page="terms-of-service"] .legal-hero::after {
+    border-color: rgba(117, 103, 255, 0.12);
+}
+
+body[data-legal-page="terms-of-service"] .legal-hero__tri {
+    --tri-color: var(--color-cyan);
+}
+
+body[data-legal-page="cookie-policy"] .legal-hero::before {
+    border-color: rgba(214, 255, 99, 0.2);
+}
+
+body[data-legal-page="cookie-policy"] .legal-hero::after {
+    border-color: rgba(117, 103, 255, 0.1);
+}
+
+body[data-legal-page="cookie-policy"] .legal-hero__tri {
+    --tri-color: var(--color-accent);
+}
+
+body[data-legal-page="cookie-policy"] .legal-hero__dot {
+    --dot-color: var(--color-accent);
+}
+
 .legal-hero__inner {
     position: relative;
     z-index: 2;
@@ -49,6 +89,7 @@
 }
 
 .legal-hero__content {
+    position: relative;
     display: grid;
     align-content: end;
     gap: 26px;
@@ -70,7 +111,11 @@
 .legal-hero__meta {
     display: grid;
     gap: 0;
-    border-top: 1px solid var(--color-border);
+    padding: 8px 24px 22px;
+    border: 1px solid var(--color-border);
+    border-radius: 4px 44% 22% 44% / 4px 34% 22% 34%;
+    background: rgba(25, 30, 37, 0.6);
+    box-shadow: var(--shadow-dark);
 }
 
 .legal-hero__meta-row {
@@ -79,6 +124,10 @@
     gap: 20px;
     padding: 14px 0;
     border-bottom: 1px solid var(--color-border);
+}
+
+.legal-hero__meta-row:last-of-type {
+    border-bottom: 0;
 }
 
 .legal-hero__meta-label {
@@ -102,10 +151,9 @@
     grid-template-columns: auto minmax(0, 1fr);
     align-items: start;
     gap: 12px;
-    padding: 17px;
-    border: 1px solid var(--color-border);
-    border-radius: 18px;
-    background: rgba(25, 30, 37, 0.76);
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--color-border);
 }
 
 .legal-hero__notice svg {
@@ -913,6 +961,11 @@
 
     .legal-hero__inner {
         padding-block: 68px;
+    }
+
+    .legal-hero__tri,
+    .legal-hero__dot {
+        display: none;
     }
 
     .legal-hero__meta-row {

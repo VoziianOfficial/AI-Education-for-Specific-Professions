@@ -20,8 +20,21 @@
     color: var(--color-primary-light);
 }
 
+.contact-hero__tri {
+    top: clamp(22px, 3vw, 36px);
+    left: clamp(12px, 1.4vw, 20px);
+    --tri-color: var(--color-cyan);
+}
+
+.contact-hero__dot {
+    top: clamp(0px, 0.6vw, 6px);
+    left: clamp(58px, 7vw, 92px);
+    --dot-color: var(--color-accent);
+}
+
 .contact-hero__media {
     isolation: isolate;
+    border-radius: 46% 54% 14% 62% / 50% 50% 16% 60%;
 }
 
 .contact-hero__media::before {

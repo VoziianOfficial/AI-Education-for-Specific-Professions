@@ -5,7 +5,7 @@
     background: var(--color-warm-white);
 }
 
-.profession-page[data-profession="marketers"] {
+.profession-page[data-profession="marketing"] {
     --profession-accent: #7567ff;
     --profession-accent-light: #a49cff;
     --profession-accent-rgb: 117, 103, 255;
@@ -17,7 +17,7 @@
     --profession-accent-rgb: 60, 174, 182;
 }
 
-.profession-page[data-profession="accountants"] {
+.profession-page[data-profession="accounting"] {
     --profession-accent: #657f45;
     --profession-accent-light: #9bbd73;
     --profession-accent-rgb: 101, 127, 69;
@@ -29,7 +29,7 @@
     --profession-accent-rgb: 183, 122, 53;
 }
 
-.profession-page[data-profession="sales-teams"] {
+.profession-page[data-profession="sales"] {
     --profession-accent: #b95e54;
     --profession-accent-light: #e7968d;
     --profession-accent-rgb: 185, 94, 84;
@@ -129,11 +129,52 @@
     content: "";
 }
 
+.profession-hero__tri {
+    top: clamp(-2px, 0.4vw, 6px);
+    left: clamp(8px, 1vw, 16px);
+    --tri-color: var(--profession-accent-light);
+}
+
+.profession-hero__dot {
+    top: clamp(26px, 3vw, 42px);
+    left: clamp(46px, 5.6vw, 74px);
+    --dot-color: var(--profession-accent-light);
+}
+
+.profession-page[data-profession="real-estate"] .profession-hero__tri,
+.profession-page[data-profession="business-owners"] .profession-hero__tri,
+.profession-page[data-profession="customer-service"] .profession-hero__tri {
+    transform: scaleX(-1);
+}
+
 .profession-hero__media {
     position: relative;
     min-width: 0;
+    margin: clamp(22px, 3vw, 42px) clamp(22px, 3vw, 42px) clamp(22px, 3vw, 42px) 0;
     overflow: clip;
     background: var(--color-surface);
+    border-radius: 56% 44% 18% 60% / 52% 48% 20% 58%;
+    box-shadow: var(--shadow-dark);
+}
+
+.profession-page[data-profession="real-estate"] .profession-hero__media {
+    border-radius: 40% 60% 20% 56% / 46% 54% 18% 62%;
+}
+
+.profession-page[data-profession="accounting"] .profession-hero__media {
+    border-radius: 60% 40% 16% 66% / 58% 42% 18% 60%;
+}
+
+.profession-page[data-profession="business-owners"] .profession-hero__media {
+    border-radius: 46% 54% 22% 64% / 60% 40% 16% 64%;
+}
+
+.profession-page[data-profession="sales"] .profession-hero__media {
+    border-radius: 64% 36% 18% 58% / 44% 56% 20% 60%;
+}
+
+.profession-page[data-profession="customer-service"] .profession-hero__media {
+    border-radius: 42% 58% 20% 62% / 56% 44% 18% 58%;
 }
 
 .profession-hero__media::before {
@@ -1572,6 +1613,11 @@
         min-height: 690px;
     }
 
+    .profession-hero__media {
+        margin: 0 var(--page-padding) clamp(20px, 4vw, 40px);
+        border-radius: 32% 68% 24% 60% / 46% 40% 22% 58% !important;
+    }
+
     .profession-hero__media::before {
         background:
             linear-gradient(180deg,
@@ -1656,6 +1702,11 @@
     .profession-hero__media,
     .profession-hero__image {
         min-height: 610px;
+    }
+
+    .profession-hero__tri,
+    .profession-hero__dot {
+        display: none;
     }
 
     .profession-hero__card {

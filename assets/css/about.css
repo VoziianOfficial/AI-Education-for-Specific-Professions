@@ -33,8 +33,21 @@
     color: var(--color-primary-light);
 }
 
+.about-hero__tri {
+    top: clamp(18px, 3vw, 30px);
+    left: clamp(8px, 1vw, 16px);
+    --tri-color: var(--color-primary-light);
+}
+
+.about-hero__dot {
+    top: clamp(64px, 8vw, 92px);
+    left: clamp(30px, 4vw, 54px);
+    --dot-color: var(--color-cyan);
+}
+
 .about-hero__media {
     isolation: isolate;
+    border-radius: 64% 36% 18% 58% / 58% 42% 20% 62%;
 }
 
 .about-hero__media::before {
