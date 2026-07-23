@@ -257,6 +257,13 @@ window.ROLEWISE_CONFIG = {
         "href": "contact.html?inquiry=collaboration",
         "image": "assets/images/advertise-collaborate.webp"
     },
+    "advertiseCollaborate": {
+        "eyebrow": "Business Opportunities",
+        "title": "Advertise & Collaborate",
+        "text": "We are always open to new opportunities, high-impact collaborations, and tailored business partnerships. Whether you want to advertise your brand to our audience, launch a joint project, or book our professional services, we are ready to bring your ideas to life. Every business is unique, and we don't believe in one-size-fits-all solutions. Please reach out to us using the contact form below, tell us a bit about your goals, and our team will get back to you with an exclusive, custom-tailored proposal designed strictly for your budget and objectives. Let’s build something great together.",
+        "ctaLabel": "Discuss Your Idea",
+        "ctaHref": "#contact-form"
+    },
     "disclaimer": {
         "footerDisclaimer": "Rolewise AI is an independent educational information and inquiry platform. We organize profession-specific AI learning topics and may help visitors explore resources, learning formats, workshops, training opportunities, and independent providers where appropriate. Availability, curriculum, pricing, delivery format, and provider terms may vary. Information presented on this website is educational and does not guarantee specific professional, financial, operational, or business outcomes.",
         "educationalDisclaimer": "Rolewise AI provides educational information about possible AI-supported workflows, prompts, learning formats, and tool categories. Content should be adapted to the visitor’s role, organization, policies, and professional responsibilities.",

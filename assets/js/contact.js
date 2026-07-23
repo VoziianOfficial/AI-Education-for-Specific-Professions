@@ -219,6 +219,93 @@
         setText("[data-contact-response-note]", responseNote);
     }
 
+    function applyAdvertiseCollaborate() {
+        const root = document.querySelector(
+            "[data-advertise-collaborate]"
+        );
+
+        if (!root) {
+            return;
+        }
+
+        const title = getText(
+            config,
+            [
+                "advertiseCollaborate.title",
+                "advertise.title"
+            ],
+            ""
+        );
+
+        const text = getText(
+            config,
+            [
+                "advertiseCollaborate.text",
+                "advertise.text"
+            ],
+            ""
+        );
+
+        const eyebrow = getText(
+            config,
+            [
+                "advertiseCollaborate.eyebrow",
+                "advertise.eyebrow"
+            ],
+            "Business Opportunities"
+        );
+
+        const ctaLabel = getText(
+            config,
+            [
+                "advertiseCollaborate.ctaLabel",
+                "advertise.ctaLabel",
+                "advertise.cta"
+            ],
+            "Discuss Your Idea"
+        );
+
+        const ctaHref = getText(
+            config,
+            [
+                "advertiseCollaborate.ctaHref",
+                "advertise.href"
+            ],
+            "#contact-form"
+        );
+
+        if (!title || !text) {
+            root.hidden = true;
+            return;
+        }
+
+        root.hidden = false;
+
+        setText(
+            "[data-advertise-eyebrow]",
+            eyebrow
+        );
+
+        setText(
+            "[data-advertise-title]",
+            title
+        );
+
+        setText(
+            "[data-advertise-text]",
+            text
+        );
+
+        setText(
+            "[data-advertise-cta-label]",
+            ctaLabel
+        );
+
+        root.querySelectorAll("[data-advertise-link]").forEach(function (link) {
+            link.href = ctaHref;
+        });
+    }
+
     function renderCategories() {
         const container = document.querySelector(
             "[data-contact-categories]"
@@ -958,6 +1045,7 @@
         }
 
         applyContactInformation();
+        applyAdvertiseCollaborate();
         renderCategories();
         populateInquirySelect();
         bindCategoryLinks();
