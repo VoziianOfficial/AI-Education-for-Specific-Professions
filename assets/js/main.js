@@ -144,6 +144,20 @@
             return;
         }
 
+        header.removeAttribute("data-aos");
+        header.removeAttribute("data-aos-delay");
+        header.removeAttribute("data-aos-duration");
+        header.removeAttribute("data-aos-offset");
+
+        header.classList.remove(
+            "aos-init",
+            "aos-animate"
+        );
+
+        header.style.removeProperty("transform");
+        header.style.removeProperty("opacity");
+        header.style.removeProperty("transition");
+
         header.classList.add("site-header");
 
         const desktopLinks = config.navigation.headerLinks.map(function (item) {

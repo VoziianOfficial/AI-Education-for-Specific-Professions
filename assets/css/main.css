@@ -46,7 +46,8 @@
 html {
     min-width: 320px;
     max-width: 100%;
-    overflow-x: hidden;
+    overflow-x: clip;
+    overflow-y: visible;
     scroll-behavior: smooth;
     text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
@@ -58,7 +59,8 @@ body {
     max-width: 100%;
     min-width: 320px;
     min-height: 100vh;
-    overflow-x: hidden;
+    overflow-x: clip;
+    overflow-y: visible;
     background: var(--color-warm-white);
     color: var(--color-text-dark);
     font-family: var(--font-body);
@@ -873,15 +875,26 @@ textarea:focus-visible {
     overflow: visible;
 }
 
+[data-site-header],
 .site-header {
-    position: sticky;
-    top: 0;
-    z-index: 1200;
+    position: sticky !important;
+    top: 0 !important;
+    right: 0;
+    left: 0;
+    z-index: 2000 !important;
+    display: block;
     width: 100%;
     height: var(--header-height);
+    overflow: visible;
     border-bottom: 1px solid var(--color-border);
     background: rgba(8, 10, 13, 0.97);
     color: var(--color-white);
+    transform: none !important;
+    translate: none !important;
+    filter: none !important;
+    contain: none !important;
+    isolation: isolate;
+    backface-visibility: visible;
 }
 
 .site-header__inner {
@@ -2604,4 +2617,26 @@ html.aos-ready [data-aos].aos-init.aos-animate {
         transform: none !important;
         transition: none !important;
     }
+}
+
+.site-header[data-aos],
+[data-site-header][data-aos],
+.site-header.aos-init,
+[data-site-header].aos-init,
+.site-header.aos-animate,
+[data-site-header].aos-animate {
+    position: sticky !important;
+    top: 0 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+body.menu-open {
+    overflow: hidden;
+}
+
+body:not(.menu-open):not(.modal-open) {
+    overflow-y: visible;
 }
